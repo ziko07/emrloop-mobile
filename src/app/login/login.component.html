@@ -1,0 +1,25 @@
+<ion-content class="custom-bg ion-padding">
+  <div id="chat-parent">
+    <div text-center>
+      <ion-img src="assets/images/logo-new.png" class="app-logo" style="width: 150px; margin-left: 150px; margin-top: 35px; text-align: center"></ion-img>
+    </div>
+    <p style="text-align: center">Content Delivery for Constant Improvement</p>
+    <div class="spacer" style="height: 10px;"> </div>
+
+    <ion-list id="login-form">
+      <ion-item>
+        <ion-icon name="person" mode="md" slot="start" style="margin-right: 10px;"></ion-icon>
+        <ion-input type="text" [(ngModel)]="form.username" name="username" placeholder="Username" class="custom-input"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="lock-closed" mode="md" slot="start" style="margin-right: 10px;"></ion-icon>
+        <ion-input type="{{ toggle_password ? 'text' : 'password'}}" [(ngModel)]="form.password" name="password" placeholder="Password" class="custom-input"></ion-input>
+        <ion-icon (click)="toggle_password = !toggle_password" mode="md" name="{{toggle_password ? 'eye-off' : 'eye'}}" slot="end" style="margin-left: 10px;"></ion-icon>
+      </ion-item>
+    </ion-list>
+    <div  class="margin" style="color: #ff0000;"><h5>{{errorLoginMessage}}</h5></div>
+    <ion-button expand="full" class="custom-button" [disabled]="disableLogin" (click)="signin()">Sign In</ion-button>
+  </div>
+</ion-content>
+<ion-footer class="ion-padding custom-bg" mode="ios">
+</ion-footer>
