@@ -1,0 +1,7 @@
+{
+  "name": "emrloop-mobile",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
