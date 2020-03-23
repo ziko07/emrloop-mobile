@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
 import {HelperService} from '../../services/helper.service';
 import {LoaderService} from '../../services/loader.service';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +18,8 @@ export class LoginComponent implements OnInit {
   buttonText: any = 'Login';
   userProfile: any = null;
   toggle_password = false;
-  constructor(private helperService: HelperService, public spinnerDialog: LoaderService) {
+  constructor(private router: Router, private helperService: HelperService,
+              public spinnerDialog: LoaderService, public authProvider: AuthService) {
     this.form = {email: '', password: ''};
   }
 
@@ -25,8 +28,8 @@ export class LoginComponent implements OnInit {
     let data = window.localStorage.getItem('credential');
     let credential = data ? JSON.parse(data) : {};
     this.form.password = credential.password;
-    this.form.username = credential.username;
-    if(credential.username) {
+    this.form.email = credential.email;
+    if(credential.email) {
       this.form.save_password = true;
     }
   }
@@ -37,12 +40,24 @@ export class LoginComponent implements OnInit {
       this.disableLogin = true;
       this.buttonText = 'Login...';
       this.userDetails = {
-        login: this.form.email,
+        email: this.form.email,
         password: this.form.password
       };
       this.spinnerDialog.show('iNwe', 'Login...', false);
-      console.log("OK");
-      this.spinnerDialog.hide();
+      this.authProvider.login(this.userDetails).subscribe(resp => {
+        this.spinnerDialog.hide();
+        console.log('<<<<<<<<<<<<');
+        console.log(resp);
+        console.log(resp.headers);
+        console.log(resp.headers.get('access-token'));
+        console.log(resp.headers.get('uid'));
+        console.log(resp.headers);
+        console.log(resp.headers.get('Transfer-Encoding'));
+        // console.log(resp.headers._headersMap);
+        console.log('<<<<<<<<<<<<');
+        // window.localStorage.setItem('auth', JSON.stringify(resp.auth));
+        this.router.navigateByUrl('/');
+      });
     }
     else {
       this.helperService.showToast(this.errorMessage);
@@ -50,8 +65,8 @@ export class LoginComponent implements OnInit {
   }
 
   validateRegister(form) {
-    if (this.form.username == undefined || this.form.username == '') {
-      this.errorMessage = "Enter username or email";
+    if (this.form.email == undefined || this.form.email == '') {
+      this.errorMessage = "Enter email";
       return false;
     }
     if (this.form.password == undefined || this.form.password == '') {
