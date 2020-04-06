@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {ModalController} from '@ionic/angular';
 import {HelperService} from '../../services/helper.service';
 import {LoaderService} from '../../services/loader.service';
 import {HomeService} from '../../services/home.service';
@@ -12,7 +13,7 @@ import {Router} from '@angular/router';
 })
 export class HomePage {
    list ;
-  constructor(public homeService: HomeService,  public router: Router, public spinnerDialog: LoaderService, private helperService: HelperService) {}
+  constructor(private modalController: ModalController, public homeService: HomeService,  public router: Router, public spinnerDialog: LoaderService, private helperService: HelperService) {}
 
   ngOnInit() {
      this.loadTodo();
@@ -32,6 +33,16 @@ export class HomePage {
 
   public details(id) {
       this.router.navigateByUrl('message/' + id);
+  }
+
+  async openModal() {
+    const modal = await this.modalController.create({
+      component: DetailsComponent,
+      componentProps: {
+        list: this.list
+      }
+    });
+    return await modal.present();
   }
 
 }

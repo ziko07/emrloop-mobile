@@ -1,3 +1,19 @@
-<p>
-  details works!
-</p>
+<ion-header>
+    <ion-toolbar >
+        <ion-buttons slot="start">
+            <ion-button (click)="closeModal()"> <ion-icon slot="icon-only" name="close"></ion-icon> </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [forceOverscroll]="false" fullscreen="true">
+    <ion-slides loop="true" speed="300" pager="false" >
+        <ion-slide *ngFor="let item of list">
+                <ion-card-content >
+                   <div *ngIf="item.attachment && item.attachment.url" [innerHTML]="check_attachment_type(item.attachment.url)"></div>
+                    <h2> <b>{{item.title}} </b></h2>
+                    <p [innerHTML]="item.content"></p>
+                </ion-card-content>
+        </ion-slide>
+    </ion-slides>
+</ion-content>

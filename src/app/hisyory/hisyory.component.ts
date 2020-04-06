@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {HelperService} from '../../services/helper.service';
 import {LoaderService} from '../../services/loader.service';
 import {HomeService} from '../../services/home.service';
+import {DetailsComponent} from '../details/details.component';
+import {Router} from '@angular/router';
+
 @Component({
   selector: 'app-hisyory',
   templateUrl: './hisyory.component.html',
@@ -9,7 +12,8 @@ import {HomeService} from '../../services/home.service';
 })
 export class HistoryComponent implements OnInit {
   list ;
-  constructor(public homeService: HomeService, public spinnerDialog: LoaderService, private helperService: HelperService) { }
+  constructor(public homeService: HomeService, public router: Router
+              , public spinnerDialog: LoaderService, private helperService: HelperService) { }
 
   ngOnInit() {
     this.loadTodo();
@@ -20,10 +24,13 @@ export class HistoryComponent implements OnInit {
     this.homeService.all().subscribe(resp => {
       this.spinnerDialog.hide();
       this.list = resp;
-      console.log(this.list);
     }, err => {
       this.spinnerDialog.hide();
       this.helperService.showToast('Unable to load emails');
     });
+  }
+
+  public details(id) {
+    this.router.navigateByUrl('message/' + id);
   }
 }

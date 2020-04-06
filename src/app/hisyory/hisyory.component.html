@@ -16,7 +16,7 @@
 
   <div>
     <ion-list>
-      <ion-item *ngFor="let item of list" lines="full">
+      <ion-item *ngFor="let item of list" lines="full" (click)="details(item.id)">
         <ion-avatar slot="start">
           <img src="/assets/images/ic_action_signal.png">
         </ion-avatar>
