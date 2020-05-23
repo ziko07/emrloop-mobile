@@ -1,0 +1,48 @@
+.menu-header {
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#88bfe8+0,70b0e0+100;Blue+3D+%2317 */
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#ffffff+0,e5e5e5+100;White+3D */
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#e9f6fd+0,d3eefb+100;Blue+3D+%233 */
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#1b8895+0,407766+100 */
+  background: rgb(27,136,149); /* Old browsers */
+  background: -moz-linear-gradient(top,  rgba(27,136,149,1) 0%, rgba(64,119,102,1) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  rgba(27,136,149,1) 0%,rgba(64,119,102,1) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  rgba(27,136,149,1) 0%,rgba(64,119,102,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1b8895', endColorstr='#407766',GradientType=0 ); /* IE6-9 */
+
+
+  .menu-header-container {
+    padding: 15px;
+    .user-name {
+      font-weight: bold;
+      color: #ffffff;
+    }
+    img {
+      height: 100px;
+      width: 100px;
+      border-radius: 100%;
+      margin-bottom: 7px;
+    }
+  }
+
+  .user-email {
+    background: rgba(255, 255, 255, 0.3);
+    padding: 5px;
+    text-align: center;
+    color: #2f4f4f;
+  }
+}
+
+.menu-content {
+  --background: #1B8895;
+  ion-list, ion-item {
+    background: transparent;
+    --background: transparent;
+    ion-icon {
+      color: #dfdfdf;
+    }
+    span {
+      color: #eae8e8;
+      font-weight: 500;
+    }
+  }
+}

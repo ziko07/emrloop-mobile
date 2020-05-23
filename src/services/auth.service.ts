@@ -1,28 +1,38 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
-import {BehaviorSubject, Observable, of} from 'rxjs';
+import {HttpClient, HttpResponse} from '@angular/common/http';
+import {Observable, of} from 'rxjs';
 import {Base} from './base';
+import {AngularTokenService} from 'angular-token';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
-    api_url = Base.api_url;
-    isLoggedIn: boolean;
-
-    constructor(public http: HttpClient) {}
-
+    constructor(public http: HttpClient, private tokenService: AngularTokenService) {
+    }
 
     public login(userDetails): Observable<HttpResponse<any>> {
-        return this.http.post<any>(this.api_url + '/auth/sign_in', userDetails, {observe: 'response'});
+        return this.tokenService.signIn(userDetails);
     }
 
-    public getAuthToken() {
-        let auth = JSON.parse(window.localStorage.getItem('auth'));
-        return auth ? auth.auth_token : '';
+    public logout(): Observable<any> {
+        return this.tokenService.signOut();
     }
 
-    private requestHeader() {
-        return {headers: {Authorization: `Bearer ${this.getAuthToken()}`}};
+    public signedIn(): boolean {
+        return this.tokenService.userSignedIn();
+    }
+
+    getCurrentUser(): Observable<any> {
+        return this.http.get(Base.api_url + '/users/profile');
+    }
+
+    getToken() {
+        let token_data = this.tokenService.currentAuthData;
+        return token_data ? token_data.accessToken : '';
+    }
+
+    getAuth() {
+        return this.tokenService.currentAuthData;
     }
 }

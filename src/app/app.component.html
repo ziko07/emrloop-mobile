@@ -1,16 +1,37 @@
 <ion-app>
     <ion-menu side="start" menuId="first" contentId="content1">
         <ion-header>
-            <ion-toolbar>
-                <ion-title>Navigate</ion-title>
-            </ion-toolbar>
+            <div class="menu-header">
+                <div class="menu-header-container">
+                    <div class="profile">
+                        <img *ngIf="user && user.image.url" [src]="user.image.url" class="circle"/>
+                        <ion-icon *ngIf="!user || !user.image.url" name="person-circle-outline" color="light"
+                                  style="font-size: 100px"></ion-icon>
+                    </div>
+                    <div class="user-name">
+                        {{ user ? user.name : 'Anonymous' }}
+                    </div>
+                </div>
+                <div class="user-email">
+                    {{ user ? user.email : 'support@kaizenloop.com'}}
+                </div>
+            </div>
         </ion-header>
-        <ion-content>
-            <ion-list *ngFor="let pages of navigate">
+        <ion-content class="menu-content">
+            <ion-list *ngFor="let pages of navigate" class="ion-no-padding ion-no-margin">
                 <ion-menu-toggle auto-hide="false">
-                    <ion-item [routerLink]="pages.url" routerDirection="forward">
+                    <ion-item [routerLink]="pages.url" routerDirection="forward" lines="full"
+                              class="ion-no-margin ion-no-margin">
                         <ion-icon [name]="pages.icon" slot="start"></ion-icon>
-                        {{pages.title}}
+                        <span>{{pages.title}}</span>
+                    </ion-item>
+                </ion-menu-toggle>
+            </ion-list>
+            <ion-list class="ion-no-padding ion-no-margin" *ngIf="user">
+                <ion-menu-toggle auto-hide="false">
+                    <ion-item (click)="logout()" lines="full" class="ion-no-margin ion-no-margin">
+                        <ion-icon name="power-outline" slot="start"></ion-icon>
+                        <span>Logout</span>
                     </ion-item>
                 </ion-menu-toggle>
             </ion-list>

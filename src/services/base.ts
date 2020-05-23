@@ -6,4 +6,8 @@ export class Base {
         let auth = JSON.parse(window.localStorage.getItem('auth'));
         return auth ? auth.auth_token : '';
     }
+
+    static requestHeader() {
+        return {headers: {Authorization: `Bearer ${Base.getAuthToken()}`}};
+    }
 }
