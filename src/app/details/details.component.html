@@ -1,19 +1,31 @@
-<ion-header>
-    <ion-toolbar >
+<ion-header [translucent]="true">
+    <ion-toolbar class="custom-toolbar">
         <ion-buttons slot="start">
-            <ion-button (click)="closeModal()"> <ion-icon slot="icon-only" name="close"></ion-icon> </ion-button>
+            <ion-button (click)="closeModal()">
+                <ion-icon slot="icon-only" name="close"></ion-icon>
+            </ion-button>
         </ion-buttons>
+        <ion-title *ngIf="activeItem"> {{activeItem.title}}</ion-title>
     </ion-toolbar>
 </ion-header>
 
-<ion-content [forceOverscroll]="false" fullscreen="true">
-    <ion-slides loop="true" speed="300" pager="false" >
-        <ion-slide *ngFor="let item of list">
-                <ion-card-content >
-                   <div *ngIf="item.attachment && item.attachment.url" [innerHTML]="check_attachment_type(item.attachment.url)"></div>
-                    <h2> <b>{{item.title}} </b></h2>
+<ion-content>
+    <ion-slides fullscreen="true" [options]="slideOpts" (ionSlideDidChange)="slideNewTab($event)" #tabSlider>
+        <ion-slide *ngFor="let item of list; let i = index;">
+            <ion-card-content *ngIf="readySlider" class="ion-no-padding">
+                <div *ngIf="item.attachment && item.attachment.url && i == current_slider"
+                     [innerHTML]="item.attachment.url | attachment"></div>
+                <div class="list-item-content">
+                    <h2><b>{{item.title}} </b></h2>
                     <p [innerHTML]="item.content"></p>
-                </ion-card-content>
+                </div>
+            </ion-card-content>
+            <ion-card-content *ngIf="!readySlider">
+                Loading...
+            </ion-card-content>
         </ion-slide>
     </ion-slides>
 </ion-content>
+<ion-footer class="ion-text-center" style="background: #dfdfdf40; padding: 7px">
+    {{current_slider}} of {{list ? list.length : 0}}
+</ion-footer>

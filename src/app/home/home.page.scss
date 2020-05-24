@@ -30,7 +30,12 @@ ion-content ion-toolbar {
   --background: translucent;
 }
 
+ion-item {
+  --background: #1b889505;
+  background: #1b889505;
+}
+
 .list-item {
-  border-left: 2px solid green;
+  border-left: 2px solid #1B8895;
   padding-left: 10px;
 }

@@ -24,7 +24,6 @@ export class HomePage {
     this.homeService.list().subscribe(resp => {
       this.spinnerDialog.hide();
       this.list = resp;
-      console.log(this.list);
     }, err => {
       this.spinnerDialog.hide();
       this.helperService.showToast('Unable to load emails');
@@ -35,11 +34,12 @@ export class HomePage {
       this.router.navigateByUrl('message/' + id);
   }
 
-  async openModal() {
+  async openModal(index) {
     const modal = await this.modalController.create({
       component: DetailsComponent,
       componentProps: {
-        list: this.list
+        list: this.list,
+        slide: index
       }
     });
     return await modal.present();

@@ -15,7 +15,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {LoginComponent} from './login/login.component';
 import {HistoryComponent} from './hisyory/hisyory.component';
 import {DetailsComponent} from './details/details.component';
-import {AttachmentPipe} from './attachment.pipe';
+import {AttachmentPipe} from './pipe/attachment.pipe';
 import {Base} from '../services/base';
 
 @NgModule({
