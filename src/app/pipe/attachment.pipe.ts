@@ -22,7 +22,7 @@ export class AttachmentPipe implements PipeTransform {
         } else if (ext === 'MOV') {
             return this.videoPreview(value);
         } else if (ext === 'pdf') {
-            return this.pdfPreview(value);
+            return this.docPreview(value);
         } else {
             return '';
         }
@@ -34,17 +34,18 @@ export class AttachmentPipe implements PipeTransform {
     }
 
     videoPreview(url) {
-        let video = '<div class=\'video\'>';
-        video += '<video controls (click)=\'toggleVideo(event)\'>';
-        video += '<source src=\'' + url + '\' type=\'video/mp4\'>';
-        video += 'Browser not supported';
+        let video = '<div class="attachment-video">';
+        video += '<video controls>';
+        video += '<source src=' + url + '>';
+        video += 'Video format is not supported';
         video += '</video>';
         video += '</div>';
         return this.sanitizer.bypassSecurityTrustHtml(video);
     }
 
-    pdfPreview(url) {
-        const pdf = '<iframe style="min-height: 450px" src=\'' + url + '\' width=\'100%\' height=\'100%\'></iframe>';
+    docPreview(url) {
+        const doc_url = 'https://docs.google.com/viewer?embedded=true&url=' + encodeURIComponent(url);
+        const pdf = '<iframe class="document-viewer-frame" src="' + doc_url + '" width=\'100%\' height=\'100%\'></iframe>';
         return this.sanitizer.bypassSecurityTrustHtml(pdf);
     }
 }

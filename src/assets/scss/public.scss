@@ -221,6 +221,7 @@ ion-navbar.no-border {
 // style for auth pages
 .auth-page {
   --background: transparent;
+
   &::after {
     content: "";
     background: url("/assets/images/bg.jpg") no-repeat;
@@ -236,6 +237,7 @@ ion-navbar.no-border {
   ion-item {
     --background: transparent;
     padding: 0;
+
     ion-label {
       ion-icon {
         vertical-align: middle;
@@ -396,6 +398,25 @@ ion-icon[ng-reflect-disabled="true"] {
   margin: 0 -20px;
 }
 
+.document-viewer-frame {
+  min-height: 450px;
+  border: none;
+}
+
+.attachment-video {
+  background: #000000;
+
+  video {
+    width: 100%;
+    max-height: calc(100vh - 170px);
+    -moz-transition: all 1s ease-in-out;
+    -webkit-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    -ms-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out;
+  }
+}
+
 // Animate CSS
 .animated {
   animation-duration: 1s;
@@ -446,3 +467,4 @@ ion-icon[ng-reflect-disabled="true"] {
 .fadeInDown {
   animation-name: fadeInDown;
 }
+

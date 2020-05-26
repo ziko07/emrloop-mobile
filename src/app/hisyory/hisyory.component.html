@@ -1,9 +1,9 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
+<ion-header>
+  <ion-toolbar class="custom-toolbar">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>KaizenLoop</ion-title>
+    <ion-title>Inbox History</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -15,18 +15,18 @@
   </ion-header>
 
   <div>
-    <ion-list>
-      <ion-item *ngFor="let item of list" lines="full" (click)="details(item.id)">
+    <ion-list class="ion-no-padding">
+      <ion-item *ngFor="let item of list; let i = index" lines="full" (click)="openModal(i)">
         <ion-avatar slot="start">
           <img src="/assets/images/ic_action_signal.png">
         </ion-avatar>
         <ion-label>
-          <h2>{{item[0].recipient_name}}</h2>
-          <h3>{{item[0].title}}</h3>
-          <p [innerHTML]="item[0].content"></p>
+          <h2>{{item.recipient_name}}</h2>
+          <h3>{{item.title}}</h3>
+          <p [innerHTML]="item.content"></p>
         </ion-label>
         <ion-label slot="end" style="margin-bottom: auto" class="ion-text-right">
-          <h2>{{item[0].created_at | date: 'dd/MM/yyyy'}}</h2>
+          <h2>{{item.created_at | date: 'dd/MM/yyyy'}}</h2>
           <h2>Image</h2>
         </ion-label>
       </ion-item>
