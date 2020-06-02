@@ -18,6 +18,15 @@
                 <div class="list-item-content">
                     <h2><b>{{item.title}} </b></h2>
                     <p [innerHTML]="item.content"></p>
+                    <ion-button expand="full" color="warning" (click)="openQuizeModal(item.id)" *ngIf="item.receipt_type == 'Quiz'">
+                        Submit Quiz
+                    </ion-button>
+
+                    <ion-button expand="full" color="secondary" (click)="sentAcknowledgement(item.id)" *ngIf="!read && item.receipt_type != 'Quiz'">
+                        Acknowledgement receipt
+                    </ion-button>
+
+                    <ion-title *ngIf="read"> Seen</ion-title>
                 </div>
             </ion-card-content>
             <ion-card-content *ngIf="!readySlider">

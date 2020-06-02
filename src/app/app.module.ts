@@ -15,12 +15,13 @@ import {AppRoutingModule} from './app-routing.module';
 import {LoginComponent} from './login/login.component';
 import {HistoryComponent} from './hisyory/hisyory.component';
 import {DetailsComponent} from './details/details.component';
+import {QuizComponent} from './quiz/quiz.component';
 import {AttachmentPipe} from './pipe/attachment.pipe';
 import {Base} from '../services/base';
 
 @NgModule({
-    declarations: [AppComponent, LoginComponent, AttachmentPipe, HistoryComponent, DetailsComponent],
-    entryComponents: [],
+    declarations: [AppComponent, LoginComponent, QuizComponent, AttachmentPipe, HistoryComponent, DetailsComponent],
+    entryComponents: [QuizComponent],
     imports: [BrowserModule, IonicModule.forRoot(),
         AppRoutingModule, FormsModule, ReactiveFormsModule,
         HttpClientModule, AngularTokenModule.forRoot({

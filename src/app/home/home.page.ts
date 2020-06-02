@@ -24,9 +24,10 @@ export class HomePage {
     this.homeService.list().subscribe(resp => {
       this.spinnerDialog.hide();
       this.list = resp;
+      console.log(this.list);
     }, err => {
       this.spinnerDialog.hide();
-      this.helperService.showToast('Unable to load emails');
+      // this.helperService.showToast('Unable to load emails');
     });
   }
 
@@ -39,7 +40,8 @@ export class HomePage {
       component: DetailsComponent,
       componentProps: {
         list: this.list,
-        slide: index
+        slide: index,
+        read: false
       }
     });
     return await modal.present();

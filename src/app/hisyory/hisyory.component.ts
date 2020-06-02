@@ -28,20 +28,22 @@ export class HistoryComponent implements OnInit {
             component: DetailsComponent,
             componentProps: {
                 list: this.list,
-                slide: index
+                slide: index,
+                read : true
             }
         });
         return await modal.present();
     }
 
     public loadTodo() {
-        this.spinnerDialog.show('', 'Loading email...');
+        this.spinnerDialog.show('', 'Loading ToDO...');
         this.homeService.all().subscribe(resp => {
             this.spinnerDialog.hide();
             this.list = resp;
+            console.log(this.list);
         }, err => {
             this.spinnerDialog.hide();
-            this.helperService.showToast('Unable to load emails');
+            // this.helperService.showToast('Unable to load emails');
         });
     }
 

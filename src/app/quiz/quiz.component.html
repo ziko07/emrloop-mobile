@@ -1,0 +1,53 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="custom-toolbar">
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title *ngIf="item"> <p>{{item.title}}</p></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+      <ion-card-content class="ion-no-padding">
+        <div class="list-item-content" *ngIf="item">
+          <form (ngSubmit)="logForm()" >
+            <ion-list>
+              <ion-radio-group [(ngModel)]="form.answer" name="dd" disabled>
+                <ion-list-header>
+                  <ion-label>
+                    <h2><b>{{item.status.question}} </b></h2>
+                  </ion-label>
+                </ion-list-header>
+
+                <ion-item>
+                  <ion-label>a) {{item.status.answer_a}}</ion-label>
+                  <ion-radio value="a" name="answer_a" [attr.checked]=true [attr.disabled]="item.response ? '' : null">></ion-radio>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label>b) {{item.status.answer_b}}</ion-label>
+                  <ion-radio value="b" name="answer_b" [attr.disabled]="item.response ? '' : null"></ion-radio>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label>c) {{item.status.answer_c}}</ion-label>
+                  <ion-radio value="c" name="answer_c" [attr.disabled]="item.response ? '' : null"></ion-radio>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label>d) {{item.status.answer_d}}</ion-label>
+                  <ion-radio value="d" name="answer_d" [attr.disabled]="item.response ? '' : null"></ion-radio>
+                </ion-item>
+              </ion-radio-group>
+            </ion-list>
+            <ion-button expand="full" color="secondary" type="submit" [attr.disabled]="item.response ? '' : null">
+              Submit Answer
+            </ion-button>
+          </form>
+        </div>
+
+
+      </ion-card-content>
+</ion-content>

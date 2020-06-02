@@ -4,6 +4,7 @@ import {LoaderService} from '../../services/loader.service';
 import {HomeService} from '../../services/home.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ModalController} from '@ionic/angular';
+import {QuizComponent} from '../quiz/quiz.component';
 
 @Component({
     selector: 'app-details',
@@ -30,6 +31,7 @@ export class DetailsComponent implements OnInit {
     };
     @Input() list: any;
     @Input() slide: any;
+    @Input() read: any;
     activeItem: any;
     current_slider = 0;
     slideOpts = {
@@ -42,24 +44,11 @@ export class DetailsComponent implements OnInit {
     }
 
     ngOnInit() {
-        // let message_id = this.router.snapshot.paramMap.get('message_id');
-        this.loadItem();
     }
 
-    public loadItem() {
-        // this.spinnerDialog.show('', 'Loading email...');
-        // this.homeService.task(message_id).subscribe(resp => {
-        //   this.spinnerDialog.hide();
-        //   this.task = resp;
-        //   console.log(this.task.attachment.url);
-        // }, err => {
-        //   this.spinnerDialog.hide();
-        //   this.helperService.showToast('Unable to load emails');
-        // });
-    }
 
     closeModal() {
-        this.modalController.dismiss();
+        this.modalController.dismiss(true);
     }
 
     public slideNewTab(event) {
@@ -77,5 +66,26 @@ export class DetailsComponent implements OnInit {
         setTimeout(() => {
             this.readySlider = true;
         }, 100);
+    }
+
+    sentAcknowledgement(id) {
+        this.spinnerDialog.show('', 'Sending Acknowledgement');
+        this.homeService.acknowledgementSent(id, {}).subscribe(resp => {
+            this.spinnerDialog.hide();
+            this.helperService.showToast('Acknowledgement Successfully Received');
+        }, err => {
+            this.spinnerDialog.hide();
+            // this.helperService.showToast('Unable to load emails');
+        });
+    }
+
+    async openQuizeModal(item_id) {
+        const modal = await this.modalController.create({
+            component: QuizComponent,
+            componentProps: {
+                id: item_id
+            }
+        });
+        return await modal.present();
     }
 }

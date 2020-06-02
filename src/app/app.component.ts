@@ -15,13 +15,8 @@ export class AppComponent {
     user: any;
     auth_menu = [
         {
-            title: 'Home',
-            url: '/home',
-            icon: 'home'
-        },
-        {
             title: 'To Do',
-            url: '/todo',
+            url: '/home',
             icon: 'list'
         },
         {

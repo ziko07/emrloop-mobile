@@ -3,6 +3,7 @@ import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from './login/login.component';
 import {HistoryComponent} from './hisyory/hisyory.component';
 import {DetailsComponent} from './details/details.component';
+import {QuizComponent} from './quiz/quiz.component';
 import {AngularTokenService} from 'angular-token';
 import {AuthGuardService as AuthGuard} from '../services/auth/auth-guard.service';
 

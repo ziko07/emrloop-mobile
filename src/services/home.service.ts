@@ -24,4 +24,7 @@ export class HomeService {
     public task(message_id): Observable<HttpResponse<any>> {
         return this.http.get<any>(this.api_url + '/users/messages/' + message_id);
     }
+    public acknowledgementSent(message_id,data): Observable <any> {
+    return this.http.put(this.api_url + '/users/messages/' + message_id + '/read', data);
+}
 }
