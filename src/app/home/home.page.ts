@@ -12,22 +12,22 @@ import {Router} from '@angular/router';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-   list ;
+   list: any;
+
   constructor(private modalController: ModalController, public homeService: HomeService,  public router: Router, public spinnerDialog: LoaderService, private helperService: HelperService) {}
 
   ngOnInit() {
-     this.loadTodo();
+     this.loadInbox();
   }
 
-  public loadTodo() {
-    this.spinnerDialog.show('', 'Loading email...');
+  public loadInbox() {
+    this.spinnerDialog.show('', 'Loading inbox...');
     this.homeService.list().subscribe(resp => {
       this.spinnerDialog.hide();
       this.list = resp;
-      console.log(this.list);
     }, err => {
       this.spinnerDialog.hide();
-      // this.helperService.showToast('Unable to load emails');
+      this.helperService.showToast('Unable to load inbox');
     });
   }
 
@@ -46,5 +46,4 @@ export class HomePage {
     });
     return await modal.present();
   }
-
 }

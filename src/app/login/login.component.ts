@@ -45,15 +45,20 @@ export class LoginComponent implements OnInit {
                 window.location.href = '/';
             }, err => {
                 this.spinnerDialog.hide();
+                this.disableLogin = false;
                 if (err.status == 401) {
                     this.helperService.showToast('Invalid username or password!');
                 } else {
-                    this.helperService.showToast('Server encountered an issue! Please try after again.');
+                    this.helperService.showToast('Server encountered an issue! Please try after again.' + err.message);
                 }
             });
         } else {
             this.helperService.showToast(this.errorMessage);
         }
+    }
+
+    public register() {
+
     }
 
     validateRegister(form) {

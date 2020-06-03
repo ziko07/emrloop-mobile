@@ -44,7 +44,7 @@ export class AttachmentPipe implements PipeTransform {
     }
 
     docPreview(url) {
-        const doc_url = 'https://docs.google.com/viewer?embedded=true&url=' + encodeURIComponent(url);
+        const doc_url = 'http://docs.google.com/viewer?embedded=true&url=' + encodeURIComponent(url);
         const pdf = '<iframe class="document-viewer-frame" src="' + doc_url + '" width=\'100%\' height=\'100%\'></iframe>';
         return this.sanitizer.bypassSecurityTrustHtml(pdf);
     }
