@@ -13,15 +13,48 @@ import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {LoginComponent} from './login/login.component';
-import {HistoryComponent} from './hisyory/hisyory.component';
+import {HistoryComponent} from './history/history.component';
 import {DetailsComponent} from './details/details.component';
 import {QuizComponent} from './quiz/quiz.component';
 import {AttachmentPipe} from './pipe/attachment.pipe';
 import {Base} from '../services/base';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { SignupComponent } from './signup/signup.component';
+import { UsersComponent } from './users/users.component';
+import { AddUserComponent } from './users/add-user/add-user.component';
+import { ChangeUserTypeComponent } from './users/change-user-type/change-user-type.component';
+import { GroupsComponent } from './groups/groups.component';
+import { ClientsComponent } from './clients/clients.component';
+import { AddClientComponent } from './clients/add-client/add-client.component';
+import { EditClientComponent } from './clients/edit-client/edit-client.component';
+import { LogosComponent } from './logos/logos.component';
+import { AddLogoComponent } from './logos/add-logo/add-logo.component';
+import { EditLogoComponent } from './logos/edit-logo/edit-logo.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
-    declarations: [AppComponent, LoginComponent, QuizComponent, AttachmentPipe, HistoryComponent, DetailsComponent],
-    entryComponents: [QuizComponent],
+    declarations: [
+        AppComponent, 
+        HeaderComponent,
+        LoginComponent, 
+        QuizComponent, 
+        AttachmentPipe, 
+        HistoryComponent, 
+        DetailsComponent,
+        ForgotPasswordComponent,
+        SignupComponent,
+        UsersComponent,
+        AddUserComponent,
+        ChangeUserTypeComponent,
+        GroupsComponent,
+        ClientsComponent,
+        AddClientComponent,
+        EditClientComponent,
+        LogosComponent,
+        AddLogoComponent,
+        EditLogoComponent
+    ],
+    entryComponents: [QuizComponent, ChangeUserTypeComponent],
     imports: [BrowserModule, IonicModule.forRoot(),
         AppRoutingModule, FormsModule, ReactiveFormsModule,
         HttpClientModule, AngularTokenModule.forRoot({
@@ -36,7 +69,7 @@ import {Base} from '../services/base';
         AuthGuard
     ],
     exports: [
-        AttachmentPipe,
+        AttachmentPipe
     ],
     bootstrap: [AppComponent]
 })

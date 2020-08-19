@@ -1,0 +1,61 @@
+<app-header title="KaizenLoop - Clients"></app-header>
+<ion-content>
+  <ion-card class="clients-card">
+    <ion-card-header>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-text class="title">
+              Clients
+            </ion-text>
+          </ion-col>
+          <ion-col>
+            <ion-button class="perform ion-text-capitalize ion-float-right" color="primary" fill="outline">
+              <a routerLink="/clients/new">Add Client</a>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-header>
+    <p *ngIf="clients.length === 0" class="not-found">No client found. Add to see them.</p>
+    <ion-card-content *ngIf="clients.length">
+      <ion-grid class="grid-one">
+        <ion-row class="row-bb-head">
+          <ion-col size="3">
+            Name
+          </ion-col>
+          <ion-col size="3">
+            Token
+          </ion-col>
+          <ion-col size="3">
+          </ion-col>
+          <ion-col size="3">
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-grid *ngFor="let client of clients; let i=index">
+        <ion-row class="clients-content" [ngClass]="i < clients.length-1 ? 'row-bb-body' : ''">
+          <ion-col size="3">
+            {{ client.name }}
+          </ion-col>
+          <ion-col size="6">
+            {{ client.token }}
+          </ion-col>
+          <ion-col size="3">
+            <ion-buttons class="client-customize">
+              <ion-button class="close common-btn" (click)="deleteClient(i)">
+                <ion-icon slot="icon-only" name="close-sharp" class="icon"></ion-icon>
+              </ion-button>
+              <ion-button class="pencil common-btn">
+                <a routerLink="/clients/edit" style="color: white;">
+                  <ion-icon slot="icon-only" name="pencil-sharp" class="icon"></ion-icon>
+                </a>
+              </ion-button>
+            </ion-buttons>
+          </ion-col>
+
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

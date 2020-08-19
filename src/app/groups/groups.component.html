@@ -1,0 +1,105 @@
+<app-header title="KaizenLoop - Groups"></app-header>
+<ion-content>
+  <div class="wrapper">
+    <ion-card class="common-card">
+      <ion-card-header>
+        <ion-text>
+          Join group
+        </ion-text>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-input placeholder="Group Name">
+        </ion-input>
+        <ion-button class="ion-float-right">Join Group</ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="common-card">
+      <ion-card-header>
+        <ion-text>
+          Add User to group
+        </ion-text>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-input type="text" placeholder="Group Name"></ion-input>
+        <ion-input type="email" placeholder="User Email"></ion-input>
+        <ion-button class="ion-float-right">Add To Group</ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="common-card">
+      <ion-card-header>
+        <ion-text>
+          Leave group
+        </ion-text>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-input placeholder="Group Name">
+        </ion-input>
+        <ion-button class="ion-float-right">Leave Group</ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="common-card">
+      <ion-card-header>
+        <ion-text>
+          Create group
+        </ion-text>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-input placeholder="Group Name">
+        </ion-input>
+        <ion-item lines="none">
+          <ion-label>
+            Select Client
+          </ion-label>
+          <ion-select value="select_client" name="select_client" okText="Okay" cancelText="Dismiss" interface="action-sheet">
+            <ion-select-option value="select_client">Select Client</ion-select-option>
+            <ion-select-option value="kaizenloop">Kaizenloop</ion-select-option>
+            <ion-select-option value="straightline">Straightline</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-button class="ion-float-right">Create Group</ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="group-list">
+
+      <ion-card-header>
+        <ion-text>
+          Group List
+        </ion-text>
+      </ion-card-header>
+
+      <p *ngIf="groupList.length === 0" class="not-found">No group found.</p>
+
+      <ion-card-content *ngIf="groupList.length">
+        <ion-grid class="grid-one">
+          <ion-row class="row-bb-head">
+            <ion-col size="4">
+              Group Name
+            </ion-col>
+            <ion-col size="4"></ion-col>
+            <ion-col size="4">
+              Client Name
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <ion-grid *ngFor="let group of groupList; let i=index">
+          <ion-row class="users-content" [ngClass]="i < groupList.length-1 ? 'row-bb-body' : ''">
+            <ion-col size="4">
+              {{ group.groupName }}
+            </ion-col>
+            <ion-col size="4">
+            </ion-col>
+            <ion-col size="4">
+              {{ group.clientName }}
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

@@ -5,6 +5,9 @@ import {LoaderService} from '../../services/loader.service';
 import {HomeService} from '../../services/home.service';
 import {DetailsComponent} from '../details/details.component';
 import {Router} from '@angular/router';
+import { IonRouterOutlet, Platform } from '@ionic/angular';
+import { Plugins } from '@capacitor/core';
+const { App } = Plugins;
 
 @Component({
   selector: 'app-home',
@@ -12,9 +15,24 @@ import {Router} from '@angular/router';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-   list: any;
+  list: any;
 
-  constructor(private modalController: ModalController, public homeService: HomeService,  public router: Router, public spinnerDialog: LoaderService, private helperService: HelperService) {}
+  constructor(
+    private modalController: ModalController, 
+    public homeService: HomeService,  
+    public router: Router, 
+    public spinnerDialog: LoaderService, 
+    private helperService: HelperService,
+    private platform: Platform,
+    private routerOutlet: IonRouterOutlet
+  ) {
+
+    this.platform.backButton.subscribeWithPriority(-1, () => {
+      if (!this.routerOutlet.canGoBack()) {
+        App.exitApp();
+      }
+    });
+  }
 
   ngOnInit() {
      this.loadInbox();

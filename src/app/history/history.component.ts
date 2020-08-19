@@ -8,8 +8,8 @@ import {ModalController} from '@ionic/angular';
 
 @Component({
     selector: 'app-hisyory',
-    templateUrl: './hisyory.component.html',
-    styleUrls: ['./hisyory.component.scss'],
+    templateUrl: './history.component.html',
+    styleUrls: ['./history.component.scss'],
 })
 export class HistoryComponent implements OnInit {
     list: any;

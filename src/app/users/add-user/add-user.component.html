@@ -1,0 +1,80 @@
+<app-header title="KaizenLoop - Add Users"></app-header>
+<ion-content>
+  <ion-card class="users-card">
+    <ion-card-header>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-text class="title">
+              Add Users
+            </ion-text>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-card class="inner-card">
+        <ion-card-content>
+          <form class="list-form">
+            <ion-item>
+                <ion-label position="floating">
+                    Email
+                </ion-label>
+                <ion-input type="email" name="email" [(ngModel)]="email"></ion-input>
+            </ion-item>
+            
+            <ion-item>
+              <ion-label>
+                Select Client
+              </ion-label>
+              <ion-select value="kaizenloop" name="client" [(ngModel)]="client" okText="Okay" cancelText="Dismiss" interface="action-sheet" class="mx-0 my-10">
+                <ion-select-option value="kaizenloop">Kaizenloop</ion-select-option>
+                <ion-select-option value="straightline">Straightline</ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>
+              </ion-label>
+              <ion-select value="admin" name="admin" [(ngModel)]="admin" okText="Okay" cancelText="Dismiss" interface="action-sheet" class="mx-0 my-10">
+                <ion-select-option value="admin">Admin</ion-select-option>
+                <ion-select-option value="user">User</ion-select-option>
+                <ion-select-option value="poweruser">PowerUser</ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating">
+                  Username
+              </ion-label>
+              <ion-input type="text" name="username" [(ngModel)]="username"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label position="floating">
+                    Password
+                </ion-label>
+                <ion-input type="password" autocomplete="off" name="password" [(ngModel)]="password"></ion-input>
+            </ion-item>
+
+            <ion-item lines="none">
+              <ion-label position="floating">
+                  Password Confirmation
+              </ion-label>
+              <ion-input type="password" autocomplete="off" name="confirm-password" [(ngModel)]="confirm_password"></ion-input>
+            </ion-item>
+          </form>
+        </ion-card-content>
+      </ion-card>
+      <div class="ion-margin form-text">
+        <p>
+          Please make sure your password is 8 character or longer.
+        </p>
+        <p class="ion-text-bold">
+          Test User? <ion-checkbox></ion-checkbox>
+        </p>
+      </div>
+      <ion-button color="primary" class="ion-float-right ion-margin ion-text-capitalize" (click)="onAddUser()">Add User</ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -23,6 +23,26 @@ export class AppComponent {
             title: 'History',
             url: '/history',
             icon: 'briefcase'
+        },
+        {
+            title: 'Users',
+            url: '/users',
+            icon: 'person-circle-outline'
+        },
+        {
+            title: 'Groups',
+            url: '/groups',
+            icon: 'people-outline'
+        },
+        {
+            title: 'Clients',
+            url: '/clients',
+            icon: 'people-circle-outline'
+        },
+        {
+            title: 'Logos',
+            url: '/logos',
+            icon: 'aperture-outline'
         }
     ];
 
@@ -72,6 +92,7 @@ export class AppComponent {
         this.authProvider.getCurrentUser().subscribe(resp => {
             this.user = resp.profile;
             this.navigate = this.auth_menu;
+            console.log(this.user);
         }, err => {
             this.user = null;
             if (err.status == 401) {

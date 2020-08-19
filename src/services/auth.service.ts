@@ -27,6 +27,10 @@ export class AuthService {
         return this.http.get(Base.api_url + '/users/profile');
     }
 
+    resetPassword(userEmail): Observable<any> {
+        return this.http.post(Base.api_url + '/auth/password', {email: userEmail});
+    }
+
     getToken() {
         let token_data = this.tokenService.currentAuthData;
         return token_data ? token_data.accessToken : '';

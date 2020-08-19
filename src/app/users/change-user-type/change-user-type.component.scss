@@ -1,0 +1,30 @@
+ion-card-header {
+    color: #28445c;
+    font-size: 20px;
+    font-weight: bold;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+ion-card-content {
+    padding: 0;
+}
+
+.bottom {
+    position: relative;
+    bottom: 48%;
+}
+
+.dropdown {
+    padding: 45px 25px;
+    border-bottom: 1px solid #e5e5e5;
+    ion-label {
+        color: #28445c;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    ion-select {
+        margin-top: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+}

@@ -15,7 +15,7 @@
         <form class="list-form">
             <ion-item class="ion-no-padding">
                 <ion-label position="floating">
-                    <ion-icon name="mail-outline" item-start class="text-primary"></ion-icon>
+                    <ion-icon name="mail-outline" item-start class="text-primary" class="icon"></ion-icon>
                     Email
                 </ion-label>
                 <ion-input type="text" [(ngModel)]="form.login" name="login"></ion-input>
@@ -23,7 +23,7 @@
 
             <ion-item class="ion-no-padding">
                 <ion-label position="floating">
-                    <ion-icon name="lock-closed-outline" class="text-primary"></ion-icon>
+                    <ion-icon name="lock-closed-outline" class="text-primary" class="icon"></ion-icon>
                     Password
                 </ion-label>
                 <ion-input type="password" autocomplete="off" [(ngModel)]="form.password" name="password"></ion-input>
@@ -31,14 +31,18 @@
         </form>
 
         <ion-item class="text-primary ion-text-right ion-no-padding text-sm" lines="none">
-            <ion-label slot="end">Forgot Password?</ion-label>
+            <ion-label slot="end">
+                <a routerLink="/forgot-password" class="td-none">
+                    Forgot Password?
+                </a>
+            </ion-label>
         </ion-item>
         <ion-button expand="full" color="secondary" [disabled]="disableLogin" (click)="signin()">
             SIGN IN
         </ion-button>
         <ion-item class="ion-text-center text-primary text-sm" lines="none">
             <ion-label tappable (click)="register()">
-                New here? <strong>Sign up</strong>
+                New here? <strong><a routerLink="/signup" style="text-decoration: none;">Sign up</a></strong>
             </ion-label>
         </ion-item>
     </div>

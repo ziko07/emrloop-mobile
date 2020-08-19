@@ -1,0 +1,74 @@
+<app-header title="KaizenLoop - Users"></app-header>
+<ion-content>
+  <ion-card class="users-card">
+    <ion-card-header>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-text class="title">
+              Users
+            </ion-text>
+          </ion-col>
+          <ion-col>
+            <ion-button class="perform ion-text-capitalize ion-float-right" color="primary" fill="outline">
+              <a routerLink="/users/new">Add User</a>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-header>
+    <p *ngIf="users.length === 0" class="not-found">No user found. Add to see them.</p>
+    <ion-card-content *ngIf="users.length">
+      <ion-grid class="grid-one">
+        <ion-row class="row-bb-head">
+          <ion-col size="2">
+            User Type
+          </ion-col>
+          <ion-col size="3">
+            Profile
+          </ion-col>
+          <ion-col size="3">
+            Email
+          </ion-col>
+          <ion-col size="2">
+            Group Numbers
+          </ion-col>
+          <ion-col size="1"></ion-col>
+          <ion-col size="1"></ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-grid *ngFor="let user of users; let i=index">
+        <ion-row class="users-content" [ngClass]="i < users.length-1 ? 'row-bb-body' : ''">
+          <ion-col size="2">
+            {{ user.userType }}
+          </ion-col>
+          <ion-col size="3">
+            <a routerLink="#">
+              {{ user.profile }}
+            </a>
+          </ion-col>
+          <ion-col size="3">
+            <a routerLink="#">
+              {{ user.email }}
+            </a>
+          </ion-col>
+          <ion-col size="2">
+            {{ user.groupNumbers }}
+          </ion-col>
+          <ion-col size="2">
+            <ion-buttons class="user-customize">
+              <ion-button class="close" (click)="deleteUser(i)">
+                <ion-icon slot="icon-only" name="close-sharp" class="icon"></ion-icon>
+              </ion-button>
+              <ion-button color="primary" (click)="showModal()">
+                <a routerLink="/users/change">
+                  <ion-icon slot="icon-only" name="settings-sharp" class="icon"></ion-icon>
+                </a>
+              </ion-button>
+            </ion-buttons>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

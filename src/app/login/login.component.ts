@@ -7,7 +7,7 @@ import {AuthService} from '../../services/auth.service';
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
+    styleUrls: ['./login.component.scss', '../app.component.scss'],
 })
 export class LoginComponent implements OnInit {
     form: any;
@@ -43,6 +43,7 @@ export class LoginComponent implements OnInit {
             this.authProvider.login(this.userDetails).subscribe(resp => {
                 this.spinnerDialog.hide();
                 window.location.href = '/';
+                console.log(this.userDetails);
             }, err => {
                 this.spinnerDialog.hide();
                 this.disableLogin = false;

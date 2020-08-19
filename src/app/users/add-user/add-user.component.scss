@@ -1,0 +1,29 @@
+.mx-0 { 
+    margin-left: 0; 
+    margin-right: 0;
+}
+
+.my-10 { 
+    margin-top: 10px; 
+    margin-bottom: 10px;
+}
+
+.inner-card {
+    border: 2px solid #cbdcde;
+    box-shadow: none;
+    margin-left: 20px;
+}
+
+.form-text {
+    p {
+        color: black;
+        font-size: 14px;
+    }
+    :nth-child(2) {
+        font-weight: bold;
+    }
+    ion-checkbox {  
+        position: relative;
+        top: 5px; 
+    }
+}

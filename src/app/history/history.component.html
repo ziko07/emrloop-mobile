@@ -1,11 +1,4 @@
-<ion-header>
-  <ion-toolbar class="custom-toolbar">
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>Inbox History</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header title="KaizenLoop - Inbox History"></app-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
@@ -13,7 +6,6 @@
       <ion-title size="large">test</ion-title>
     </ion-toolbar>
   </ion-header>
-
   <div>
     <ion-list class="ion-no-padding">
       <ion-item *ngFor="let item of list; let i = index" lines="full" (click)="openModal(i)">

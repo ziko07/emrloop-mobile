@@ -1,0 +1,22 @@
+<app-header title="KaizenLoop - Change User Type"></app-header>
+<ion-content>
+  <ion-card>
+    <ion-card-header class="ion-text-center ion-text-uppercase">
+      Change the user type
+    </ion-card-header>
+    <ion-card-content>
+      <div class="dropdown">
+        <ion-label>
+          User Type
+        </ion-label>
+        <ion-select value="select" name="user-type" okText="Okay" cancelText="Dismiss" interface="action-sheet">
+          <ion-select-option value="select">Select User Type</ion-select-option>
+          <ion-select-option value="admin">Admin</ion-select-option>
+          <ion-select-option value="user">User</ion-select-option>
+          <ion-select-option value="poweruser">PowerUser</ion-select-option>
+        </ion-select>
+      </div>
+      <ion-button color="secondary" class="ion-margin ion-float-right ion-text-capitalize">Change User Type</ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
