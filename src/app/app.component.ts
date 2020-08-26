@@ -1,9 +1,12 @@
-import {Component} from '@angular/core';
-import {Platform} from '@ionic/angular';
-import {SplashScreen} from '@ionic-native/splash-screen/ngx';
-import {StatusBar} from '@ionic-native/status-bar/ngx';
-import {AuthService} from '../services/auth.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Component } from '@angular/core';
+import { Platform } from '@ionic/angular';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { StatusBar} from '@ionic-native/status-bar/ngx';
+import { AuthService } from '../services/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
+// import { FCM } from '@ionic-native/fcm/ngx';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import { HelperService } from '../services/helper.service';
 
 @Component({
     selector: 'app-root',
@@ -13,6 +16,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class AppComponent {
     navigate: any;
     user: any;
+    token: any;
     auth_menu = [
         {
             title: 'To Do',
@@ -52,11 +56,46 @@ export class AppComponent {
         private statusBar: StatusBar,
         private authProvider: AuthService,
         private router: Router,
-        private activateRoute: ActivatedRoute
+        private activateRoute: ActivatedRoute,
+        // private fcm: FCM,
+        private backgroundMode: BackgroundMode,
+        public helperService: HelperService
     ) {
         this.sideMenu();
         this.initializeApp();
+        this.platform.ready()
+        .then(() => {
+            this.backgroundMode.enable();
+
+            // this.fcm.onNotification().subscribe(data => {
+            //     if (data.wasTapped) {
+            //         this.helperService.showDemoToast("Received in background!");
+            //     } else {
+            //         this.helperService.showDemoToast("Received in foreground!");
+            //     }
+            // })
+
+            // this.helperService.showDemoToast("before token");
+
+            // this.fcm.getToken().then(token => {
+            //     this.helperService.showDemoToast("after token");
+            //     this.token = token;
+            //     this.helperService.showDemoToast("after token init!");
+            // });
+
+            // this.fcm.onTokenRefresh()
+            //     .subscribe((token) => this.helperService.showDemoToast(`Got a new token ${token}`));
+        });
     }
+
+
+    // subscribeToTopic() {
+    //     this.fcm.subscribeToTopic('syftet');
+    // }
+
+    // unsubscribeFromTopic() {
+    //     this.fcm.unsubscribeFromTopic('syftet');
+    // }
 
     initializeApp() {
         this.platform.ready().then(() => {

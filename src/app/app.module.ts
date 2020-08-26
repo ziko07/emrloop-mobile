@@ -1,23 +1,25 @@
-import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {RouteReuseStrategy} from '@angular/router';
-import {AngularTokenModule} from 'angular-token';
-import {AuthGuardService as AuthGuard} from '../services/auth/auth-guard.service';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouteReuseStrategy } from '@angular/router';
+import { AngularTokenModule } from 'angular-token';
+import { AuthGuardService as AuthGuard } from '../services/auth/auth-guard.service';
 
-import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
-import {HttpClientModule, HttpClient} from '@angular/common/http';
-import {SplashScreen} from '@ionic-native/splash-screen/ngx';
-import {StatusBar} from '@ionic-native/status-bar/ngx';
+import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { FCM } from '@ionic-native/fcm/ngx';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 
-import {AppComponent} from './app.component';
-import {AppRoutingModule} from './app-routing.module';
-import {LoginComponent} from './login/login.component';
-import {HistoryComponent} from './history/history.component';
-import {DetailsComponent} from './details/details.component';
-import {QuizComponent} from './quiz/quiz.component';
-import {AttachmentPipe} from './pipe/attachment.pipe';
-import {Base} from '../services/base';
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { LoginComponent } from './login/login.component';
+import { HistoryComponent } from './history/history.component';
+import { DetailsComponent } from './details/details.component';
+import { QuizComponent } from './quiz/quiz.component';
+import { AttachmentPipe } from './pipe/attachment.pipe';
+import { Base } from '../services/base';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { SignupComponent } from './signup/signup.component';
 import { UsersComponent } from './users/users.component';
@@ -66,7 +68,9 @@ import { HeaderComponent } from './header/header.component';
         StatusBar,
         SplashScreen,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
-        AuthGuard
+        AuthGuard,
+        FCM,
+        BackgroundMode
     ],
     exports: [
         AttachmentPipe

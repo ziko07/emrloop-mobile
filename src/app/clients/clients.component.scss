@@ -40,6 +40,8 @@
     }
 
     .client-customize {
+        position: relative;
+        right: 10px;
         ion-button {
             height: 20px;
             --padding-top: 10px;

@@ -22,4 +22,17 @@ export class HelperService {
             toastData.present();
         });
     }
+
+    public showDemoToast(message, type = 'primary') {
+        this.toast = this.toastController.create({
+            message,
+            position: 'bottom',
+            duration: 4000,
+            animated: true,
+            color: type,
+            cssClass: 'my-custom-class'
+        }).then((toastData) => {
+            toastData.present();
+        });
+    }
 }

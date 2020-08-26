@@ -88,7 +88,7 @@ const routes: Routes = [
     {
         path: 'forgot-password',
         component: ForgotPasswordComponent
-    },
+    }
 ];
 
 @NgModule({

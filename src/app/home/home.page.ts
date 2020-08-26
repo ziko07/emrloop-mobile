@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import {ModalController} from '@ionic/angular';
-import {HelperService} from '../../services/helper.service';
-import {LoaderService} from '../../services/loader.service';
-import {HomeService} from '../../services/home.service';
-import {DetailsComponent} from '../details/details.component';
-import {Router} from '@angular/router';
-import { IonRouterOutlet, Platform } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
+import { HelperService } from '../../services/helper.service';
+import { LoaderService } from '../../services/loader.service';
+import { HomeService } from '../../services/home.service';
+import { DetailsComponent } from '../details/details.component';
+import { Router } from '@angular/router';
 import { Plugins } from '@capacitor/core';
+import { IonRouterOutlet, Platform } from '@ionic/angular';
 const { App } = Plugins;
 
 @Component({
@@ -26,12 +26,11 @@ export class HomePage {
     private platform: Platform,
     private routerOutlet: IonRouterOutlet
   ) {
-
-    this.platform.backButton.subscribeWithPriority(-1, () => {
-      if (!this.routerOutlet.canGoBack()) {
-        App.exitApp();
-      }
-    });
+      this.platform.backButton.subscribeWithPriority(-1, () => {
+        if (!this.routerOutlet.canGoBack()) {
+          App.exitApp();
+        }
+      });
   }
 
   ngOnInit() {
