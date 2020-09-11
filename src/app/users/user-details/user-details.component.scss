@@ -1,0 +1,20 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  .users-card {
+    width: 80%;
+    .user-info {
+      color: black;
+      padding: 20px 0;
+      div {
+        width: 150px;
+        margin-top: 20px;
+        p {
+          font-weight: bold;
+          border-bottom: 1px solid black;
+        }
+      }
+    }
+  }
+}

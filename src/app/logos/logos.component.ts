@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import  { LogoService } from '../../services/logo.service';
+import { HelperService } from '../../services/helper.service';
+import { ClientService } from '../../services/client.service';
 
 @Component({
   selector: 'app-logos',
@@ -7,57 +10,47 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LogosComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+      public logoService: LogoService,
+      public helperService: HelperService,
+      public clientService: ClientService) {
+  }
 
-  ngOnInit() {}
+  logos = [];
+  clients = [];
 
-  logos = [
-    {
-      name: 'Straightline',
-      imgSrc: 'https://prod-kaizenloop-logos.s3.amazonaws.com/Straight%20Line%20Global.png',
-      type: 'web'
-    },
-    {
-      name: 'Straightline',
-      imgSrc: 'https://prod-kaizenloop-logos.s3.amazonaws.com/Straight%20Line%20Global.png',
-      type: 'mobile'
-    },
-    {
-      name: 'Calyx',
-      imgSrc: 'https://prod-kaizenloop-logos.s3.amazonaws.com/calyx-vector-logo.jpg',
-      type: 'web'
-    },
-    {
-      name: 'Calyx',
-      imgSrc: 'https://prod-kaizenloop-logos.s3.amazonaws.com/calyx-vector-logo.jpg',
-      type: 'mobile'
-    },
-    {
-      name: 'Calyx 1',
-      imgSrc: 'https://prod-kaizenloop-logos.s3.amazonaws.com/IMG_36641.jpg',
-      type: 'web'
-    },
-    {
-      name: 'Calyx 1',
-      imgSrc: 'https://prod-kaizenloop-logos.s3.amazonaws.com/IMG_36641.jpg',
-      type: 'mobile'
-    },
-    {
-      name: 'Aloha Hemp',
-      imgSrc: 'https://prod-kaizenloop-logos.s3.amazonaws.com/IMG_95971.png',
-      type: 'web'
-    },
-    {
-      name: 'Aloha Hemp',
-      imgSrc: 'https://prod-kaizenloop-logos.s3.amazonaws.com/IMG_95971.png',
-      type: 'mobile'
-    },
-  ]
+  ngOnInit() {
+    this.getAllLogos();
+    this.getAllClients();
+  }
+
+  getAllLogos() {
+    this.logoService.getLogos().subscribe(
+        resp => {
+          console.log(resp);
+        }, err => {
+          console.log(err);
+        }
+    );
+  }
+
+  getAllClients() {
+    this.clientService.getClients().subscribe(
+        resp => {
+          this.clients = resp;
+          console.log('Client list');
+          console.log(resp);
+        },
+        err => {
+          console.log(err);
+        }
+    );
+  }
 
   deleteLogo(id) {
     if (confirm('Are you sure?')) {
-      this.logos.splice(id,1);
-      console.log(this.logos,id);
+      this.logos.splice(id, 1);
+      console.log(this.logos, id);
     }
   }
 }

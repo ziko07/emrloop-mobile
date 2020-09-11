@@ -44,7 +44,7 @@ export class HomePage {
       this.list = resp;
     }, err => {
       this.spinnerDialog.hide();
-      this.helperService.showToast('Unable to load inbox');
+      this.helperService.showDangerToast('Unable to load inbox');
     });
   }
 

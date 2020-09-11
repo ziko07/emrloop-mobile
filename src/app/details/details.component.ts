@@ -40,7 +40,12 @@ export class DetailsComponent implements OnInit {
         initialSlide: this.slide
     };
 
-    constructor(private modalController: ModalController, public homeService: HomeService, public router: ActivatedRoute, public spinnerDialog: LoaderService, private helperService: HelperService) {
+    constructor(
+        private modalController: ModalController,
+        public homeService: HomeService,
+        public router: ActivatedRoute,
+        public spinnerDialog: LoaderService,
+        private helperService: HelperService) {
     }
 
     ngOnInit() {
@@ -72,7 +77,7 @@ export class DetailsComponent implements OnInit {
         this.spinnerDialog.show('', 'Sending Acknowledgement');
         this.homeService.acknowledgementSent(id, {}).subscribe(resp => {
             this.spinnerDialog.hide();
-            this.helperService.showToast('Acknowledgement Successfully Received');
+            this.helperService.showSuccessToast('Acknowledgement Successfully Received');
         }, err => {
             this.spinnerDialog.hide();
             // this.helperService.showToast('Unable to load emails');

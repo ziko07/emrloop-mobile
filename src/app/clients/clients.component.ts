@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
+import { ClientService } from '../../services/client.service';
+import { HelperService } from '../../services/helper.service';
+
+import { Client } from '../../models/client.model';
+
 @Component({
   selector: 'app-clients',
   templateUrl: './clients.component.html',
@@ -7,25 +12,59 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ClientsComponent implements OnInit {
 
-  constructor() { }
+  constructor(public clientService: ClientService, public helperService: HelperService) {
+  }
 
-  ngOnInit() {}
+  client = new Client();
+  clients = [];
 
-  clients = [
-    {
-      name: 'Kaizenloop',
-      token: '82076687c5b4a96a32ba'
-    },
-    {
-      name: 'Straightline',
-      token: '678693491ae6eae418f4'
-    }
-  ]
+  ngOnInit() {
+      this.getClient();
+      this.getAllClients();
+  }
 
-  deleteClient(id) {
+  getClient() {
+      this.clientService.getClient().subscribe(resp => {
+          if (resp.action === 'new') {
+              this.clients.push(resp.client);
+          } else {
+              for (let i = 0; i < this.clients.length; i++) {
+                  if (this.clients[i].id === resp.client.id) {
+                      this.clients[i] = resp.client;
+                      break;
+                  }
+              }
+          }
+      }, err => {});
+  }
+
+  getAllClients() {
+    this.clientService.getClients().subscribe(
+        resp => {
+          this.clients = resp;
+          console.log('Client list');
+          console.log(resp);
+        },
+        err => {
+          console.log(err);
+        }
+    );
+  }
+
+  onDeleteClient(id, clientId) {
     if (confirm('Are you sure?')) {
-      this.clients.splice(id,1);
-      console.log(this.clients,id);
+      this.clients.splice(id, 1);
+      console.log(id + ',' + clientId);
+      this.clientService.deleteClient(clientId).subscribe(
+          resp => {
+              this.helperService.showDangerToast(resp.message);
+              console.log(resp);
+          },
+          err => {
+              console.log(err);
+              this.helperService.showDangerToast(err.message);
+          }
+      );
     }
   }
 }

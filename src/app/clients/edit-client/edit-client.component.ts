@@ -1,15 +1,54 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+
+import {Client} from '../../../models/client.model';
+
+import {ClientService} from '../../../services/client.service';
+import {HelperService} from '../../../services/helper.service';
 
 @Component({
-  selector: 'app-edit-client',
-  templateUrl: './edit-client.component.html',
-  styleUrls: ['../clients.component.scss', '../add-client/add-client.component.scss'],
+    selector: 'app-edit-client',
+    templateUrl: './edit-client.component.html',
+    styleUrls: ['../clients.component.scss', '../add-client/add-client.component.scss'],
 })
 export class EditClientComponent implements OnInit {
 
-  constructor() { }
+    constructor(private route: ActivatedRoute,
+                public clientService: ClientService,
+                public helperService: HelperService,
+                public router: Router) {
+    }
 
-  ngOnInit() {}
+    id: string;
+    client = new Client();
 
-  onUpdateClient() {}
+    ngOnInit() {
+        this.id = this.route.snapshot.paramMap.get('id');
+        this.loadClient();
+        console.log(this.id);
+    }
+
+    loadClient() {
+        this.clientService.getSingleClient(this.id).subscribe(
+            resp => {
+                this.client = resp;
+                console.log(this.client);
+            }, err => {
+                console.log(err);
+            }
+        );
+    }
+
+    onEditClient() {
+        this.clientService.editClient(this.client.id, this.client.name).subscribe(
+            resp => {
+                console.log(resp);
+                this.clientService.listClient(resp.client, 'update');
+                this.helperService.showUpdateToast(resp.message);
+            }, err => {
+                console.log(err);
+                this.helperService.showUpdateToast(err.message);
+            }
+        );
+    }
 }

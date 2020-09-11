@@ -40,28 +40,28 @@
       <ion-grid *ngFor="let user of users; let i=index">
         <ion-row class="users-content" [ngClass]="i < users.length-1 ? 'row-bb-body' : ''">
           <ion-col size="2">
-            {{ user.userType }}
+            {{ user.type }}
           </ion-col>
           <ion-col size="3">
-            <a routerLink="#">
-              {{ user.profile }}
+            <a routerLink="/users/{{user.id}}">
+              {{ user.name }}
             </a>
           </ion-col>
           <ion-col size="3">
-            <a routerLink="#">
+            <a routerLink="/users/{{user.id}}">
               {{ user.email }}
             </a>
           </ion-col>
           <ion-col size="2">
-            {{ user.groupNumbers }}
+            {{ user.group_number }}
           </ion-col>
           <ion-col size="2">
             <ion-buttons class="user-customize">
-              <ion-button class="close" (click)="deleteUser(i)">
+              <ion-button class="close" (click)="onDeleteUser(i,user.email)">
                 <ion-icon slot="icon-only" name="close-sharp" class="icon"></ion-icon>
               </ion-button>
               <ion-button color="primary" (click)="showModal()">
-                <a routerLink="/users/change">
+                <a routerLink="/users/{{user.id}}/change">
                   <ion-icon slot="icon-only" name="settings-sharp" class="icon"></ion-icon>
                 </a>
               </ion-button>

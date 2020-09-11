@@ -8,7 +8,7 @@ import {AuthService} from './auth.service';
     providedIn: 'root'
 })
 export class HomeService {
-    api_url = Base.api_url;
+    api_url = Base.apiUrl;
 
     constructor(public http: HttpClient, private auth: AuthService) {
     }

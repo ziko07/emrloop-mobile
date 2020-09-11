@@ -10,26 +10,37 @@ export class HelperService {
     constructor(public toastController: ToastController) {
     }
 
-    public showToast(message, type = 'danger') {
+    public showSuccessToast(message) {
         this.toast = this.toastController.create({
             message,
             position: 'bottom',
             duration: 4000,
             animated: true,
-            color: type,
+            color: 'success',
             cssClass: 'my-custom-class'
         }).then((toastData) => {
             toastData.present();
         });
     }
-
-    public showDemoToast(message, type = 'primary') {
+    public showUpdateToast(message) {
         this.toast = this.toastController.create({
             message,
             position: 'bottom',
             duration: 4000,
             animated: true,
-            color: type,
+            color: 'tertiary',
+            cssClass: 'my-custom-class'
+        }).then((toastData) => {
+            toastData.present();
+        });
+    }
+    public showDangerToast(message) {
+        this.toast = this.toastController.create({
+            message,
+            position: 'bottom',
+            duration: 4000,
+            animated: true,
+            color: 'danger',
             cssClass: 'my-custom-class'
         }).then((toastData) => {
             toastData.present();

@@ -134,8 +134,8 @@ export class AppComponent {
             console.log(this.user);
         }, err => {
             this.user = null;
-            if (err.status == 401) {
-                this.router.navigateByUrl('/login');
+            if (err.status === 401) {
+                //this.router.navigateByUrl('/login');
             }
         });
     }

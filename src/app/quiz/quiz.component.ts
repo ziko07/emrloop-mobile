@@ -28,10 +28,10 @@ export class QuizComponent implements OnInit {
        this.item = resp;
        this.form.answer = this.item.status.correct;
        console.log(resp);
-       this.helperService.showToast('Acknowledgement Successfully Received');
+       this.helperService.showSuccessToast('Acknowledgement Successfully Received');
      }, err => {
        this.spinnerDialog.hide();
-       this.helperService.showToast('error');
+       this.helperService.showDangerToast('error');
      });
   }
 
@@ -46,7 +46,7 @@ export class QuizComponent implements OnInit {
     this.homeService.acknowledgementSent(this.id, {answer: this.form.answer}).subscribe(resp => {
       this.spinnerDialog.hide();
       this.modalController.dismiss(true);
-      this.helperService.showToast('Acknowledgement Successfully Received');
+      this.helperService.showSuccessToast('Acknowledgement Successfully Received');
     }, err => {
       this.spinnerDialog.hide();
       // this.helperService.showToast('Unable to load emails');

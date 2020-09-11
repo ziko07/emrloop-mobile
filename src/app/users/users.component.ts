@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+
 import { ChangeUserTypeComponent } from './change-user-type/change-user-type.component';
-import { AuthService } from 'src/services/auth.service';
+
+import { UserService } from '../../services/user.service';
+import { HelperService } from '../../services/helper.service';
 
 @Component({
   selector: 'app-users',
@@ -10,10 +13,31 @@ import { AuthService } from 'src/services/auth.service';
 })
 export class UsersComponent implements OnInit {
 
-  constructor(private modalController: ModalController) { 
+  constructor(
+      private modalController: ModalController,
+      public userService: UserService,
+      public helperService: HelperService) {
   }
 
-  ngOnInit() {}
+  users = [];
+
+  ngOnInit() {
+    this.getAllUsers();
+  }
+
+  getAllUsers() {
+    this.userService.getUsers().subscribe(
+        resp => {
+          console.log('User list');
+          this.users = resp;
+          console.log(resp);
+        },
+        err => {
+          console.log(err);
+          console.log('err');
+        }
+    );
+  }
 
   async showModal() {
     const modal = await this.modalController.create({
@@ -22,41 +46,23 @@ export class UsersComponent implements OnInit {
     return await modal.present();
   }
 
-  users = [
-    {
-      id: 0,
-      userType: 'Admin',
-      profile: 'Stephen Tokarz',
-      email: 'stokarz@kaizenloop.com',
-      groupNumbers: 1
-    },
-    {
-      id: 1,
-      userType: 'PowerUser',
-      profile: 'Josh Shuck',
-      email: 'jshuck@straightlineglobal.com',
-      groupNumbers: 0
-    },
-    {
-      id: 2,
-      userType: 'Admin',
-      profile: 'Varun Kaushal',
-      email: 'vkaushal@admin.com',
-      groupNumbers: 0
-    },
-    {
-      id: 3,
-      userType: 'User',
-      profile: 'Varun Kaushal',
-      email: 'vkaushal@kaizenloop.com',
-      groupNumbers: 1
-    }
-  ]
-
-  deleteUser(id) {
+  onDeleteUser(id, email) {
     if (confirm('Are you sure?')) {
-      this.users.splice(id,1);
-      console.log(this.users,id);
+      this.userService.deleteUser(email).subscribe(
+          resp => {
+            console.log('Resp');
+            console.log(resp);
+            console.log(this.users, id);
+            this.helperService.showSuccessToast(resp.message);
+          },
+          err => {
+            console.log('Err');
+            console.log(err);
+            console.log(this.users, id);
+            this.helperService.showDangerToast(err.message);
+          }
+      );
+      this.users.splice(id, 1);
     }
   }
 }

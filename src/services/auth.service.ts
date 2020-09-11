@@ -24,11 +24,11 @@ export class AuthService {
     }
 
     getCurrentUser(): Observable<any> {
-        return this.http.get(Base.api_url + '/users/profile');
+        return this.http.get(Base.apiUrl + '/users/profile');
     }
 
     resetPassword(userEmail): Observable<any> {
-        return this.http.post(Base.api_url + '/auth/password', {email: userEmail});
+        return this.http.post(Base.apiUrl + '/auth/password', {email: userEmail});
     }
 
     getToken() {

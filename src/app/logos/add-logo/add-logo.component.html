@@ -22,10 +22,15 @@
                   Client
                 </ion-label>
               </div>
-              <ion-select value="select_client" name="select_client" okText="Okay" cancelText="Dismiss" interface="action-sheet" class="mx-0 my-10">
-                <ion-select-option value="select_client">Select Client</ion-select-option>
-                <ion-select-option value="kaizenloop">Kaizenloop</ion-select-option>
-                <ion-select-option value="straightline">Straightline</ion-select-option>
+              <ion-select
+                [(ngModel)]="logo.client_id"
+                name="select_client"
+                okText="Okay"
+                cancelText="Dismiss"
+                interface="action-sheet"
+                class="mx-0 my-10"
+              >
+                <ion-select-option *ngFor="let client of clients" value="{{ client.id }}">{{ client.name }}</ion-select-option>
               </ion-select>
             </div>
             
@@ -35,7 +40,7 @@
                   Image Location
                 </ion-label>
               </div>
-              <ion-input type="file" name="image_location"></ion-input>
+              <ion-input type="file" name="image_location" [(ngModel)]="logo.image_location"></ion-input>
             </div>
 
             <div class="input-box">
@@ -44,13 +49,15 @@
                   Image Type
                 </ion-label>
               </div>
-              <ion-input type="text" name="image_type"></ion-input>
+              <ion-input type="text" name="image_type" [(ngModel)]="logo.image_type"></ion-input>
             </div>
             
           </form>
         </ion-card-content>
       </ion-card>
-      <ion-button color="primary" class="ion-float-right ion-margin ion-text-capitalize">Create Logo</ion-button>
+      <ion-button color="primary" class="ion-float-right ion-margin ion-text-capitalize" (click)="onCreateLogo()">
+        Create Logo
+      </ion-button>
     </ion-card-content>
   </ion-card>
 </ion-content>

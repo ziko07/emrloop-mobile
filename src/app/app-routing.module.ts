@@ -6,18 +6,19 @@ import {DetailsComponent} from './details/details.component';
 import {QuizComponent} from './quiz/quiz.component';
 import {AngularTokenService} from 'angular-token';
 import {AuthGuardService as AuthGuard} from '../services/auth/auth-guard.service';
-import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
-import { SignupComponent } from './signup/signup.component';
-import { UsersComponent } from './users/users.component';
-import { AddUserComponent } from './users/add-user/add-user.component';
-import { GroupsComponent } from './groups/groups.component';
-import { ClientsComponent } from './clients/clients.component';
-import { AddClientComponent } from './clients/add-client/add-client.component';
-import { EditClientComponent } from './clients/edit-client/edit-client.component';
-import { LogosComponent } from './logos/logos.component';
-import { AddLogoComponent } from './logos/add-logo/add-logo.component';
-import { EditLogoComponent } from './logos/edit-logo/edit-logo.component';
-import { ChangeUserTypeComponent } from './users/change-user-type/change-user-type.component';
+import {ForgotPasswordComponent} from './forgot-password/forgot-password.component';
+import {SignupComponent} from './signup/signup.component';
+import {UsersComponent} from './users/users.component';
+import {AddUserComponent} from './users/add-user/add-user.component';
+import {GroupsComponent} from './groups/groups.component';
+import {ClientsComponent} from './clients/clients.component';
+import {AddClientComponent} from './clients/add-client/add-client.component';
+import {EditClientComponent} from './clients/edit-client/edit-client.component';
+import {LogosComponent} from './logos/logos.component';
+import {AddLogoComponent} from './logos/add-logo/add-logo.component';
+import {EditLogoComponent} from './logos/edit-logo/edit-logo.component';
+import {ChangeUserTypeComponent} from './users/change-user-type/change-user-type.component';
+import {UserDetailsComponent} from './users/user-details/user-details.component';
 
 const routes: Routes = [
     {
@@ -38,7 +39,11 @@ const routes: Routes = [
         component: AddUserComponent
     },
     {
-        path: 'users/change',
+        path: 'users/:id',
+        component: UserDetailsComponent
+    },
+    {
+        path: 'users/:id/change',
         component: ChangeUserTypeComponent
     },
     {
@@ -54,7 +59,7 @@ const routes: Routes = [
         component: AddClientComponent
     },
     {
-        path: 'clients/edit',
+        path: 'clients/:id/edit',
         component: EditClientComponent
     },
     {

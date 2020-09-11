@@ -33,19 +33,21 @@ import { LogosComponent } from './logos/logos.component';
 import { AddLogoComponent } from './logos/add-logo/add-logo.component';
 import { EditLogoComponent } from './logos/edit-logo/edit-logo.component';
 import { HeaderComponent } from './header/header.component';
+import {UserDetailsComponent} from './users/user-details/user-details.component';
 
 @NgModule({
     declarations: [
-        AppComponent, 
+        AppComponent,
         HeaderComponent,
-        LoginComponent, 
-        QuizComponent, 
-        AttachmentPipe, 
-        HistoryComponent, 
+        LoginComponent,
+        QuizComponent,
+        AttachmentPipe,
+        HistoryComponent,
         DetailsComponent,
         ForgotPasswordComponent,
         SignupComponent,
         UsersComponent,
+        UserDetailsComponent,
         AddUserComponent,
         ChangeUserTypeComponent,
         GroupsComponent,
@@ -60,8 +62,8 @@ import { HeaderComponent } from './header/header.component';
     imports: [BrowserModule, IonicModule.forRoot(),
         AppRoutingModule, FormsModule, ReactiveFormsModule,
         HttpClientModule, AngularTokenModule.forRoot({
-            signInPath: Base.api_url + '/auth/sign_in',
-            signOutPath: Base.api_url + '/auth/sign_out',
+            signInPath: Base.apiUrl + '/auth/sign_in',
+            signOutPath: Base.apiUrl + '/auth/sign_out',
             oAuthBase: '/login'
         })],
     providers: [
