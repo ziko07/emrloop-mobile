@@ -18,7 +18,7 @@
                     <ion-icon name="mail-outline" item-start class="text-primary" class="icon"></ion-icon>
                     Email
                 </ion-label>
-                <ion-input type="text" [(ngModel)]="form.login" name="login"></ion-input>
+                <ion-input type="text" [(ngModel)]="form.login" name="login" required clearInput></ion-input>
             </ion-item>
 
             <ion-item class="ion-no-padding">
@@ -26,7 +26,8 @@
                     <ion-icon name="lock-closed-outline" class="text-primary" class="icon"></ion-icon>
                     Password
                 </ion-label>
-                <ion-input type="password" autocomplete="off" [(ngModel)]="form.password" name="password"></ion-input>
+                <ion-input type="password" autocomplete="off" [(ngModel)]="form.password" name="password" required
+                           clearInput></ion-input>
             </ion-item>
         </form>
 
@@ -40,11 +41,6 @@
         <ion-button expand="full" color="secondary" [disabled]="disableLogin" (click)="signin()">
             SIGN IN
         </ion-button>
-        <ion-item class="ion-text-center text-primary text-sm" lines="none">
-            <ion-label tappable (click)="register()">
-                New here? <strong><a routerLink="/signup" style="text-decoration: none;">Sign up</a></strong>
-            </ion-label>
-        </ion-item>
     </div>
     <ion-footer style="margin-top: 20px">
         <ion-grid>

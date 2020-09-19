@@ -1,0 +1,84 @@
+<app-header title="KaizenLoop - Edit Logo"></app-header>
+<ion-content>
+    <ion-card class="logos-card">
+        <ion-card-header>
+            <ion-grid>
+                <ion-row>
+                    <ion-col>
+                        <ion-text class="title">
+                            Edit Clients Logo
+                        </ion-text>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-card class="inner-card">
+                <ion-card-content>
+                    <form class="list-form">
+                        <div class="input-box">
+                            <div class="label">
+                                <ion-label>
+                                    Client
+                                </ion-label>
+                            </div>
+                            <ion-select
+                                    [(ngModel)]="logo.client_id"
+                                    value="Select client"
+                                    name="select_client"
+                                    okText="Okay"
+                                    cancelText="Dismiss"
+                                    interface="action-sheet"
+                                    class="mx-0 my-10"
+                            >
+                                <ion-select-option
+                                        *ngFor="let client of clients"
+                                        value="{{ client.id }}"
+                                >
+                                    {{ client.name }}
+                                </ion-select-option>
+                            </ion-select>
+                        </div>
+
+                        <div class="input-box">
+                            <div class="label">
+                                <ion-label>
+                                    Image Location
+                                </ion-label>
+                            </div>
+                            <ion-input
+                                    type="file"
+                                    name="image_location"
+                                    (change)="loadImageFromDevice($event)"
+                            >
+                            </ion-input>
+                        </div>
+
+                        <div class="input-box">
+                            <div class="label">
+                                <ion-label>
+                                    Image Type
+                                </ion-label>
+                            </div>
+                            <ion-input
+                                    type="text"
+                                    name="image_type"
+                                    [(ngModel)]="logo.image_type"
+                                    required clearInput
+                            >
+                            </ion-input>
+                        </div>
+
+                    </form>
+                </ion-card-content>
+            </ion-card>
+            <ion-button
+                    color="primary"
+                    class="ion-float-right ion-margin ion-text-capitalize"
+                    (click)="onUpdateLogo()"
+            >
+                Update Logo
+            </ion-button>
+        </ion-card-content>
+    </ion-card>
+</ion-content>

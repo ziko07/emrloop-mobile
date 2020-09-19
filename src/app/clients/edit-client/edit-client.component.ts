@@ -40,14 +40,23 @@ export class EditClientComponent implements OnInit {
     }
 
     onEditClient() {
+        if (!this.client.name) {
+            this.helperService.showDangerToast('Input client name to update!');
+            return;
+        }
+        this.helperService.showLoader();
         this.clientService.editClient(this.client.id, this.client.name).subscribe(
             resp => {
                 console.log(resp);
                 this.clientService.listClient(resp.client, 'update');
+                this.helperService.dismissLoader();
                 this.helperService.showUpdateToast(resp.message);
+                this.router.navigateByUrl('/clients');
+
             }, err => {
                 console.log(err);
-                this.helperService.showUpdateToast(err.message);
+                this.helperService.dismissLoader();
+                this.helperService.showDangerToast('Something went wrong. Try again later.');
             }
         );
     }

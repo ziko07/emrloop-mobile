@@ -8,7 +8,14 @@
                 </ion-text>
             </ion-card-header>
             <ion-card-content>
-                <input placeholder="Group Name" list="groups-1" name="group_name" [(ngModel)]="group.group_name"/>
+                <input
+                        placeholder="Group Name"
+                        list="groups-1"
+                        name="group_name"
+                        [(ngModel)]="group.join_group_name"
+                        class="custom-search-box"
+                        required clearInput
+                />
                 <datalist id="groups-1">
                     <option *ngFor="let group of groups">
                         {{ group.group_name }}
@@ -25,14 +32,14 @@
                 </ion-text>
             </ion-card-header>
             <ion-card-content>
-                <ion-input type="text" placeholder="Group Name"></ion-input>
-
                 <input
                         type="text"
                         placeholder="Group Name"
                         list="groups-2"
                         name="group_name"
-                        [(ngModel)]="group.group_name"
+                        class="custom-search-box"
+                        [(ngModel)]="group.add_user_group_name"
+                        required clearInput
                 />
                 <datalist id="groups-2">
                     <option *ngFor="let group of groups">
@@ -45,7 +52,9 @@
                         placeholder="User Email"
                         list="emails-1"
                         name="email_name"
+                        class="custom-search-box"
                         [(ngModel)]="email.email"
+                        required clearInput
                 />
                 <datalist id="emails-1">
                     <option *ngFor="let email of emails">
@@ -69,7 +78,9 @@
                         placeholder="Group Name"
                         list="groups-3"
                         name="group_name"
-                        [(ngModel)]="group.group_name"
+                        class="custom-search-box"
+                        [(ngModel)]="group.leave_user_group_name"
+                        required clearInput
                 />
                 <datalist id="groups-3">
                     <option *ngFor="let group of groups">
@@ -90,21 +101,17 @@
                 <input
                         type="text"
                         placeholder="Group Name"
-                        list="groups-4"
                         name="group_name"
-                        [(ngModel)]="group.group_name"
+                        class="custom-search-box"
+                        [(ngModel)]="group.create_group_name"
+                        required clearInput
                 />
-                <datalist id="groups-4">
-                    <option *ngFor="let group of groups">
-                        {{ group.group_name }}
-                    </option>
-                </datalist>
                 <ion-item lines="none">
                     <ion-label>
                         Select Client
                     </ion-label>
                     <ion-select
-                        [(ngModel)]="client.id"
+                        [(ngModel)]="client_id"
                         name="select_client"
                         okText="Okay"
                         cancelText="Dismiss"

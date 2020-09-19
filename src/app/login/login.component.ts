@@ -39,23 +39,24 @@ export class LoginComponent implements OnInit {
                 login: this.form.login,
                 password: this.form.password
             };
-            this.spinnerDialog.show('', 'Login...', false);
+            this.helperService.showLoader();
             this.authProvider.login(this.userDetails).subscribe(resp => {
-                this.spinnerDialog.hide();
+                this.helperService.dismissLoader();
                 window.location.href = '/';
+                // this.router.navigateByUrl('/home');
                 console.log(resp);
                 console.log('Hello World!');
             }, err => {
-                this.spinnerDialog.hide();
+                this.helperService.dismissLoader();
                 this.disableLogin = false;
-                if (err.status == 401) {
+                if (err.status === 401) {
                     this.helperService.showDangerToast('Invalid username or password!');
                 } else {
-                    this.helperService.showDangerToast('Server encountered an issue! Please try after again.' + err.message);
+                    this.helperService.showDangerToast('Server encountered an issue! Please try after again.');
                 }
             });
         } else {
-            this.helperService.showDangerToast(this.errorMessage);
+            this.helperService.showDangerToast('Something went wrong. Try again later.');
         }
     }
 

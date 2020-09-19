@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {Base} from './base';
 import {AngularTokenService} from 'angular-token';
 
@@ -9,6 +9,16 @@ import {AngularTokenService} from 'angular-token';
 })
 export class AuthService {
     constructor(public http: HttpClient, private tokenService: AngularTokenService) {
+    }
+
+    private profileSubject = new Subject<any>();
+
+    listProfile(user: any) {
+        this.profileSubject.next(user);
+    }
+
+    getProfile(): Observable<any> {
+        return this.profileSubject;
     }
 
     public login(userDetails): Observable<HttpResponse<any>> {
@@ -23,12 +33,33 @@ export class AuthService {
         return this.tokenService.userSignedIn();
     }
 
+    getUserType(): Observable<any> {
+        return this.http.get(Base.apiUrl + '/users/user_type', Base.requestHeader());
+    }
+
     getCurrentUser(): Observable<any> {
         return this.http.get(Base.apiUrl + '/users/profile');
     }
 
+    updateProfile(type, form): Observable<any> {
+        console.log(type);
+        if (type === 'admin') {
+            return this.http.post(Base.apiUrl + '/users/update_profile', {admin: form}, Base.requestHeader());
+        } else if (type === 'user') {
+            return this.http.post(Base.apiUrl + '/users/update_profile', {user: form}, Base.requestHeader());
+        } else {
+            return this.http.post(Base.apiUrl + '/users/update_profile', {poweruser: form}, Base.requestHeader());
+        }
+    }
+
     resetPassword(userEmail): Observable<any> {
-        return this.http.post(Base.apiUrl + '/auth/password', {email: userEmail});
+        return this.http.post(Base.apiUrl + '/auth/password',
+            {email: userEmail, redirect_url: `${Base.apiUrl}/auth/sign_in`},
+            Base.requestHeader());
+    }
+
+    getUserGroups(): Observable<any> {
+        return this.http.get(Base.apiUrl + '/group/my_groups', Base.requestHeader());
     }
 
     getToken() {

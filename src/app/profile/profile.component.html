@@ -1,0 +1,124 @@
+<app-header title="KaizenLoop - Profile"></app-header>
+<ion-content>
+    <ion-card class="clients-card profile-card">
+        <ion-card-header>
+            <ion-text class="title pl-10">
+                User Bio
+            </ion-text>
+        </ion-card-header>
+        <ion-card-content>
+            <div class="profile-form-element">
+                <div>
+                    <ion-label>
+                        Email
+                    </ion-label>
+                </div>
+                <ion-label style="color: #737373">
+                    {{ email }}
+                </ion-label>
+            </div>
+            <form>
+                <div class="profile-form-element">
+                    <div>
+                        <ion-label>
+                            Name
+                        </ion-label>
+                    </div>
+                    <ion-input
+                            type="text"
+                            name="name"
+                            [(ngModel)]="form.name"
+                    >
+                    </ion-input>
+                </div>
+                <div class="profile-form-element">
+                    <ion-label>
+                        Nickname
+                    </ion-label>
+                    <ion-input
+                            type="text"
+                            name="nickname"
+                            [(ngModel)]="form.nickname"
+                    >
+                    </ion-input>
+                </div>
+                <div class="profile-form-element">
+                    <div>
+                        <ion-label>
+                            Image
+                        </ion-label>
+                    </div>
+                    <ion-input
+                            type="file"
+                            name="image"
+                            (change)="loadImageFromDevice($event)"
+                    >
+                    </ion-input>
+                </div>
+                <div class="profile-form-element">
+                    <div>
+                        <ion-label>
+                            Password
+                        </ion-label>
+                    </div>
+                    <ion-input
+                            type="password"
+                            name="password"
+                            [(ngModel)]="password"
+                    >
+                    </ion-input>
+                    <small>Leave it blank if you don't want to change it.</small>
+                </div>
+                <div class="profile-form-element">
+                    <div>
+                        <ion-label>
+                            Password confirmation
+                        </ion-label>
+                    </div>
+                    <ion-input
+                            type="password"
+                            name="confirm-password"
+                            [(ngModel)]="password_confirmation"
+                    >
+                    </ion-input>
+                </div>
+                <div class="profile-form-element">
+                    <div>
+                        <ion-label>
+                            Current Password
+                        </ion-label>
+                    </div>
+                    <ion-input
+                            type="password"
+                            name="current-password"
+                            [(ngModel)]="form.current_password"
+                            required clearInput
+                    >
+                    </ion-input>
+                </div>
+                <ion-button
+                        color="primary ion-margin"
+                        type="submit"
+                        expand="block"
+                        (click)="onUpdateProfile()"
+                >
+                    Update
+                </ion-button>
+            </form>
+        </ion-card-content>
+    </ion-card>
+    <ion-card class="clients-card profile-card">
+        <ion-card-header>
+            <ion-text class="title pl-10">
+                Group List({{ groups.length }})
+            </ion-text>
+        </ion-card-header>
+        <ion-card-content>
+            <div class="group-list" *ngFor="let group of groups">
+                <div>
+                    {{ group.group_name }}
+                </div>
+            </div>
+        </ion-card-content>
+    </ion-card>
+</ion-content>

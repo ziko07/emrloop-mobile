@@ -1,31 +1,34 @@
 <app-header title="KaizenLoop - Add Client"></app-header>
 <ion-content>
-  <ion-card class="clients-card">
-    <ion-card-header>
-      <ion-grid>
-        <ion-row>
-          <ion-col>
-            <ion-text class="title">
-              Add Clients
-            </ion-text>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-card class="inner-card">
+    <ion-card class="clients-card">
+        <ion-card-header>
+            <ion-grid>
+                <ion-row>
+                    <ion-col>
+                        <ion-text class="title">
+                            Add Clients
+                        </ion-text>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-card-header>
         <ion-card-content>
-          <form class="list-form">
-            <div class="label">
-              <ion-label>
-                Name
-              </ion-label>
-            </div>
-            <ion-input type="text" name="username" [(ngModel)]="client.name"></ion-input>
-          </form>
+            <ion-card class="inner-card">
+                <ion-card-content>
+                    <form class="list-form">
+                        <div class="label">
+                            <ion-label>
+                                Name
+                            </ion-label>
+                        </div>
+                        <ion-input type="text" name="username" [(ngModel)]="client.name" required
+                                   clearInput></ion-input>
+                    </form>
+                </ion-card-content>
+            </ion-card>
+            <ion-button color="primary" class="ion-float-right ion-margin ion-text-capitalize" (click)="onAddClient()">
+                Create Client
+            </ion-button>
         </ion-card-content>
-      </ion-card>
-      <ion-button color="primary" class="ion-float-right ion-margin ion-text-capitalize" (click)="onAddClient()">Create Client</ion-button>
-    </ion-card-content>
-  </ion-card>
+    </ion-card>
 </ion-content>

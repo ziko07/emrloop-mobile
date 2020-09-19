@@ -32,6 +32,15 @@ export class GroupsComponent implements OnInit {
 
     ngOnInit() {
         this.getInfo();
+        this.getGroup();
+    }
+
+    getGroup() {
+        this.groupService.getGroup().subscribe(
+            resp => {
+                this.groups.push(resp);
+            }, err => {}
+        );
     }
 
     getInfo() {
@@ -50,58 +59,70 @@ export class GroupsComponent implements OnInit {
     }
 
     onJoinGroup() {
-        this.group_name = this.group.group_name;
+        this.helperService.showLoader();
+        this.group_name = this.group.join_group_name;
         console.log(this.group_name);
         this.groupService.joinGroup(this.group_name).subscribe(
             resp => {
                 this.helperService.showSuccessToast(resp.message);
+                this.helperService.dismissLoader();
             }, err => {
-                this.helperService.showDangerToast(err.message);
+                this.helperService.showDangerToast('Something went wrong. Try again later.');
+                this.helperService.dismissLoader();
             }
         );
-        this.group.group_name = '';
+        this.group.join_group_name = '';
     }
 
     onAddUserToGroup() {
-        this.group_name = this.group.group_name;
+        this.helperService.showLoader();
+        this.group_name = this.group.add_user_group_name;
         this.email_name = this.email.email;
         console.log(this.group_name, this.email_name);
         this.groupService.addUserToGroup(this.group_name, this.email_name).subscribe(
             resp => {
+                this.helperService.dismissLoader();
                 this.helperService.showSuccessToast(resp.message);
             }, err => {
-                this.helperService.showDangerToast(err.message);
+                this.helperService.dismissLoader();
+                this.helperService.showDangerToast('Something went wrong. Try again later.');
             }
         );
     }
 
     onLeaveGroup() {
-        this.group_name = this.group.group_name;
+        this.helperService.showLoader();
+        this.group_name = this.group.leave_user_group_name;
         console.log(this.group_name);
         this.groupService.leaveGroup(this.group_name).subscribe(
             resp => {
                 console.log(resp);
+                this.helperService.dismissLoader();
                 this.helperService.showSuccessToast(resp.message);
             }, err => {
-                this.helperService.showDangerToast(err.message);
+                this.helperService.dismissLoader();
+                this.helperService.showDangerToast('Something went wrong. Try again later.');
             }
         );
-        this.group.group_name = '';
+        this.group.leave_user_group_name = '';
     }
 
     onCreateGroup() {
-        this.group_name = this.group.group_name;
-        this.client_id = this.client.id;
-        console.log(this.group_name, this.client_id);
-        this.groupService.createGroup(this.group_name, this.client_id).subscribe(
+        this.helperService.showLoader();
+        this.groupService.createGroup(this.group.create_group_name, this.client_id).subscribe(
             resp => {
                 console.log(resp);
+                this.helperService.dismissLoader();
+                this.group = resp.group;
+                this.group.client_name = resp.client_name;
+                this.groupService.listGroup(this.group);
                 this.helperService.showSuccessToast(resp.message);
             }, err => {
                 console.log(err);
-                this.helperService.showDangerToast(err.message);
+                this.helperService.dismissLoader();
+                this.helperService.showDangerToast('Something went wrong. Try again later.');
             }
         );
-        this.group.group_name = '';
+        this.group.create_group_name = '';
     }
 }

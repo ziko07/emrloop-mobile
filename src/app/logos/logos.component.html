@@ -37,25 +37,25 @@
       <ion-grid *ngFor="let logo of logos; let i=index">
         <ion-row class="logos-content" [ngClass]="i < logos.length-1 ? 'row-bb-body' : ''">
           <ion-col size="3">
-            {{ logo.name }}
+            {{ logo.client ? logo.client.name : "No client" }}
           </ion-col>
 
           <ion-col size="4">
-            <ion-img src="{{ logo.imgSrc }}">
+            <ion-img src="{{ logo.image_location }}">
             </ion-img>
           </ion-col>
 
           <ion-col size="2">
-            {{ logo.type }}
+            {{ logo.image_type }}
           </ion-col>
 
           <ion-col size="3">
             <ion-buttons class="logo-customize">
-              <ion-button class="close common-btn" (click)="deleteLogo(i)">
+              <ion-button class="close common-btn" (click)="deleteLogo(i, logo.id)">
                 <ion-icon slot="icon-only" name="close-sharp" class="icon"></ion-icon>
               </ion-button>
               <ion-button class="pencil common-btn">
-                <a routerLink="/logos/edit" style="color: white;">
+                <a routerLink="/logos/{{logo.id}}/edit" style="color: white;">
                   <ion-icon slot="icon-only" name="pencil-sharp" class="icon"></ion-icon>
                 </a>
               </ion-button>

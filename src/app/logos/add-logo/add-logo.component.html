@@ -40,7 +40,13 @@
                   Image Location
                 </ion-label>
               </div>
-              <ion-input type="file" name="image_location" [(ngModel)]="logo.image_location"></ion-input>
+              <ion-input
+                      type="file"
+                      name="image_type"
+                      (change)="loadImageFromDevice($event)"
+                      accept="image/png, image/jpeg"
+              >
+              </ion-input>
             </div>
 
             <div class="input-box">
@@ -49,7 +55,7 @@
                   Image Type
                 </ion-label>
               </div>
-              <ion-input type="text" name="image_type" [(ngModel)]="logo.image_type"></ion-input>
+              <ion-input type="text" name="image_type" [(ngModel)]="logo.image_type" required clearInput></ion-input>
             </div>
             
           </form>

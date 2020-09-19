@@ -24,11 +24,17 @@
     }
   }
 
-  .user-email {
+  .mt_5 { margin-top: 5px !important; }
+
+  .common-link {
     background: rgba(255, 255, 255, 0.3);
-    padding: 5px;
+    padding: 10px;
     text-align: center;
     color: #2f4f4f;
+    a {
+      text-decoration: none;
+      color: #2f4f4f;
+    }
   }
 }
 
