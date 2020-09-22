@@ -25,8 +25,8 @@ export class ClientService {
         return this.http.get(Base.apiUrl + '/clients/' + id, Base.requestHeader());
     }
 
-    getClients(): Observable<any> {
-        return this.http.get(Base.apiUrl + '/clients', Base.requestHeader());
+    getClients(page): Observable<any> {
+        return this.http.get(Base.apiUrl + '/clients?page=' + page, Base.requestHeader());
     }
 
     addClient(name): Observable<any> {

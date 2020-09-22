@@ -3,6 +3,7 @@ import {Component, OnInit} from '@angular/core';
 import {LogoService} from '../../services/logo.service';
 import {HelperService} from '../../services/helper.service';
 import {ClientService} from '../../services/client.service';
+import {GroupService} from '../../services/group.service';
 
 import {Logo} from '../../models/logo.model';
 
@@ -15,16 +16,27 @@ export class LogosComponent implements OnInit {
     constructor(
         public logoService: LogoService,
         public helperService: HelperService,
-        public clientService: ClientService) {
+        public clientService: ClientService,
+        public groupService: GroupService) {
     }
 
     logo = new Logo();
     logos = [];
     clients = [];
+    page = 1;
+
+    loadData(event) {
+        setTimeout(() => {
+            this.getAllLogos();
+            if (this.clients.length > 1) {
+                event.target.complete();
+            }
+        }, 500);
+    }
 
     ngOnInit() {
+        this.loadData(event);
         this.getLogo();
-        this.getAllLogos();
         this.getAllClients();
     }
 
@@ -45,32 +57,31 @@ export class LogosComponent implements OnInit {
     }
 
     getAllLogos() {
-        this.helperService.showLoader();
-        this.logoService.getLogos().subscribe(
+        this.logoService.getLogos(this.page).subscribe(
             resp => {
-                this.helperService.dismissLoader();
-                this.logos = resp;
-                for (const logo of this.logos) {
-                    if ((logo.client)) {
-                        console.log(logo.client.name);
-                    }
+                if (resp.length < 1) {
+                    this.helperService.showUpdateToast('All data successfully loaded!');
+                    return;
                 }
+                this.logos = this.logos.concat(resp);
                 console.log(resp);
             }, err => {
-                this.helperService.dismissLoader();
                 console.log(err);
             }
         );
+        ++this.page;
     }
 
     getAllClients() {
-        this.clientService.getClients().subscribe(
+        this.helperService.showLoader();
+        this.groupService.getAllInfo().subscribe(
             resp => {
-                this.clients = resp;
-                console.log('Client list');
-                console.log(resp);
+                this.helperService.dismissLoader();
+                this.clients = resp[0].clients;
+                console.log(this.clients);
             },
             err => {
+                this.helperService.dismissLoader();
                 console.log(err);
             }
         );
@@ -84,7 +95,11 @@ export class LogosComponent implements OnInit {
                 resp => {
                     console.log(resp);
                     this.helperService.dismissLoader();
-                    this.helperService.showUpdateToast('Logo Successfully Deleted!');
+                    if (resp.status === 'ok') {
+                        this.helperService.showUpdateToast(resp.message);
+                    } else {
+                        this.helperService.showDangerToast(resp.message);
+                    }
                 }, err => {
                     console.log(err);
                     this.helperService.dismissLoader();

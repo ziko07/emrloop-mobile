@@ -34,7 +34,7 @@ export class AuthService {
     }
 
     getUserType(): Observable<any> {
-        return this.http.get(Base.apiUrl + '/users/user_type', Base.requestHeader());
+        return this.http.get(Base.apiUrl + '/users/current_user_type', Base.requestHeader());
     }
 
     getCurrentUser(): Observable<any> {
@@ -58,8 +58,8 @@ export class AuthService {
             Base.requestHeader());
     }
 
-    getUserGroups(): Observable<any> {
-        return this.http.get(Base.apiUrl + '/group/my_groups', Base.requestHeader());
+    getUserGroups(page): Observable<any> {
+        return this.http.get(Base.apiUrl + '/group/my_groups?page=' + page, Base.requestHeader());
     }
 
     getToken() {

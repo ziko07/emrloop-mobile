@@ -4,6 +4,7 @@ import {User} from '../../../models/user.model';
 
 import {UserService} from '../../../services/user.service';
 import {HelperService} from '../../../services/helper.service';
+import {AuthService} from '../../../services/auth.service';
 
 @Component({
     selector: 'app-change-user-type',
@@ -12,19 +13,33 @@ import {HelperService} from '../../../services/helper.service';
 })
 export class ChangeUserTypeComponent implements OnInit {
     user = new User();
+    users = [];
     id: any;
-    userType: any;
+    userType: string;
 
     constructor(private route: ActivatedRoute,
                 public router: Router,
                 public userService: UserService,
-                public helperService: HelperService) {
+                public helperService: HelperService,
+                public authService: AuthService) {
     }
 
     ngOnInit() {
         this.id = this.route.snapshot.paramMap.get('id');
-        console.log(this.id);
+        this.onGetSingleUserType();
     }
+
+    onGetSingleUserType() {
+        this.userService.getSingleUserType(this.id).subscribe(
+            resp => {
+                this.userType = resp.user_type;
+                console.log(resp);
+            }, err => {
+                console.log(err);
+            }
+        )
+    }
+
 
     onChangeUserType() {
         this.helperService.showLoader();
@@ -33,9 +48,13 @@ export class ChangeUserTypeComponent implements OnInit {
             resp => {
                 this.helperService.dismissLoader();
                 console.log(resp);
-                this.userService.listUser(resp, 'update');
-                this.helperService.showUpdateToast(resp.message);
-                this.router.navigateByUrl('/users');
+                if (resp.status === 'ok') {
+                    this.userService.listUser(resp, 'update');
+                    this.helperService.showUpdateToast(resp.message);
+                    this.router.navigateByUrl('/users');
+                } else {
+                    this.helperService.showDangerToast(resp.message);
+                }
             }, err => {
                 this.helperService.dismissLoader();
                 console.log(err);

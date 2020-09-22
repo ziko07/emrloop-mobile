@@ -32,10 +32,14 @@ export class AddClientComponent implements OnInit {
         this.helperService.showLoader();
         this.clientService.addClient(this.client.name).subscribe(
             resp => {
-                this.clientService.listClient(resp.client);
                 this.helperService.dismissLoader();
-                this.helperService.showSuccessToast(resp.message);
-                this.router.navigateByUrl('/clients');
+                if (resp.status === 'ok') {
+                    this.clientService.listClient(resp.client);
+                    this.helperService.showSuccessToast(resp.message);
+                    this.router.navigateByUrl('/clients');
+                } else {
+                    this.helperService.showDangerToast(resp.message);
+                }
                 console.log(resp);
             },
             err => {

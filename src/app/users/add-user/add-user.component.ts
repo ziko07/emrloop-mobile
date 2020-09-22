@@ -29,9 +29,13 @@ export class AddUserComponent implements OnInit {
             resp => {
                 console.log(resp);
                 this.helperService.dismissLoader();
-                this.helperService.showSuccessToast(resp.message);
-                this.userService.listUser(resp);
-                this.router.navigateByUrl('/users');
+                if (resp.status === 'ok') {
+                    this.helperService.showSuccessToast(resp.message);
+                    this.userService.listUser(resp);
+                    this.router.navigateByUrl('/users');
+                } else {
+                    this.helperService.showDangerToast(resp.message);
+                }
             }, err => {
                 console.log('Err');
                 console.log(err);

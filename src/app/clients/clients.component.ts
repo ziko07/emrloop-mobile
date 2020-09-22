@@ -17,10 +17,20 @@ export class ClientsComponent implements OnInit {
 
     client = new Client();
     clients = [];
+    page = 1;
+
+    loadData(event) {
+        setTimeout(() => {
+            this.getAllClients();
+            if (this.clients.length > 1) {
+                event.target.complete();
+            }
+        }, 500);
+    }
 
     ngOnInit() {
         this.getClient();
-        this.getAllClients();
+        this.loadData(event);
     }
 
     getClient() {
@@ -41,11 +51,14 @@ export class ClientsComponent implements OnInit {
 
     getAllClients() {
         this.helperService.showLoader();
-        this.clientService.getClients().subscribe(
+        this.clientService.getClients(this.page).subscribe(
             resp => {
                 this.helperService.dismissLoader();
-                this.clients = resp;
-                console.log('Client list');
+                if (resp.length < 1) {
+                    this.helperService.showUpdateToast('All data successfully loaded!');
+                    return;
+                }
+                this.clients = this.clients.concat(resp);
                 console.log(resp);
             },
             err => {
@@ -53,6 +66,7 @@ export class ClientsComponent implements OnInit {
                 console.log(err);
             }
         );
+        ++this.page;
     }
 
     onDeleteClient(id, clientId) {
@@ -62,8 +76,12 @@ export class ClientsComponent implements OnInit {
             this.helperService.showLoader();
             this.clientService.deleteClient(clientId).subscribe(
                 resp => {
-                    this.helperService.showUpdateToast(resp.message);
                     this.helperService.dismissLoader();
+                    if (resp.status === 'ok') {
+                        this.helperService.showUpdateToast(resp.message);
+                    } else {
+                        this.helperService.showDangerToast(resp.message);
+                    }
                     console.log(resp);
                 },
                 err => {

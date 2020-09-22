@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {LogoService} from '../../../services/logo.service';
 import {HelperService} from '../../../services/helper.service';
 import {ClientService} from '../../../services/client.service';
+import {GroupService} from '../../../services/group.service';
 
 import {Logo} from '../../../models/logo.model';
 
@@ -17,11 +18,13 @@ export class UpdateLogoComponent implements OnInit {
                 public router: Router,
                 public logoService: LogoService,
                 public helperService: HelperService,
-                public clientService: ClientService) {
+                public clientService: ClientService,
+                public groupService: GroupService) {
     }
 
     id: string;
     logo = new Logo();
+    logos = [];
     clients = [];
 
     ngOnInit() {
@@ -32,11 +35,10 @@ export class UpdateLogoComponent implements OnInit {
     }
 
     getAllClients() {
-        this.clientService.getClients().subscribe(
+        this.groupService.getAllInfo().subscribe(
             resp => {
-                this.clients = resp;
-                console.log('Client list');
-                console.log(resp);
+                this.clients = resp[0].clients;
+                console.log(this.clients);
             },
             err => {
                 console.log(err);
@@ -48,8 +50,9 @@ export class UpdateLogoComponent implements OnInit {
         this.logoService.getSingleClientLogo(this.id).subscribe(
             resp => {
                 console.log(resp);
-                 this.logo.image_type = resp.image_type;
-                 this.logo.client_id = resp.client_id;
+                this.logo.image_type = resp.image_type;
+                this.logo.client_id = resp.client.id;
+                console.log(this.logo);
             }, err => {
                 console.log(err);
             }
@@ -70,10 +73,14 @@ export class UpdateLogoComponent implements OnInit {
         this.logoService.updateLogo(this.id, this.logo).subscribe(
             resp => {
                 console.log(resp);
-                this.logoService.listLogo(resp.logo, 'update');
-                this.helperService.showUpdateToast('Logo Successfully Updated!');
-                this.router.navigateByUrl('/logos');
                 this.helperService.dismissLoader();
+                if (resp.status === 'ok') {
+                    this.logoService.listLogo(resp.logo, 'update');
+                    this.helperService.showUpdateToast(resp.message);
+                    this.router.navigateByUrl('/logos');
+                } else {
+                    this.helperService.showDangerToast(resp.message);
+                }
             }, err => {
                 console.log(err);
                 this.helperService.showUpdateToast('Something went wrong. Try again later.');

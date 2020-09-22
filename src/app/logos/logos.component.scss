@@ -38,9 +38,9 @@
         position: relative;
         right: 10px;
         ion-button {
-            height: 20px;
-            --padding-top: 10px;
-            --padding-bottom: 10px;
+            height: 30px;
+            --padding-top: 15px;
+            --padding-bottom: 15px;
             --padding-right: 5px;
             --padding-left: 5px;
             margin-right: 5px;
@@ -68,7 +68,7 @@
 .not-found {
     text-align: center;
     font-size: 16px;
-    color: black;
+    color: #28445c;
 }
 
 .grid-one { 
@@ -78,4 +78,13 @@
             color: #688F9D; 
         }
     }
+}
+
+ion-img {
+    width: 50px;
+}
+
+ion-back-button {
+    position: relative;
+    right: 10px;
 }

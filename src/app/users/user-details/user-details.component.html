@@ -1,4 +1,11 @@
-<app-header title="KaizenLoop - Single User"></app-header>
+<ion-header>
+  <ion-toolbar class="custom-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button text="Back"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Single User</ion-title>
+  </ion-toolbar>
+</ion-header>
 <ion-content>
   <div class="wrapper">
     <ion-card class="users-card">
@@ -8,7 +15,7 @@
             <p>
               Name:
             </p>
-            {{ name }}
+            {{ name ? name : 'Not updated yet.' }}
           </div>
           <div>
             <p>

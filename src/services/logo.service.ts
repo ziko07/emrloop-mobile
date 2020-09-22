@@ -23,8 +23,8 @@ export class LogoService {
     return this.http.get(Base.apiUrl + '/logos/' + id, Base.requestHeader());
   }
 
-  getLogos(): Observable<any> {
-    return this.http.get(Base.apiUrl + '/logos', Base.requestHeader());
+  getLogos(page): Observable<any> {
+    return this.http.get(Base.apiUrl + '/logos?page=' + page, Base.requestHeader());
   }
 
   createLogo(logoDetails): Observable<any> {

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 
 import {GroupService} from '../../services/group.service';
 import {HelperService} from '../../services/helper.service';
+import {UserService} from '../../services/user.service';
 
 import {Group} from '../../models/group.model';
 import {Email} from '../../models/email.model';
@@ -14,7 +15,9 @@ import {Client} from '../../models/client.model';
 })
 export class GroupsComponent implements OnInit {
 
-    constructor(public groupService: GroupService, public helperService: HelperService) {
+    constructor(public groupService: GroupService,
+                public helperService: HelperService,
+                public userService: UserService) {
     }
 
     groups = [];
@@ -30,7 +33,19 @@ export class GroupsComponent implements OnInit {
     user_uid: string;
     client_id: number;
 
+    page = 1;
+
+    loadData(event) {
+        setTimeout(() => {
+            this.getAllGroups();
+            if (this.groups.length > 1) {
+                event.target.complete();
+            }
+        }, 500);
+    }
+
     ngOnInit() {
+        this.loadData(event);
         this.getInfo();
         this.getGroup();
     }
@@ -43,17 +58,32 @@ export class GroupsComponent implements OnInit {
         );
     }
 
+    getAllGroups() {
+        this.groupService.getGroups(this.page).subscribe(
+            resp => {
+                if (resp.groups.length < 1) {
+                    this.helperService.showUpdateToast('All data successfully loaded!');
+                    return;
+                }
+                this.groups = this.groups.concat(resp.groups);
+                console.log(resp);
+            }, err => {
+                console.log(err);
+            }
+        );
+        ++this.page;
+    }
+
     getInfo() {
+        this.helperService.showLoader();
         this.groupService.getAllInfo().subscribe(
             resp => {
-                this.groups = resp[0].groups;
                 this.clients = resp[0].clients;
                 this.emails = resp[0].emails;
-                console.log(this.groups);
-                console.log(resp);
+                this.helperService.dismissLoader();
             },
             err => {
-                console.log(err);
+                this.helperService.dismissLoader();
             }
         );
     }
@@ -64,11 +94,15 @@ export class GroupsComponent implements OnInit {
         console.log(this.group_name);
         this.groupService.joinGroup(this.group_name).subscribe(
             resp => {
-                this.helperService.showSuccessToast(resp.message);
                 this.helperService.dismissLoader();
+                if (resp.status === 'ok') {
+                    this.helperService.showSuccessToast(resp.message);
+                } else {
+                    this.helperService.showDangerToast(resp.message);
+                }
             }, err => {
-                this.helperService.showDangerToast('Something went wrong. Try again later.');
                 this.helperService.dismissLoader();
+                this.helperService.showDangerToast('Something went wrong. Try again later.');
             }
         );
         this.group.join_group_name = '';
@@ -82,7 +116,13 @@ export class GroupsComponent implements OnInit {
         this.groupService.addUserToGroup(this.group_name, this.email_name).subscribe(
             resp => {
                 this.helperService.dismissLoader();
-                this.helperService.showSuccessToast(resp.message);
+                console.log(resp);
+                if (resp.status === 'ok') {
+                    this.userService.listUser(this.email_name, 'group');
+                    this.helperService.showSuccessToast(resp.message);
+                } else {
+                    this.helperService.showDangerToast(resp.message);
+                }
             }, err => {
                 this.helperService.dismissLoader();
                 this.helperService.showDangerToast('Something went wrong. Try again later.');
@@ -96,9 +136,12 @@ export class GroupsComponent implements OnInit {
         console.log(this.group_name);
         this.groupService.leaveGroup(this.group_name).subscribe(
             resp => {
-                console.log(resp);
                 this.helperService.dismissLoader();
-                this.helperService.showSuccessToast(resp.message);
+                if (resp.status === 'ok') {
+                    this.helperService.showSuccessToast(resp.message);
+                } else {
+                    this.helperService.showDangerToast(resp.message);
+                }
             }, err => {
                 this.helperService.dismissLoader();
                 this.helperService.showDangerToast('Something went wrong. Try again later.');
@@ -113,10 +156,14 @@ export class GroupsComponent implements OnInit {
             resp => {
                 console.log(resp);
                 this.helperService.dismissLoader();
-                this.group = resp.group;
-                this.group.client_name = resp.client_name;
-                this.groupService.listGroup(this.group);
-                this.helperService.showSuccessToast(resp.message);
+                if (resp.status === 'ok') {
+                    this.group = resp.group;
+                    this.group.client_name = resp.client_name;
+                    this.groupService.listGroup(this.group);
+                    this.helperService.showSuccessToast(resp.message);
+                } else {
+                    this.helperService.showDangerToast(resp.message);
+                }
             }, err => {
                 console.log(err);
                 this.helperService.dismissLoader();

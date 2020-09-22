@@ -19,6 +19,10 @@ export class GroupService {
     return this.groupSubject;
   }
 
+  getGroups(page): Observable<any> {
+    return this.http.get(Base.apiUrl + '/group?page=' + page, Base.requestHeader());
+  }
+
   getAllInfo(): Observable<any> {
     return this.http.get(Base.apiUrl + '/group/great_group', Base.requestHeader());
   }

@@ -18,7 +18,9 @@
                     <ion-icon name="mail-outline" item-start class="text-primary" class="icon"></ion-icon>
                     Email
                 </ion-label>
-                <ion-input type="text" [(ngModel)]="form.login" name="login" required clearInput></ion-input>
+                <ion-input type="text" [(ngModel)]="form.login" name="login"
+                           required clearInput autocomplete="off">
+                </ion-input>
             </ion-item>
 
             <ion-item class="ion-no-padding">

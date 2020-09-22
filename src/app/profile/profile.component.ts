@@ -8,7 +8,7 @@ import {Form} from '../../models/form.model';
 @Component({
     selector: 'app-profile',
     templateUrl: './profile.component.html',
-    styleUrls: ['../clients/clients.component.scss', './profile.component.scss'],
+    styleUrls: ['../clients/clients.component.scss', './profile.component.scss', '../users/users.component.scss'],
 })
 export class ProfileComponent implements OnInit {
 
@@ -22,20 +22,34 @@ export class ProfileComponent implements OnInit {
     password: string;
     password_confirmation: string;
     form = new Form();
+    page = 1;
+    length: number;
+
+    loadData(event) {
+        setTimeout(() => {
+            this.getAllUserGroups();
+            if (this.groups.length > 1) {
+                event.target.complete();
+            }
+        }, 500);
+    }
 
     ngOnInit() {
         this.getCurrentUserType();
-        this.getAllUserGroups();
+        this.loadData(event);
         this.onGetCurrentUser();
     }
 
     onGetCurrentUser() {
+        this.helperService.showLoader();
         this.authProvider.getCurrentUser().subscribe(
             resp => {
+                this.helperService.dismissLoader();
                 this.form = resp.profile;
                 this.email = resp.profile.email;
-                console.log(this.form);
+                console.log(resp.profile);
             }, err => {
+                this.helperService.dismissLoader();
                 console.log(err);
             }
         );
@@ -53,14 +67,20 @@ export class ProfileComponent implements OnInit {
     }
 
     getAllUserGroups() {
-        this.authProvider.getUserGroups().subscribe(
+        this.authProvider.getUserGroups(this.page).subscribe(
             resp => {
-                this.groups = resp;
-                console.log(this.groups);
+                if (resp.my_groups.length < 1) {
+                    this.helperService.showUpdateToast('All data successfully loaded!');
+                    return;
+                }
+                this.groups = this.groups.concat(resp.my_groups);
+                this.length = resp.group_size;
+                console.log(resp);
             }, err => {
                 console.log(err);
             }
         );
+        ++this.page;
     }
 
     loadImageFromDevice(e) {
@@ -73,21 +93,24 @@ export class ProfileComponent implements OnInit {
     }
 
     onUpdateProfile() {
+        if (!this.form.current_password) {
+            this.helperService.showDangerToast('Input current password to update profile.');
+            return;
+        }
         if (this.password && this.password_confirmation) {
             this.form.password = this.password;
             this.form.password_confirmation = this.password_confirmation;
-            console.log('yes');
-        } else {
-            console.log('no');
         }
         this.helperService.showLoader();
         this.authProvider.updateProfile(this.type, this.form).subscribe(
             resp => {
                 console.log(resp);
-                this.helperService.showSuccessToast(resp.message);
                 this.helperService.dismissLoader();
                 if (resp.status === 'ok') {
                     this.authProvider.listProfile(resp.user);
+                    this.helperService.showSuccessToast(resp.message);
+                } else {
+                    this.helperService.showDangerToast(resp.message);
                 }
             }, err => {
                 this.helperService.dismissLoader();
@@ -95,5 +118,6 @@ export class ProfileComponent implements OnInit {
                 console.log(this.form);
             }
         );
+        this.form.current_password = '';
     }
 }

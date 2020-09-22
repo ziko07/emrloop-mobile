@@ -28,3 +28,16 @@ ion-card-content {
         border-radius: 5px;
     }
 }
+
+select {
+    width: 100%;
+    height: 45px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding-left: 10px;
+}
+
+ion-back-button {
+    position: relative;
+    right: 10px;
+}

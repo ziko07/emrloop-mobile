@@ -63,7 +63,7 @@ export class AppComponent {
         {
             title: 'My Profile',
             url: '/profile',
-            icon: 'happy'
+            icon: 'information-circle-outline'
         },
         {
             title: 'To Do',
@@ -133,7 +133,7 @@ export class AppComponent {
             this.helperService.dismissLoader();
             // this.router.navigateByUrl('/login');
             window.location.href = '/login';
-            this.helperService.showUpdateToast('You are successfully logged out!');
+            this.helperService.showUpdateToast('You have successfully logged out!');
         }, err => {
         });
     }

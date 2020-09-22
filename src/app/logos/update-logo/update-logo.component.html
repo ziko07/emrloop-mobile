@@ -1,4 +1,11 @@
-<app-header title="KaizenLoop - Edit Logo"></app-header>
+<ion-header>
+    <ion-toolbar class="custom-toolbar">
+        <ion-buttons slot="start">
+            <ion-back-button text="Back"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Edit Logo</ion-title>
+    </ion-toolbar>
+</ion-header>
 <ion-content>
     <ion-card class="logos-card">
         <ion-card-header>
@@ -23,17 +30,16 @@
                                 </ion-label>
                             </div>
                             <ion-select
+                                    name="client_id"
                                     [(ngModel)]="logo.client_id"
-                                    value="Select client"
-                                    name="select_client"
                                     okText="Okay"
                                     cancelText="Dismiss"
                                     interface="action-sheet"
                                     class="mx-0 my-10"
                             >
                                 <ion-select-option
-                                        *ngFor="let client of clients"
-                                        value="{{ client.id }}"
+                                  *ngFor="let client of clients"
+                                  [value]="client.id"
                                 >
                                     {{ client.name }}
                                 </ion-select-option>

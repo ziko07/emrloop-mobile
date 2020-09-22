@@ -1,4 +1,12 @@
-<app-header title="KaizenLoop - Profile"></app-header>
+<ion-header>
+    <ion-toolbar class="custom-toolbar">
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>My Profile</ion-title>
+    </ion-toolbar>
+</ion-header>
+
 <ion-content>
     <ion-card class="clients-card profile-card">
         <ion-card-header>
@@ -28,6 +36,7 @@
                             type="text"
                             name="name"
                             [(ngModel)]="form.name"
+                            required clearInput
                     >
                     </ion-input>
                 </div>
@@ -39,6 +48,7 @@
                             type="text"
                             name="nickname"
                             [(ngModel)]="form.nickname"
+                            required clearInput
                     >
                     </ion-input>
                 </div>
@@ -65,6 +75,7 @@
                             type="password"
                             name="password"
                             [(ngModel)]="password"
+                            required clearInput autocomplete="off"
                     >
                     </ion-input>
                     <small>Leave it blank if you don't want to change it.</small>
@@ -79,6 +90,7 @@
                             type="password"
                             name="confirm-password"
                             [(ngModel)]="password_confirmation"
+                            required clearInput autocomplete="off"
                     >
                     </ion-input>
                 </div>
@@ -92,7 +104,7 @@
                             type="password"
                             name="current-password"
                             [(ngModel)]="form.current_password"
-                            required clearInput
+                            required clearInput autocomplete="off"
                     >
                     </ion-input>
                 </div>
@@ -110,10 +122,13 @@
     <ion-card class="clients-card profile-card">
         <ion-card-header>
             <ion-text class="title pl-10">
-                Group List({{ groups.length }})
+                Group List ({{ length }})
             </ion-text>
         </ion-card-header>
-        <ion-card-content>
+        <p *ngIf="groups.length === 0" class="not-found">
+            This user has not been added to any group.
+        </p>
+        <ion-card-content *ngIf="groups.length">
             <div class="group-list" *ngFor="let group of groups">
                 <div>
                     {{ group.group_name }}
@@ -121,4 +136,10 @@
             </div>
         </ion-card-content>
     </ion-card>
+    <ion-infinite-scroll threshold="10px" (ionInfinite)="loadData($event)">
+        <ion-infinite-scroll-content
+                loadingSpinner="bubbles"
+                loadingText="Loading more data...">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 </ion-content>
