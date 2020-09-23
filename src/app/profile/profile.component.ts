@@ -41,9 +41,19 @@ export class ProfileComponent implements OnInit {
         }, 500);
     }
 
+    doRefresh(event) {
+        console.log('Begin async operation');
+
+        setTimeout(() => {
+            console.log('Async operation has ended');
+            event.target.complete();
+        }, 1000);
+    }
+
     ngOnInit() {
         this.getCurrentUserType();
         this.loadData(event);
+        this.doRefresh(event);
         this.onGetCurrentUser();
     }
 

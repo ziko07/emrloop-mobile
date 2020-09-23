@@ -8,6 +8,12 @@
 </ion-header>
 
 <ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-down"
+                               pullingText="Pull to refresh"
+                               refreshingSpinner="bubbles"
+                               refreshingText="Refreshing....."></ion-refresher-content>
+    </ion-refresher>
     <ion-card class="clients-card profile-card">
         <ion-card-header>
             <ion-text class="title pl-10">

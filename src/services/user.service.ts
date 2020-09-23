@@ -44,4 +44,8 @@ export class UserService {
     deleteUser(email): Observable<any> {
         return this.http.delete(Base.apiUrl + `/users/delete_user?email=${email}`, Base.requestHeader());
     }
+
+    confirmUser(id): Observable<any> {
+        return this.http.post(Base.apiUrl + `/users/confirm_user?id=${id}`, Base.requestHeader());
+    }
 }

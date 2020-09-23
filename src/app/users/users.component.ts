@@ -21,6 +21,7 @@ export class UsersComponent implements OnInit {
     users = [];
     page = 0;
     checked = false;
+    isConfirmed = false;
 
     loadData(event) {
         if (this.checked) {
@@ -44,7 +45,7 @@ export class UsersComponent implements OnInit {
 
     getUser() {
         this.userService.getUser().subscribe(resp => {
-            if (resp.action === 'new') {
+            if (resp.action === 'new' && this.checked) {
                 console.log(resp);
                 const user = resp.user.user;
                 user.type = resp.user.user_type;
@@ -93,6 +94,22 @@ export class UsersComponent implements OnInit {
                 if (this.page === 1) {
                     this.helperService.dismissLoader();
                 }
+                console.log(err);
+            }
+        );
+    }
+
+    onConfirmUser(id) {
+        console.log(id);
+        this.userService.confirmUser(id).subscribe(
+            resp => {
+                if (resp.status === 'ok') {
+                    document.querySelector('.check').style.display = 'none';
+                    this.user.confirmed = true;
+                    this.helperService.showSuccessToast(resp.message);
+                }
+                console.log(resp);
+            }, err => {
                 console.log(err);
             }
         );

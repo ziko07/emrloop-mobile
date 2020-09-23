@@ -45,9 +45,9 @@
         right: 25px;
 
         ion-button {
-            height: 30px;
-            --padding-top: 15px;
-            --padding-bottom: 15px;
+            height: 24px;
+            --padding-top: 12px;
+            --padding-bottom: 12px;
             --padding-right: 5px;
             --padding-left: 5px;
         }
@@ -57,11 +57,18 @@
             font-weight: bold;
         }
 
+        .check {
+            border-radius: 5px;
+            background: #2dd36f;
+            color: white;
+            height: 25px;
+            width: 45px;
+        }
+
         .close {
             border-radius: 5px;
             background: #b51c1c;
             color: white;
-            
         }
     }
 }

@@ -59,7 +59,9 @@ export class GroupsComponent implements OnInit {
     getGroup() {
         this.groupService.getGroup().subscribe(
             resp => {
-                this.groups.push(resp);
+                if (this.checked) {
+                    this.groups.push(resp);
+                }
             }, err => {}
         );
     }

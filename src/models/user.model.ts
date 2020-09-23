@@ -9,4 +9,5 @@ export class User {
     client_id: number;
     group_number: number;
     test_user: boolean;
+    confirmed: boolean;
 }

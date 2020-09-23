@@ -42,7 +42,7 @@ export class ClientsComponent implements OnInit {
 
     getClient() {
         this.clientService.getClient().subscribe(resp => {
-            if (resp.action === 'new') {
+            if (resp.action === 'new' && this.checked) {
                 this.clients.push(resp.client);
             } else {
                 for (let i = 0; i < this.clients.length; i++) {

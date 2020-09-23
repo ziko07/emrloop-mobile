@@ -31,7 +31,7 @@
           <ion-col size="2">
             User Type
           </ion-col>
-          <ion-col size="3">
+          <ion-col size="2">
             Profile
           </ion-col>
           <ion-col size="3">
@@ -42,6 +42,7 @@
           </ion-col>
           <ion-col size="1"></ion-col>
           <ion-col size="1"></ion-col>
+          <ion-col size="1"></ion-col>
         </ion-row>
       </ion-grid>
       <ion-grid *ngFor="let user of users; let i=index">
@@ -49,7 +50,7 @@
           <ion-col size="2">
             {{ user.type }}
           </ion-col>
-          <ion-col size="3">
+          <ion-col size="2">
             <a routerLink="/users/{{user.id}}">
               {{ user.name }}
             </a>
@@ -62,8 +63,11 @@
           <ion-col size="2">
             {{ user.group_number }}
           </ion-col>
-          <ion-col size="2">
+          <ion-col size="3">
             <ion-buttons class="user-customize">
+              <button *ngIf="!user.confirmed" class="check" style="margin-right: 5px;" (click)="onConfirmUser(user.id)">
+                <ion-icon slot="icon-only" name="checkmark-sharp" class="icon"></ion-icon>
+              </button>
               <ion-button class="close" (click)="onDeleteUser(i,user.email)">
                 <ion-icon slot="icon-only" name="close-sharp" class="icon"></ion-icon>
               </ion-button>
