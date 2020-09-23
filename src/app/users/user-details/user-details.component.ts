@@ -23,16 +23,11 @@ export class UserDetailsComponent implements OnInit {
   }
 
   getSingleUserInfo() {
-    this.userService.getUsers().subscribe(
+    this.userService.getSingleUser(this.id).subscribe(
         resp => {
-          this.users = resp;
-          for (const user of this.users) {
-            if (user.id == this.id) {
-              this.name = user.name;
-              this.email = user.email;
-              break;
-            }
-          }
+          console.log(resp);
+          this.name = resp.name;
+          this.email = resp.email;
         },
         err => {
           console.log(err);

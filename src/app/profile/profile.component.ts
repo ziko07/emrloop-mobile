@@ -22,14 +22,21 @@ export class ProfileComponent implements OnInit {
     password: string;
     password_confirmation: string;
     form = new Form();
-    page = 1;
+    page = 0;
     length: number;
+    checked = false;
 
     loadData(event) {
+        if (this.checked) {
+            event.target.complete();
+            return;
+        }
         setTimeout(() => {
+            ++this.page;
             this.getAllUserGroups();
-            if (this.groups.length > 1) {
+            if (this.groups.length > 0) {
                 event.target.complete();
+                return;
             }
         }, 500);
     }
@@ -70,6 +77,7 @@ export class ProfileComponent implements OnInit {
         this.authProvider.getUserGroups(this.page).subscribe(
             resp => {
                 if (resp.my_groups.length < 1) {
+                    this.checked = true;
                     this.helperService.showUpdateToast('All data successfully loaded!');
                     return;
                 }
@@ -80,7 +88,6 @@ export class ProfileComponent implements OnInit {
                 console.log(err);
             }
         );
-        ++this.page;
     }
 
     loadImageFromDevice(e) {

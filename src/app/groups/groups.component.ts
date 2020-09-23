@@ -34,12 +34,18 @@ export class GroupsComponent implements OnInit {
     client_id: number;
 
     page = 1;
+    checked = false;
 
     loadData(event) {
+        if (this.checked) {
+            event.target.complete();
+            return;
+        }
         setTimeout(() => {
             this.getAllGroups();
-            if (this.groups.length > 1) {
+            if (this.groups.length > 0) {
                 event.target.complete();
+                return;
             }
         }, 500);
     }
@@ -62,6 +68,7 @@ export class GroupsComponent implements OnInit {
         this.groupService.getGroups(this.page).subscribe(
             resp => {
                 if (resp.groups.length < 1) {
+                    this.checked = true;
                     this.helperService.showUpdateToast('All data successfully loaded!');
                     return;
                 }

@@ -6,6 +6,7 @@ import {User} from '../../../models/user.model';
 import {UserService} from '../../../services/user.service';
 import {ClientService} from '../../../services/client.service';
 import {HelperService} from '../../../services/helper.service';
+import {GroupService} from '../../../services/group.service';
 
 @Component({
     selector: 'app-add-user',
@@ -20,6 +21,7 @@ export class AddUserComponent implements OnInit {
     constructor(public userService: UserService,
                 public clientService: ClientService,
                 public helperService: HelperService,
+                public groupService: GroupService,
                 public router: Router) {
     }
 
@@ -46,11 +48,11 @@ export class AddUserComponent implements OnInit {
     }
 
     getAllClients() {
-        this.clientService.getClients().subscribe(
+        this.groupService.getAllInfo().subscribe(
             resp => {
-                this.clients = resp;
+                this.clients = resp[0].clients;
                 console.log('Client list on Add user page');
-                console.log(resp);
+                console.log(this.clients);
             },
             err => {
                 console.log(err);

@@ -24,12 +24,18 @@ export class LogosComponent implements OnInit {
     logos = [];
     clients = [];
     page = 1;
+    checked = false;
 
     loadData(event) {
+        if (this.checked) {
+            event.target.complete();
+            return;
+        }
         setTimeout(() => {
             this.getAllLogos();
-            if (this.clients.length > 1) {
+            if (this.clients.length > 0) {
                 event.target.complete();
+                return;
             }
         }, 500);
     }
@@ -60,6 +66,7 @@ export class LogosComponent implements OnInit {
         this.logoService.getLogos(this.page).subscribe(
             resp => {
                 if (resp.length < 1) {
+                    this.checked = true;
                     this.helperService.showUpdateToast('All data successfully loaded!');
                     return;
                 }

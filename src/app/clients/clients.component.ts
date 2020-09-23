@@ -17,13 +17,20 @@ export class ClientsComponent implements OnInit {
 
     client = new Client();
     clients = [];
-    page = 1;
+    page = 0;
+    checked = false;
 
     loadData(event) {
+        if (this.checked) {
+            event.target.complete();
+            return;
+        }
         setTimeout(() => {
+            ++this.page;
             this.getAllClients();
-            if (this.clients.length > 1) {
+            if (this.clients.length > 0) {
                 event.target.complete();
+                return;
             }
         }, 500);
     }
@@ -50,11 +57,16 @@ export class ClientsComponent implements OnInit {
     }
 
     getAllClients() {
-        this.helperService.showLoader();
+        if (this.page === 1) {
+            this.helperService.showLoader();
+        }
         this.clientService.getClients(this.page).subscribe(
             resp => {
-                this.helperService.dismissLoader();
+                if (this.page === 1) {
+                    this.helperService.dismissLoader();
+                }
                 if (resp.length < 1) {
+                    this.checked = true;
                     this.helperService.showUpdateToast('All data successfully loaded!');
                     return;
                 }
@@ -62,11 +74,12 @@ export class ClientsComponent implements OnInit {
                 console.log(resp);
             },
             err => {
-                this.helperService.dismissLoader();
+                if (this.page === 1) {
+                    this.helperService.dismissLoader();
+                }
                 console.log(err);
             }
         );
-        ++this.page;
     }
 
     onDeleteClient(id, clientId) {

@@ -17,15 +17,22 @@ export class UsersComponent implements OnInit {
         public helperService: HelperService) {
     }
 
-    users = [];
     user = new User();
-    page = 1;
+    users = [];
+    page = 0;
+    checked = false;
 
     loadData(event) {
+        if (this.checked) {
+            event.target.complete();
+            return;
+        }
         setTimeout(() => {
+            ++this.page;
             this.getAllUsers();
-            if (this.users.length > 1) {
+            if (this.users.length > 0) {
                 event.target.complete();
+                return;
             }
         }, 500);
     }
@@ -66,23 +73,29 @@ export class UsersComponent implements OnInit {
     }
 
     getAllUsers() {
-        this.helperService.showLoader();
+        if (this.page === 1) {
+            this.helperService.showLoader();
+        }
         this.userService.getUsers(this.page).subscribe(
             resp => {
-                this.helperService.dismissLoader();
+                if (this.page === 1) {
+                    this.helperService.dismissLoader();
+                }
                 if (resp.users.length < 1) {
+                    this.checked = true;
                     this.helperService.showUpdateToast('All data successfully loaded!');
                     return;
                 }
                 this.users = this.users.concat(resp.users);
-                console.log(resp.users, this.page);
+                console.log(resp, resp.users, this.page);
             },
             err => {
-                this.helperService.dismissLoader();
+                if (this.page === 1) {
+                    this.helperService.dismissLoader();
+                }
                 console.log(err);
             }
         );
-        ++this.page;
     }
 
     onDeleteUser(id, email) {
