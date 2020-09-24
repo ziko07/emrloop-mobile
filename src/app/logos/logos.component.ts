@@ -1,9 +1,11 @@
 import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
 import {LogoService} from '../../services/logo.service';
 import {HelperService} from '../../services/helper.service';
 import {ClientService} from '../../services/client.service';
 import {GroupService} from '../../services/group.service';
+import {AuthService} from '../../services/auth.service';
 
 import {Logo} from '../../models/logo.model';
 
@@ -14,6 +16,8 @@ import {Logo} from '../../models/logo.model';
 })
 export class LogosComponent implements OnInit {
     constructor(
+        private router: Router,
+        public authService: AuthService,
         public logoService: LogoService,
         public helperService: HelperService,
         public clientService: ClientService,
@@ -41,9 +45,23 @@ export class LogosComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.getCurrentUserType();
         this.loadData(event);
         this.getLogo();
         this.getAllClients();
+    }
+
+    getCurrentUserType() {
+        this.authService.getUserType().subscribe(
+            resp => {
+                if (resp.user_type !== 'admin') {
+                    this.router.navigateByUrl('/home');
+                }
+                console.log(resp);
+            }, err => {
+                console.log(err);
+            }
+        );
     }
 
     getLogo() {

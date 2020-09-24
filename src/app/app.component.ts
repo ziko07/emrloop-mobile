@@ -5,7 +5,7 @@ import {Platform} from '@ionic/angular';
 
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
-// import { FCM } from '@ionic-native/fcm/ngx';
+import {FCM} from '@ionic-native/fcm/ngx';
 import {BackgroundMode} from '@ionic-native/background-mode/ngx';
 
 import {AuthService} from '../services/auth.service';
@@ -79,6 +79,7 @@ export class AppComponent {
 
     constructor(
         private platform: Platform,
+        private fcm: FCM,
         private splashScreen: SplashScreen,
         private statusBar: StatusBar,
         private authProvider: AuthService,
@@ -93,7 +94,31 @@ export class AppComponent {
         this.platform.ready()
             .then(() => {
                 this.backgroundMode.enable();
+
+                // this.fcm.onNotification().subscribe(data => {
+                //     if (data.wasTapped) {
+                //         console.log('Received in background');
+                //     } else {
+                //         console.log('Received in foreground');
+                //     }
+                //     ;
+                // });
+                //
+                // this.fcm.onTokenRefresh().subscribe(token => {
+                //     // Register your new token in your back-end if you want
+                //     // backend.registerToken(token);
+                // });
+                //
+                // this.getToken();
             });
+    }
+
+    getToken() {
+        this.fcm.getToken().then(token => {
+            this.helperService.showSuccessToast('Done with #{token}');
+            // Register your new token in your back-end if you want
+            // backend.registerToken(token);
+        });
     }
 
     getProfile() {

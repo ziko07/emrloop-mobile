@@ -19,11 +19,13 @@ export class ProfileComponent implements OnInit {
     groups = [];
     email: string;
     type: string;
+    name: string;
+    nickname: string;
     password: string;
     password_confirmation: string;
     form = new Form();
     page = 0;
-    length: number;
+    length = 0;
     checked = false;
 
     loadData(event) {
@@ -41,19 +43,9 @@ export class ProfileComponent implements OnInit {
         }, 500);
     }
 
-    doRefresh(event) {
-        console.log('Begin async operation');
-
-        setTimeout(() => {
-            console.log('Async operation has ended');
-            event.target.complete();
-        }, 1000);
-    }
-
     ngOnInit() {
         this.getCurrentUserType();
         this.loadData(event);
-        this.doRefresh(event);
         this.onGetCurrentUser();
     }
 
@@ -62,7 +54,10 @@ export class ProfileComponent implements OnInit {
         this.authProvider.getCurrentUser().subscribe(
             resp => {
                 this.helperService.dismissLoader();
-                this.form = resp.profile;
+                this.form.name = resp.profile.name;
+                this.name = resp.profile.name;
+                this.form.nickname = resp.profile.nickname;
+                this.nickname = resp.profile.nickname;
                 this.email = resp.profile.email;
                 console.log(resp.profile);
             }, err => {
@@ -118,10 +113,20 @@ export class ProfileComponent implements OnInit {
             this.form.password = this.password;
             this.form.password_confirmation = this.password_confirmation;
         }
+        if (this.name) {
+            this.form.name = this.name;
+        }
+        if (this.nickname) {
+            this.form.nickname = this.nickname;
+        }
         this.helperService.showLoader();
+        console.log(this.form);
+        console.log(this.type);
+        console.log("fgfhfghgfhfghfghfgh");
         this.authProvider.updateProfile(this.type, this.form).subscribe(
             resp => {
                 console.log(resp);
+                console.log(this.form);
                 this.helperService.dismissLoader();
                 if (resp.status === 'ok') {
                     this.authProvider.listProfile(resp.user);
@@ -135,6 +140,8 @@ export class ProfileComponent implements OnInit {
                 console.log(this.form);
             }
         );
+        this.form.password = '';
+        this.form.password_confirmation = '';
         this.form.current_password = '';
     }
 }

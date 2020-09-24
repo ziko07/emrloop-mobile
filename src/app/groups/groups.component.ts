@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
 import {GroupService} from '../../services/group.service';
 import {HelperService} from '../../services/helper.service';
 import {UserService} from '../../services/user.service';
+import {AuthService} from '../../services/auth.service';
 
 import {Group} from '../../models/group.model';
 import {Email} from '../../models/email.model';
@@ -17,7 +19,9 @@ export class GroupsComponent implements OnInit {
 
     constructor(public groupService: GroupService,
                 public helperService: HelperService,
-                public userService: UserService) {
+                public userService: UserService,
+                private router: Router,
+                public authService: AuthService) {
     }
 
     groups = [];
@@ -51,9 +55,23 @@ export class GroupsComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.getCurrentUserType();
         this.loadData(event);
         this.getInfo();
         this.getGroup();
+    }
+
+    getCurrentUserType() {
+        this.authService.getUserType().subscribe(
+            resp => {
+                if (resp.user_type !== 'admin') {
+                    this.router.navigateByUrl('/home');
+                }
+                console.log(resp);
+            }, err => {
+                console.log(err);
+            }
+        );
     }
 
     getGroup() {

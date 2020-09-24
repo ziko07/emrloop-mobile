@@ -8,12 +8,6 @@
 </ion-header>
 
 <ion-content>
-    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-        <ion-refresher-content pullingIcon="arrow-down"
-                               pullingText="Pull to refresh"
-                               refreshingSpinner="bubbles"
-                               refreshingText="Refreshing....."></ion-refresher-content>
-    </ion-refresher>
     <ion-card class="clients-card profile-card">
         <ion-card-header>
             <ion-text class="title pl-10">
@@ -41,7 +35,7 @@
                     <ion-input
                             type="text"
                             name="name"
-                            [(ngModel)]="form.name"
+                            [(ngModel)]="name"
                             required clearInput
                     >
                     </ion-input>
@@ -53,7 +47,7 @@
                     <ion-input
                             type="text"
                             name="nickname"
-                            [(ngModel)]="form.nickname"
+                            [(ngModel)]="nickname"
                             required clearInput
                     >
                     </ion-input>
@@ -89,7 +83,7 @@
                 <div class="profile-form-element">
                     <div>
                         <ion-label>
-                            Password confirmation
+                            Password Confirmation
                         </ion-label>
                     </div>
                     <ion-input

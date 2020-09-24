@@ -45,7 +45,7 @@
           <ion-col size="1"></ion-col>
         </ion-row>
       </ion-grid>
-      <ion-grid *ngFor="let user of users; let i=index">
+      <ion-grid class="grid-two" *ngFor="let user of users; let i=index">
         <ion-row class="users-content" [ngClass]="i < users.length-1 ? 'row-bb-body' : ''">
           <ion-col size="2">
             {{ user.type }}
@@ -65,13 +65,15 @@
           </ion-col>
           <ion-col size="3">
             <ion-buttons class="user-customize">
-              <button *ngIf="!user.confirmed" class="check" style="margin-right: 5px;" (click)="onConfirmUser(user.id)">
-                <ion-icon slot="icon-only" name="checkmark-sharp" class="icon"></ion-icon>
-              </button>
+              <span *ngIf="!user.confirmed" style="position: relative; bottom: 1px">
+                  <ion-button class="check" style="margin-right: 5px;" (click)="onConfirmUser(user)">
+                    <ion-icon slot="icon-only" name="checkmark-sharp" class="icon"></ion-icon>
+                  </ion-button>
+              </span>
               <ion-button class="close" (click)="onDeleteUser(i,user.email)">
                 <ion-icon slot="icon-only" name="close-sharp" class="icon"></ion-icon>
               </ion-button>
-              <ion-button color="primary">
+              <ion-button color="primary" style="position: relative; right: 6px;">
                 <a routerLink="/users/{{user.id}}/change">
                   <ion-icon slot="icon-only" name="settings-sharp" class="icon"></ion-icon>
                 </a>

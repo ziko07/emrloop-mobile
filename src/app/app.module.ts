@@ -6,12 +6,11 @@ import {AngularTokenModule} from 'angular-token';
 import {AuthGuardService as AuthGuard} from '../services/auth/auth-guard.service';
 
 import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
-import {HttpClientModule, HttpClient} from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {FCM} from '@ionic-native/fcm/ngx';
 import {BackgroundMode} from '@ionic-native/background-mode/ngx';
-import {FileChooser} from '@ionic-native/file-chooser/ngx';
 
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
@@ -73,8 +72,7 @@ import {UserDetailsComponent} from './users/user-details/user-details.component'
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
         AuthGuard,
         FCM,
-        BackgroundMode,
-        FileChooser
+        BackgroundMode
     ],
     exports: [
         AttachmentPipe

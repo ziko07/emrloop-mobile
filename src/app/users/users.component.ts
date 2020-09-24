@@ -1,27 +1,36 @@
 import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
 import {UserService} from '../../services/user.service';
 import {HelperService} from '../../services/helper.service';
+import {AuthService} from '../../services/auth.service';
 
 import {User} from '../../models/user.model';
 
 @Component({
     selector: 'app-users',
     templateUrl: './users.component.html',
-    styleUrls: ['./users.component.scss'],
+    styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
 
     constructor(
+        private router: Router,
         public userService: UserService,
-        public helperService: HelperService) {
+        public helperService: HelperService,
+        public authService: AuthService) {
     }
 
     user = new User();
     users = [];
     page = 0;
     checked = false;
-    isConfirmed = false;
+
+    ngOnInit() {
+        this.getCurrentUserType();
+        this.getUser();
+        this.loadData(event);
+    }
 
     loadData(event) {
         if (this.checked) {
@@ -38,9 +47,17 @@ export class UsersComponent implements OnInit {
         }, 500);
     }
 
-    ngOnInit() {
-        this.getUser();
-        this.loadData(event);
+    getCurrentUserType() {
+        this.authService.getUserType().subscribe(
+            resp => {
+                if (resp.user_type !== 'admin') {
+                    this.router.navigateByUrl('/home');
+                }
+                console.log(resp);
+            }, err => {
+                console.log(err);
+            }
+        );
     }
 
     getUser() {
@@ -99,13 +116,12 @@ export class UsersComponent implements OnInit {
         );
     }
 
-    onConfirmUser(id) {
-        console.log(id);
-        this.userService.confirmUser(id).subscribe(
+    onConfirmUser(user) {
+        console.log(user);
+        this.userService.confirmUser(user.id).subscribe(
             resp => {
                 if (resp.status === 'ok') {
-                    document.querySelector('.check').style.display = 'none';
-                    this.user.confirmed = true;
+                    user.confirmed = true;
                     this.helperService.showSuccessToast(resp.message);
                 }
                 console.log(resp);

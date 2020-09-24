@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
 import {ClientService} from '../../services/client.service';
 import {HelperService} from '../../services/helper.service';
+import {AuthService} from '../../services/auth.service';
 
 import {Client} from '../../models/client.model';
 
@@ -12,7 +14,9 @@ import {Client} from '../../models/client.model';
 })
 export class ClientsComponent implements OnInit {
     constructor(public clientService: ClientService,
-                public helperService: HelperService) {
+                public helperService: HelperService,
+                private router: Router,
+                public authService: AuthService) {
     }
 
     client = new Client();
@@ -36,8 +40,22 @@ export class ClientsComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.getCurrentUserType();
         this.getClient();
         this.loadData(event);
+    }
+
+    getCurrentUserType() {
+        this.authService.getUserType().subscribe(
+            resp => {
+                if (resp.user_type !== 'admin') {
+                    this.router.navigateByUrl('/home');
+                }
+                console.log(resp);
+            }, err => {
+                console.log(err);
+            }
+        );
     }
 
     getClient() {
