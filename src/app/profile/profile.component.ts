@@ -110,6 +110,27 @@ export class ProfileComponent implements OnInit {
             return;
         }
         if (this.password && this.password_confirmation) {
+            if (this.password.length < 8 || this.password_confirmation.length < 8) {
+                this.helperService.showDangerToast('Password should have at least 8 characters.');
+                this.password = '';
+                this.password_confirmation = '';
+                this.form.current_password = '';
+                return;
+            }
+            if (this.password !== this.password_confirmation) {
+                this.helperService.showDangerToast("Passwords don't match.");
+                this.password = '';
+                this.password_confirmation = '';
+                this.form.current_password = '';
+                return;
+            }
+            if (this.password === this.form.current_password) {
+                this.helperService.showUpdateToast('New password is same to current password.');
+                this.password = '';
+                this.password_confirmation = '';
+                this.form.current_password = '';
+                return;
+            }
             this.form.password = this.password;
             this.form.password_confirmation = this.password_confirmation;
         }
@@ -120,9 +141,6 @@ export class ProfileComponent implements OnInit {
             this.form.nickname = this.nickname;
         }
         this.helperService.showLoader();
-        console.log(this.form);
-        console.log(this.type);
-        console.log("fgfhfghgfhfghfghfgh");
         this.authProvider.updateProfile(this.type, this.form).subscribe(
             resp => {
                 console.log(resp);
@@ -140,6 +158,8 @@ export class ProfileComponent implements OnInit {
                 console.log(this.form);
             }
         );
+        this.password = '';
+        this.password_confirmation = '';
         this.form.password = '';
         this.form.password_confirmation = '';
         this.form.current_password = '';

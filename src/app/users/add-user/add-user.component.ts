@@ -26,6 +26,14 @@ export class AddUserComponent implements OnInit {
     }
 
     onAddUser() {
+        if (this.user.password !== this.user.password_confirmation) {
+            this.helperService.showDangerToast("Passwords don't match");
+            return;
+        }
+        if (this.user.password.length < 8 || this.user.password_confirmation.length < 8) {
+            this.helperService.showDangerToast('Password should have at least 8 characters.');
+            return;
+        }
         this.helperService.showLoader();
         this.userService.addUser(this.user).subscribe(
             resp => {

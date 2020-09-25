@@ -2,8 +2,8 @@ export class Base {
     static apiUrl = 'http://34.207.81.246/api/v1';
     static baseUrl = 'http://34.207.81.246/';
 
-    // static apiUrl = 'https://5f3f81bcbe28.ngrok.io/api/v1';
-    // static baseUrl = 'https://5f3f81bcbe28.ngrok.io';
+    // static apiUrl = 'https://cae64b464987.ngrok.io/api/v1';
+    // static baseUrl = 'https://cae64b464987.ngrok.io';
 
     static getAuthToken() {
         const auth = JSON.parse(window.localStorage.getItem('auth'));

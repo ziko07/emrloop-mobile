@@ -75,7 +75,7 @@
                             type="password"
                             name="password"
                             [(ngModel)]="password"
-                            required clearInput autocomplete="off"
+                            required clearInput autocomplete="off" minlength="8"
                     >
                     </ion-input>
                     <small>Leave it blank if you don't want to change it.</small>
@@ -90,7 +90,7 @@
                             type="password"
                             name="confirm-password"
                             [(ngModel)]="password_confirmation"
-                            required clearInput autocomplete="off"
+                            required clearInput autocomplete="off" minlength="8"
                     >
                     </ion-input>
                 </div>
@@ -104,7 +104,7 @@
                             type="password"
                             name="current-password"
                             [(ngModel)]="form.current_password"
-                            required clearInput autocomplete="off"
+                            required clearInput autocomplete="off" minlength="8"
                     >
                     </ion-input>
                 </div>

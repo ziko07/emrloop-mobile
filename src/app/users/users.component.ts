@@ -27,9 +27,9 @@ export class UsersComponent implements OnInit {
     checked = false;
 
     ngOnInit() {
+        this.loadData(event);
         this.getCurrentUserType();
         this.getUser();
-        this.loadData(event);
     }
 
     loadData(event) {

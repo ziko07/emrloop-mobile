@@ -28,7 +28,7 @@
                     <ion-icon name="lock-closed-outline" class="text-primary" class="icon"></ion-icon>
                     Password
                 </ion-label>
-                <ion-input type="password" autocomplete="off" [(ngModel)]="form.password" name="password" required
+                <ion-input type="password" autocomplete="off" [(ngModel)]="form.password" name="password" required minlength="8"
                            clearInput></ion-input>
             </ion-item>
         </form>
