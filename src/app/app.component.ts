@@ -5,7 +5,7 @@ import {Platform} from '@ionic/angular';
 
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
-import {FCM} from '@ionic-native/fcm/ngx';
+import { FCM } from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
 import {BackgroundMode} from '@ionic-native/background-mode/ngx';
 
 import {AuthService} from '../services/auth.service';
@@ -21,7 +21,8 @@ export class AppComponent {
     isSignedIn: boolean;
     navigate: any;
     user: any;
-    token: any;
+    token: any = "Init";
+    status: any = 'init';
     adminMenu = [
         {
             title: 'My Profile',
@@ -114,11 +115,22 @@ export class AppComponent {
     }
 
     getToken() {
+        console.log('*******************************************************');
+        this.status = 'get token started';
         this.fcm.getToken().then(token => {
+            console.log('##################################################');
+            this.status = "token found";
+            console.log(token);
+            this.token = token;
             this.helperService.showSuccessToast('Done with #{token}');
             // Register your new token in your back-end if you want
             // backend.registerToken(token);
+        }).catch((error) => {
+            this.status = 'error';
+            this.status = error;
         });
+
+        this.status = "get token finished";
     }
 
     getProfile() {
@@ -132,6 +144,9 @@ export class AppComponent {
         this.platform.ready().then(() => {
             this.statusBar.backgroundColorByHexString('#1B8895');
             this.splashScreen.hide();
+            setTimeout(() => {
+                this.getToken();
+               }, 5000);
         });
         this.setUserData();
         this.getProfile();

@@ -9,7 +9,7 @@ import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
 import {HttpClientModule} from '@angular/common/http';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
-import {FCM} from '@ionic-native/fcm/ngx';
+import {FCM} from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';;
 import {BackgroundMode} from '@ionic-native/background-mode/ngx';
 
 import {AppComponent} from './app.component';
