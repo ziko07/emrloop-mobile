@@ -28,6 +28,7 @@ export class ProfileComponent implements OnInit {
     length = 0;
     checked = false;
 
+
     loadData(event) {
         if (this.checked) {
             event.target.complete();
@@ -141,12 +142,17 @@ export class ProfileComponent implements OnInit {
             this.form.nickname = this.nickname;
         }
         this.helperService.showLoader();
-        this.authProvider.updateProfile(this.type, this.form).subscribe(
+        const formData = {};
+        for (const key in this.form) {
+           if (this.form[key]) {
+               formData[key] = this.form[key];
+           }
+        }
+        this.authProvider.updateProfile(this.type, formData).subscribe(
             resp => {
-                console.log(resp);
-                console.log(this.form);
                 this.helperService.dismissLoader();
                 if (resp.status === 'ok') {
+                    console.log(this.form, formData);
                     this.authProvider.listProfile(resp.user);
                     this.helperService.showSuccessToast(resp.message);
                 } else {

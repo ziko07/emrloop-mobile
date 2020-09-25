@@ -41,14 +41,13 @@ export class AuthService {
         return this.http.get(Base.apiUrl + '/users/profile');
     }
 
-    updateProfile(type, form): Observable<any> {
-        console.log(type);
+    updateProfile(type, formData): Observable<any> {
         if (type === 'admin') {
-            return this.http.post(Base.apiUrl + '/users/update_profile', {admin: form}, Base.requestHeader());
+            return this.http.post(Base.apiUrl + '/users/update_profile', {admin: formData}, Base.requestHeader());
         } else if (type === 'user') {
-            return this.http.post(Base.apiUrl + '/users/update_profile', {user: form}, Base.requestHeader());
+            return this.http.post(Base.apiUrl + '/users/update_profile', {user: formData}, Base.requestHeader());
         } else {
-            return this.http.post(Base.apiUrl + '/users/update_profile', {poweruser: form}, Base.requestHeader());
+            return this.http.post(Base.apiUrl + '/users/update_profile', {poweruser: formData}, Base.requestHeader());
         }
     }
 
