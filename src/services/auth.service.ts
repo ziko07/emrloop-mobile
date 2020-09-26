@@ -41,6 +41,10 @@ export class AuthService {
         return this.http.get(Base.apiUrl + '/users/profile');
     }
 
+    push(regId, os_type): Observable<any> {
+        return this.http.post(Base.apiUrl + '/push', {regId, os_type}, Base.requestHeader());
+    }
+
     updateProfile(type, form): Observable<any> {
         console.log(type);
         if (type === 'admin') {

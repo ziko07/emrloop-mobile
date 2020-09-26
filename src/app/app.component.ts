@@ -2,10 +2,10 @@ import {Component} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 
 import {Platform} from '@ionic/angular';
+//import {FCM} from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
 
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
-import { FCM } from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
 import {BackgroundMode} from '@ionic-native/background-mode/ngx';
 
 import {AuthService} from '../services/auth.service';
@@ -21,8 +21,8 @@ export class AppComponent {
     isSignedIn: boolean;
     navigate: any;
     user: any;
-    token: any = "Init";
-    status: any = 'init';
+    token: any = 'Init';
+    osType: string;
     adminMenu = [
         {
             title: 'My Profile',
@@ -80,7 +80,6 @@ export class AppComponent {
 
     constructor(
         private platform: Platform,
-        private fcm: FCM,
         private splashScreen: SplashScreen,
         private statusBar: StatusBar,
         private authProvider: AuthService,
@@ -88,49 +87,14 @@ export class AppComponent {
         private activateRoute: ActivatedRoute,
         private backgroundMode: BackgroundMode,
         public helperService: HelperService,
-        public authGuard: AuthGuard
+        public authGuard: AuthGuard,
+        //private fcm: FCM
     ) {
         this.sideMenu();
         this.initializeApp();
-        this.platform.ready()
-            .then(() => {
-                this.backgroundMode.enable();
-
-                // this.fcm.onNotification().subscribe(data => {
-                //     if (data.wasTapped) {
-                //         console.log('Received in background');
-                //     } else {
-                //         console.log('Received in foreground');
-                //     }
-                //     ;
-                // });
-                //
-                // this.fcm.onTokenRefresh().subscribe(token => {
-                //     // Register your new token in your back-end if you want
-                //     // backend.registerToken(token);
-                // });
-                //
-                // this.getToken();
-            });
-    }
-
-    getToken() {
-        console.log('*******************************************************');
-        this.status = 'get token started';
-        this.fcm.getToken().then(token => {
-            console.log('##################################################');
-            this.status = "token found";
-            console.log(token);
-            this.token = token;
-            this.helperService.showSuccessToast('Done with #{token}');
-            // Register your new token in your back-end if you want
-            // backend.registerToken(token);
-        }).catch((error) => {
-            this.status = 'error';
-            this.status = error;
+        this.platform.ready().then(() => {
+            this.backgroundMode.enable();
         });
-
-        this.status = "get token finished";
     }
 
     getProfile() {
@@ -144,12 +108,18 @@ export class AppComponent {
         this.platform.ready().then(() => {
             this.statusBar.backgroundColorByHexString('#1B8895');
             this.splashScreen.hide();
-            setTimeout(() => {
-                this.getToken();
-               }, 5000);
         });
+        this.getOsType();
         this.setUserData();
         this.getProfile();
+    }
+
+    getOsType() {
+        if (this.platform.is('ios')) {
+            this.osType = 'ios';
+        } else if (this.platform.is('android')) {
+            this.osType = 'android';
+        }
     }
 
     sideMenu() {
@@ -171,12 +141,29 @@ export class AppComponent {
         this.helperService.showLoader();
         this.authProvider.logout().subscribe(resp => {
             this.helperService.dismissLoader();
-            // this.router.navigateByUrl('/login');
             window.location.href = '/login';
             this.helperService.showUpdateToast('You have successfully logged out!');
         }, err => {
         });
     }
+
+    // getToken() {
+    //     this.fcm.getToken().then(token => {
+    //         this.token = token;
+    //         console.log('Token done with ', this.token);
+    //         this.helperService.showSuccessToast('Done with #{token}');
+    //         this.authProvider.push(this.token, this.osType).subscribe(
+    //             resp => {
+    //                 console.log('FCM done');
+    //                 console.log(resp);
+    //             }, err => {
+    //                 console.log(err);
+    //             }
+    //         );
+    //     }).catch((error) => {
+    //         console.log(error);
+    //     });
+    // }
 
     setUserData() {
         this.isSignedIn = this.authProvider.signedIn();
@@ -191,6 +178,7 @@ export class AppComponent {
             } else {
                 this.navigate = this.generalMenu;
             }
+            //this.getToken();
         }, err => {
             this.user = null;
             if (err.status === 401) {

@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+
 import {HelperService} from '../../services/helper.service';
 import {LoaderService} from '../../services/loader.service';
 import {AuthService} from '../../services/auth.service';
@@ -16,14 +17,17 @@ export class LoginComponent implements OnInit {
     errorMessage: any;
     buttonText: any = 'Login';
 
-    constructor(private router: Router, private helperService: HelperService,
-                public spinnerDialog: LoaderService, public authProvider: AuthService) {
+    constructor(private router: Router,
+                private helperService: HelperService,
+                public spinnerDialog: LoaderService,
+                public authProvider: AuthService,
+    ) {
         this.form = {login: '', password: ''};
     }
 
     ngOnInit() {
-        let data = window.localStorage.getItem('credential');
-        let credential = data ? JSON.parse(data) : {};
+        const data = window.localStorage.getItem('credential');
+        const credential = data ? JSON.parse(data) : {};
         this.form.password = credential.password;
         this.form.login = credential.login;
         if (credential.login) {
@@ -43,10 +47,8 @@ export class LoginComponent implements OnInit {
             this.authProvider.login(this.userDetails).subscribe(resp => {
                 this.helperService.dismissLoader();
                 window.location.href = '/';
-                // this.router.navigateByUrl('/home');
-                console.log(resp);
-                console.log('Hello World!');
             }, err => {
+                console.log(err);
                 this.helperService.dismissLoader();
                 this.disableLogin = false;
                 if (err.status === 401) {
@@ -60,10 +62,6 @@ export class LoginComponent implements OnInit {
         }
     }
 
-    public register() {
-
-    }
-
     validateRegister(form) {
         if (this.form.login == undefined || this.form.login == '') {
             this.errorMessage = 'Enter email';
@@ -75,5 +73,4 @@ export class LoginComponent implements OnInit {
         }
         return true;
     }
-
 }

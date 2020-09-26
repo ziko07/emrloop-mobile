@@ -15,7 +15,7 @@ export class HelperService {
     public showSuccessToast(message) {
         this.toast = this.toastController.create({
             message,
-            position: 'middle',
+            position: 'bottom',
             duration: 1000,
             animated: true,
             color: 'success',
@@ -28,7 +28,7 @@ export class HelperService {
     public showUpdateToast(message) {
         this.toast = this.toastController.create({
             message,
-            position: 'middle',
+            position: 'bottom',
             duration: 1000,
             animated: true,
             color: 'tertiary',
@@ -41,7 +41,7 @@ export class HelperService {
     public showDangerToast(message) {
         this.toast = this.toastController.create({
             message,
-            position: 'middle',
+            position: 'bottom',
             duration: 1000,
             animated: true,
             color: 'danger',
