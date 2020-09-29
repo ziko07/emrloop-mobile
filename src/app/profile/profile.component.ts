@@ -141,7 +141,13 @@ export class ProfileComponent implements OnInit {
             this.form.nickname = this.nickname;
         }
         this.helperService.showLoader();
-        this.authProvider.updateProfile(this.type, this.form).subscribe(
+        const formData = {};
+        for (const key in this.form) {
+            if (this.form[key]) {
+                formData[key] = this.form[key];
+            }
+        }
+        this.authProvider.updateProfile(this.type, formData).subscribe(
             resp => {
                 console.log(resp);
                 console.log(this.form);
@@ -163,5 +169,6 @@ export class ProfileComponent implements OnInit {
         this.form.password = '';
         this.form.password_confirmation = '';
         this.form.current_password = '';
+        this.form.image = '';
     }
 }

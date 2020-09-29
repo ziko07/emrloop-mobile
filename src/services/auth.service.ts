@@ -42,7 +42,7 @@ export class AuthService {
     }
 
     push(regId, os_type): Observable<any> {
-        return this.http.post(Base.apiUrl + '/push', {regId, os_type}, Base.requestHeader());
+        return this.http.post(Base.apiUrl + '/users/push', {regId, os_type}, Base.requestHeader());
     }
 
     updateProfile(type, form): Observable<any> {

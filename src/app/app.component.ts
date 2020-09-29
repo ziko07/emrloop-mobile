@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 
 import {Platform} from '@ionic/angular';
-//import {FCM} from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
 
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
@@ -87,8 +86,7 @@ export class AppComponent {
         private activateRoute: ActivatedRoute,
         private backgroundMode: BackgroundMode,
         public helperService: HelperService,
-        public authGuard: AuthGuard,
-        //private fcm: FCM
+        public authGuard: AuthGuard
     ) {
         this.sideMenu();
         this.initializeApp();
@@ -97,32 +95,24 @@ export class AppComponent {
         });
     }
 
-    getProfile() {
+    getProfile(): void {
         this.authProvider.getProfile().subscribe(resp => {
             this.user = resp;
         }, err => {
+            console.log(err);
         });
     }
 
-    initializeApp() {
+    initializeApp(): void {
         this.platform.ready().then(() => {
             this.statusBar.backgroundColorByHexString('#1B8895');
             this.splashScreen.hide();
+            this.setUserData();
+            this.getProfile();
         });
-        this.getOsType();
-        this.setUserData();
-        this.getProfile();
     }
 
-    getOsType() {
-        if (this.platform.is('ios')) {
-            this.osType = 'ios';
-        } else if (this.platform.is('android')) {
-            this.osType = 'android';
-        }
-    }
-
-    sideMenu() {
+    sideMenu(): void {
         this.navigate = [
             {
                 title: 'Login',
@@ -137,7 +127,7 @@ export class AppComponent {
         ];
     }
 
-    logout() {
+    logout(): void {
         this.helperService.showLoader();
         this.authProvider.logout().subscribe(resp => {
             this.helperService.dismissLoader();
@@ -147,30 +137,7 @@ export class AppComponent {
         });
     }
 
-    // getToken() {
-    //     this.fcm.getToken().then(token => {
-    //         this.token = token;
-    //         console.log('Token done with ', this.token);
-    //         this.helperService.showSuccessToast('Done with #{token}');
-    //         this.authProvider.push(this.token, this.osType).subscribe(
-    //             resp => {
-    //                 console.log('FCM done');
-    //                 console.log(resp);
-    //             }, err => {
-    //                 console.log(err);
-    //             }
-    //         );
-    //     }).catch((error) => {
-    //         console.log(error);
-    //     });
-    // }
-
-    setUserData() {
-        this.isSignedIn = this.authProvider.signedIn();
-        if (this.isSignedIn) {
-            this.router.navigateByUrl('/home');
-        }
-        console.log(this.isSignedIn);
+    onGetCurrentUser(): void {
         this.authProvider.getCurrentUser().subscribe(resp => {
             this.user = resp.profile;
             if (this.user.type === 'Admin') {
@@ -178,12 +145,22 @@ export class AppComponent {
             } else {
                 this.navigate = this.generalMenu;
             }
-            //this.getToken();
-        }, err => {
-            this.user = null;
-            if (err.status === 401) {
-                this.router.navigateByUrl('/login');
-            }
-        });
+            }, err => {
+                this.user = null;
+                if (err.status === 401) {
+                    this.router.navigateByUrl('/login');
+                }
+            });
+    }
+
+    setUserData() {
+        this.isSignedIn = this.authProvider.signedIn();
+        if (this.isSignedIn) {
+            this.router.navigateByUrl('/home');
+        }
+        console.log(206, this.isSignedIn);
+        console.log(207, this.token);
+        console.log(208, this.osType);
+        this.onGetCurrentUser();
     }
 }
