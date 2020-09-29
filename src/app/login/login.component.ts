@@ -1,10 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
-import {Platform} from '@ionic/angular';
-
-import {FCM} from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
-
 import {HelperService} from '../../services/helper.service';
 import {LoaderService} from '../../services/loader.service';
 import {AuthService} from '../../services/auth.service';
@@ -20,21 +16,16 @@ export class LoginComponent implements OnInit {
     disableLogin = false;
     errorMessage: any;
     buttonText: any = 'Login';
-    token: any = 'Init';
-    osType: string;
 
     constructor(private router: Router,
                 private helperService: HelperService,
                 public spinnerDialog: LoaderService,
-                public authProvider: AuthService,
-                private fcm: FCM,
-                private platform: Platform
+                public authProvider: AuthService
     ) {
         this.form = {login: '', password: ''};
     }
 
     ngOnInit() {
-        this.getOsType();
         const data = window.localStorage.getItem('credential');
         const credential = data ? JSON.parse(data) : {};
         this.form.password = credential.password;
@@ -42,36 +33,6 @@ export class LoginComponent implements OnInit {
         if (credential.login) {
             this.form.save_password = true;
         }
-    }
-
-    getOsType(): void {
-        if (this.platform.is('ios')) {
-            this.osType = 'ios';
-        } else if (this.platform.is('android')) {
-            this.osType = 'android';
-        }
-        console.log(this.platform.platforms(), this.osType);
-    }
-
-    onPushNotification(): void {
-        this.authProvider.push(this.token, this.osType).subscribe(
-            resp => {
-                console.log(resp);
-            }, err => {
-                console.log(err);
-            }
-        );
-    }
-
-    getToken(): void {
-        this.fcm.getToken().then(token => {
-            this.token = token;
-            console.log('Token done with ', this.token);
-            this.onPushNotification();
-        }).catch((error) => {
-                console.log(error);
-            }
-        );
     }
 
     signin() {
@@ -84,14 +45,9 @@ export class LoginComponent implements OnInit {
             };
             this.helperService.showLoader();
             this.authProvider.login(this.userDetails).subscribe(resp => {
-                this.helperService.dismissLoader();
                 console.log(resp);
-                if (resp.status === 200) {
-                    setTimeout(() => {
-                        this.getToken();
-                    }, 5000);
-                    window.location.href = '/';
-                }
+                this.helperService.dismissLoader();
+                window.location.href = '/';
             }, err => {
                 console.log(err);
                 this.helperService.dismissLoader();

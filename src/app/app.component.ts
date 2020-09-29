@@ -3,6 +3,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 
 import {Platform} from '@ionic/angular';
 
+import {FCM} from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
+
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {BackgroundMode} from '@ionic-native/background-mode/ngx';
@@ -86,13 +88,25 @@ export class AppComponent {
         private activateRoute: ActivatedRoute,
         private backgroundMode: BackgroundMode,
         public helperService: HelperService,
-        public authGuard: AuthGuard
+        public authGuard: AuthGuard,
+        private fcm: FCM
     ) {
         this.sideMenu();
         this.initializeApp();
         this.platform.ready().then(() => {
             this.backgroundMode.enable();
+            this.getOsType();
+            this.getProfile();
+            this.setUserData();
         });
+    }
+
+    getOsType(): void {
+        if (this.platform.is('ios')) {
+            this.osType = 'ios';
+        } else if (this.platform.is('android')) {
+            this.osType = 'android';
+        }
     }
 
     getProfile(): void {
@@ -145,17 +159,42 @@ export class AppComponent {
             } else {
                 this.navigate = this.generalMenu;
             }
+        }, err => {
+            this.user = null;
+            if (err.status === 401) {
+                this.router.navigateByUrl('/login');
+            }
+        });
+    }
+
+    onPushNotification(): void {
+        this.authProvider.push(this.token, this.osType).subscribe(
+            resp => {
+                console.log(resp);
             }, err => {
-                this.user = null;
-                if (err.status === 401) {
-                    this.router.navigateByUrl('/login');
-                }
-            });
+                console.log(err);
+            }
+        );
+    }
+
+    getToken(): void {
+        this.fcm.getToken().then(token => {
+            this.token = token;
+            console.log('Token done with ', this.token);
+            this.onPushNotification();
+        }).catch((error) => {
+                console.log(error);
+            }
+        );
     }
 
     setUserData() {
         this.isSignedIn = this.authProvider.signedIn();
+        console.log(this.isSignedIn);
         if (this.isSignedIn) {
+            setTimeout(() => {
+                this.getToken();
+            }, 5000);
             this.router.navigateByUrl('/home');
         }
         console.log(206, this.isSignedIn);
