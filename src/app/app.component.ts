@@ -22,7 +22,7 @@ export class AppComponent {
     isSignedIn: boolean;
     navigate: any;
     user: any;
-    token: any = 'Init';
+    token: string;
     osType: string;
     adminMenu = [
         {
@@ -81,6 +81,7 @@ export class AppComponent {
 
     constructor(
         private platform: Platform,
+        private fcm: FCM,
         private splashScreen: SplashScreen,
         private statusBar: StatusBar,
         private authProvider: AuthService,
@@ -88,17 +89,48 @@ export class AppComponent {
         private activateRoute: ActivatedRoute,
         private backgroundMode: BackgroundMode,
         public helperService: HelperService,
-        public authGuard: AuthGuard,
-        private fcm: FCM
+        public authGuard: AuthGuard
     ) {
         this.sideMenu();
         this.initializeApp();
+    }
+
+    initializeApp(): void {
         this.platform.ready().then(() => {
             this.backgroundMode.enable();
+            this.statusBar.backgroundColorByHexString('#1B8895');
+            this.splashScreen.hide();
             this.getOsType();
-            this.getProfile();
             this.setUserData();
+            this.getProfile();
         });
+    }
+
+    onPushNotification(): void {
+        this.authProvider.push(this.token, this.osType).subscribe(
+            resp => {
+                console.log(resp);
+            }, err => {
+                console.log(err);
+            }
+        );
+    }
+
+    getToken(): void {
+        this.fcm.getToken().then(token => {
+            this.token = token;
+            this.authProvider.push(this.token, this.osType).subscribe(
+                resp => {
+                    console.log(resp);
+                }, err => {
+                    console.log(err);
+                }
+            );
+        }).catch((error) => {
+                this.token = error;
+                console.log(error);
+            }
+        );
     }
 
     getOsType(): void {
@@ -114,15 +146,6 @@ export class AppComponent {
             this.user = resp;
         }, err => {
             console.log(err);
-        });
-    }
-
-    initializeApp(): void {
-        this.platform.ready().then(() => {
-            this.statusBar.backgroundColorByHexString('#1B8895');
-            this.splashScreen.hide();
-            this.setUserData();
-            this.getProfile();
         });
     }
 
@@ -167,39 +190,16 @@ export class AppComponent {
         });
     }
 
-    onPushNotification(): void {
-        this.authProvider.push(this.token, this.osType).subscribe(
-            resp => {
-                console.log(resp);
-            }, err => {
-                console.log(err);
-            }
-        );
-    }
-
-    getToken(): void {
-        this.fcm.getToken().then(token => {
-            this.token = token;
-            console.log('Token done with ', this.token);
-            this.onPushNotification();
-        }).catch((error) => {
-                console.log(error);
-            }
-        );
-    }
-
-    setUserData() {
+    setUserData(): void {
         this.isSignedIn = this.authProvider.signedIn();
         console.log(this.isSignedIn);
         if (this.isSignedIn) {
             setTimeout(() => {
                 this.getToken();
-            }, 5000);
+            }, 2000);
             this.router.navigateByUrl('/home');
         }
-        console.log(206, this.isSignedIn);
-        console.log(207, this.token);
-        console.log(208, this.osType);
         this.onGetCurrentUser();
+        this.onPushNotification();
     }
 }

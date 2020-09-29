@@ -1,6 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
+import {Platform} from '@ionic/angular';
+
+import {FCM} from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
+
 import {HelperService} from '../../services/helper.service';
 import {LoaderService} from '../../services/loader.service';
 import {AuthService} from '../../services/auth.service';
@@ -20,7 +24,8 @@ export class LoginComponent implements OnInit {
     constructor(private router: Router,
                 private helperService: HelperService,
                 public spinnerDialog: LoaderService,
-                public authProvider: AuthService
+                public authProvider: AuthService,
+                private platform: Platform
     ) {
         this.form = {login: '', password: ''};
     }
@@ -47,7 +52,9 @@ export class LoginComponent implements OnInit {
             this.authProvider.login(this.userDetails).subscribe(resp => {
                 console.log(resp);
                 this.helperService.dismissLoader();
-                window.location.href = '/';
+                if (resp.status === 200) {
+                    window.location.href = '/';
+                }
             }, err => {
                 console.log(err);
                 this.helperService.dismissLoader();
