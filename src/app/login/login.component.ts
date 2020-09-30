@@ -20,17 +20,24 @@ export class LoginComponent implements OnInit {
     disableLogin = false;
     errorMessage: any;
     buttonText: any = 'Login';
+    regId: string;
+    osType: string;
 
     constructor(private router: Router,
                 private helperService: HelperService,
                 public spinnerDialog: LoaderService,
                 public authProvider: AuthService,
-                private platform: Platform
+                private platform: Platform,
+                private fcm: FCM
     ) {
         this.form = {login: '', password: ''};
     }
 
     ngOnInit() {
+        setTimeout(() => {
+            this.getToken();
+        }, 5000);
+        this.getOSType();
         const data = window.localStorage.getItem('credential');
         const credential = data ? JSON.parse(data) : {};
         this.form.password = credential.password;
@@ -38,6 +45,34 @@ export class LoginComponent implements OnInit {
         if (credential.login) {
             this.form.save_password = true;
         }
+    }
+
+    getOSType(): void {
+        if (this.platform.is('android')) {
+            this.osType = 'android';
+        } else if (this.platform.is('ios')) {
+            this.osType = 'ios';
+        }
+    }
+
+    onPushNotification(): void {
+        this.authProvider.push(this.regId, this.osType).subscribe(
+            resp => {
+                console.log(resp);
+            }, err => {
+                console.log(err);
+            }
+        );
+    }
+
+    getToken(): void {
+        this.fcm.getToken().then(token => {
+            this.regId = token;
+        }).catch((error) => {
+                this.regId = error;
+                console.log(error);
+            }
+        );
     }
 
     signin() {
@@ -53,6 +88,7 @@ export class LoginComponent implements OnInit {
                 console.log(resp);
                 this.helperService.dismissLoader();
                 if (resp.status === 200) {
+                    this.onPushNotification();
                     window.location.href = '/';
                 }
             }, err => {

@@ -3,8 +3,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 
 import {Platform} from '@ionic/angular';
 
-import {FCM} from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
-
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {BackgroundMode} from '@ionic-native/background-mode/ngx';
@@ -81,7 +79,6 @@ export class AppComponent {
 
     constructor(
         private platform: Platform,
-        private fcm: FCM,
         private splashScreen: SplashScreen,
         private statusBar: StatusBar,
         private authProvider: AuthService,
@@ -100,45 +97,9 @@ export class AppComponent {
             this.backgroundMode.enable();
             this.statusBar.backgroundColorByHexString('#1B8895');
             this.splashScreen.hide();
-            this.getOsType();
             this.setUserData();
             this.getProfile();
         });
-    }
-
-    onPushNotification(): void {
-        this.authProvider.push(this.token, this.osType).subscribe(
-            resp => {
-                console.log(resp);
-            }, err => {
-                console.log(err);
-            }
-        );
-    }
-
-    getToken(): void {
-        this.fcm.getToken().then(token => {
-            this.token = token;
-            this.authProvider.push(this.token, this.osType).subscribe(
-                resp => {
-                    console.log(resp);
-                }, err => {
-                    console.log(err);
-                }
-            );
-        }).catch((error) => {
-                this.token = error;
-                console.log(error);
-            }
-        );
-    }
-
-    getOsType(): void {
-        if (this.platform.is('ios')) {
-            this.osType = 'ios';
-        } else if (this.platform.is('android')) {
-            this.osType = 'android';
-        }
     }
 
     getProfile(): void {
@@ -194,12 +155,8 @@ export class AppComponent {
         this.isSignedIn = this.authProvider.signedIn();
         console.log(this.isSignedIn);
         if (this.isSignedIn) {
-            setTimeout(() => {
-                this.getToken();
-            }, 2000);
             this.router.navigateByUrl('/home');
         }
         this.onGetCurrentUser();
-        this.onPushNotification();
     }
 }
