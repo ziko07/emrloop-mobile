@@ -21,7 +21,7 @@ export class HelperService {
         this.toast = this.toastController.create({
             message,
             position: 'bottom',
-            duration: 1000,
+            duration: 10000,
             animated: true,
             color: 'success',
             cssClass: 'my-custom-class'

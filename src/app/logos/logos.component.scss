@@ -106,11 +106,10 @@ ion-back-button {
     right: 10px;
 }
 
-ion-popover .popover-content{
+.popover-content{
     left: 205px !important;
-    --width: 180px !important;
+    width: 180px !important;
     $popover-md-width: 180px;
     $popover-ios-width: 180px;
     $popover-wp-width: 180px;
-
 }

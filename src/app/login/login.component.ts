@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
         setTimeout(() => {
             this.getToken();
-        }, 5000);
+        }, 10000);
         this.getOSType();
         const data = window.localStorage.getItem('credential');
         const credential = data ? JSON.parse(data) : {};

@@ -2,7 +2,7 @@ import {Component, OnInit, Input, OnDestroy, ViewChild} from '@angular/core';
 import {HelperService} from '../../services/helper.service';
 import {LoaderService} from '../../services/loader.service';
 import {HomeService} from '../../services/home.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {ModalController} from '@ionic/angular';
 import {QuizComponent} from '../quiz/quiz.component';
 
@@ -49,6 +49,7 @@ export class DetailsComponent implements OnInit {
     }
 
     ngOnInit() {
+        console.log(this.list);
     }
 
 

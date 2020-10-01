@@ -3,6 +3,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 
 import {Platform} from '@ionic/angular';
 
+import {FCM} from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
+
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {BackgroundMode} from '@ionic-native/background-mode/ngx';
@@ -86,15 +88,31 @@ export class AppComponent {
         private activateRoute: ActivatedRoute,
         private backgroundMode: BackgroundMode,
         public helperService: HelperService,
-        public authGuard: AuthGuard
+        public authGuard: AuthGuard,
+        private fcm: FCM
     ) {
         this.sideMenu();
         this.initializeApp();
     }
 
+    onNotificationTap(): void {
+        this.fcm.onNotification().subscribe(data => {
+            if (data.wasTapped) {
+                this.router.navigateByUrl('/users');
+                this.helperService.showSuccessToast('Received in background');
+            } else {
+                this.router.navigateByUrl('/logos');
+                this.helperService.showSuccessToast('Received in foreground');
+            }
+        });
+    }
+
     initializeApp(): void {
         this.platform.ready().then(() => {
             this.backgroundMode.enable();
+            setTimeout(() => {
+                this.onNotificationTap();
+            }, 5000);
             this.statusBar.backgroundColorByHexString('#1B8895');
             this.splashScreen.hide();
             this.setUserData();
