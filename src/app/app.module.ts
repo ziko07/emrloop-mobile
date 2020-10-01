@@ -34,6 +34,7 @@ import {AddLogoComponent} from './logos/add-logo/add-logo.component';
 import {UpdateLogoComponent} from './logos/update-logo/update-logo.component';
 import {HeaderComponent} from './header/header.component';
 import {UserDetailsComponent} from './users/user-details/user-details.component';
+import {PopoverComponent} from './popover/popover.component';
 
 @NgModule({
     declarations: [
@@ -56,9 +57,10 @@ import {UserDetailsComponent} from './users/user-details/user-details.component'
         EditClientComponent,
         LogosComponent,
         AddLogoComponent,
-        UpdateLogoComponent
+        UpdateLogoComponent,
+        PopoverComponent
     ],
-    entryComponents: [QuizComponent, ChangeUserTypeComponent],
+    entryComponents: [QuizComponent, ChangeUserTypeComponent, PopoverComponent],
     imports: [BrowserModule, IonicModule.forRoot(),
         AppRoutingModule, FormsModule, ReactiveFormsModule,
         HttpClientModule, AngularTokenModule.forRoot({

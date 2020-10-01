@@ -1,82 +1,53 @@
 <ion-header>
-  <ion-toolbar class="custom-toolbar">
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>Logos</ion-title>
-  </ion-toolbar>
+    <ion-toolbar class="custom-toolbar">
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Logos</ion-title>
+    </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-card class="logos-card">
-    <ion-card-header>
-      <ion-grid>
-        <ion-row>
-          <ion-col>
-            <ion-text class="title">
-              Logos
-            </ion-text>
-          </ion-col>
-          <ion-col>
-            <ion-button class="perform ion-text-capitalize ion-float-right" color="primary" fill="outline">
-              <a routerLink="/logos/new">Add Logo</a>
-            </ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-header>
-    <p *ngIf="logos.length === 0" class="not-found">No logo found. Add to see them.</p>
-    <ion-card-content *ngIf="logos.length">
-      <ion-grid class="grid-one">
-        <ion-row class="row-bb-head">
-          <ion-col size="3">
-            Name
-          </ion-col>
-          <ion-col size="4">
-            Logo
-          </ion-col>
-          <ion-col size="2">
-            Type
-          </ion-col>
-          <ion-col size="3">
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-      <ion-grid *ngFor="let logo of logos; let i=index">
-        <ion-row class="logos-content" [ngClass]="i < logos.length-1 ? 'row-bb-body' : ''">
-          <ion-col size="3">
-            {{ logo.client ? logo.client.name : "No client" }}
-          </ion-col>
+    <ion-card>
+        <ion-card-header>
+            <ion-grid>
+                <ion-row>
+                    <ion-col>
+                        <ion-text class="title">
+                            Logos
+                        </ion-text>
+                    </ion-col>
+                    <ion-col>
+                        <ion-button class="perform ion-text-capitalize ion-float-right" color="primary" fill="outline">
+                            <a routerLink="/logos/new">Add Logo</a>
+                        </ion-button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-card-header>
+        <p *ngIf="logos.length === 0" class="not-found">No logo found. Add to see them.</p>
+        <ion-card-content *ngIf="logos.length">
+            <ion-list>
+                <ion-item *ngFor="let logo of logos; let i=index" class="logos-content row-bb-body" id="show_option_{{i}}" lines="none">
+                    <ion-avatar slot="start">
+                        <ion-img src="{{ logo.image_location }}"></ion-img>
+                    </ion-avatar>
 
-          <ion-col size="4">
-            <ion-img src="{{ logo.image_location }}">
-            </ion-img>
-          </ion-col>
+                    <ion-label class="logo-info">
+                        <div style="font-weight: bold">
+                            {{ logo.client ? logo.client.name : "No client" }}
+                        </div>
+                        Type: {{ logo.image_type }}
+                    </ion-label>
 
-          <ion-col size="2">
-            {{ logo.image_type }}
-          </ion-col>
-
-          <ion-col size="3">
-            <ion-buttons class="logo-customize">
-              <ion-button class="close common-btn" (click)="deleteLogo(i, logo.id)">
-                <ion-icon slot="icon-only" name="close-sharp" class="icon"></ion-icon>
-              </ion-button>
-              <ion-button class="pencil common-btn">
-                <a routerLink="/logos/{{logo.id}}/edit" style="color: white;">
-                  <ion-icon slot="icon-only" name="pencil-sharp" class="icon"></ion-icon>
-                </a>
-              </ion-button>
-            </ion-buttons>
-          </ion-col>
-
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
-  <ion-infinite-scroll threshold="10px" (ionInfinite)="loadData($event)">
-    <ion-infinite-scroll-content
-            loadingSpinner="bubbles"
-            loadingText="Loading more logos...">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+                    <ion-icon (click)="showPopOver($event, i, logo.id)" name="ellipsis-horizontal-sharp"></ion-icon>
+                </ion-item>
+            </ion-list>
+        </ion-card-content>
+    </ion-card>
+    <ion-infinite-scroll threshold="10px" (ionInfinite)="loadData($event)">
+        <ion-infinite-scroll-content
+                loadingSpinner="bubbles"
+                loadingText="Loading more logos...">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 </ion-content>
