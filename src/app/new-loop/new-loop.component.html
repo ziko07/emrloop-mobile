@@ -1,3 +1,32 @@
-<p>
-  new-loop works!
-</p>
+<ion-header>
+    <ion-toolbar class="custom-toolbar">
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title>New Loop</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <div>
+        <ion-select
+                name="client_id"
+                [(ngModel)]="message.groupName"
+                okText="Okay"
+                cancelText="Dismiss"
+                interface="action-sheet"
+                class="mx-0 my-10"
+        >
+            <ion-select-option
+                    value="Select Group"
+            >
+                Select Group
+            </ion-select-option>
+            <ion-select-option
+                    *ngFor="let group of groups"
+                    [value]="group.id"
+            >
+                {{ group.group_name }}
+            </ion-select-option>
+        </ion-select>
+    </div>
+</ion-content>

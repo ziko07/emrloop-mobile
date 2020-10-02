@@ -19,10 +19,6 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.helperService.showLoader();
-        setTimeout(() => {
-            this.helperService.dismissLoader();
-        }, 2000);
         this.onGetProfile();
         this.getUserInfo();
     }
@@ -38,15 +34,12 @@ export class HomeComponent implements OnInit {
     }
 
     getUserInfo() {
-        this.helperService.showLoader();
         this.authService.getCurrentUser().subscribe(
             resp => {
-                this.helperService.dismissLoader();
                 this.name = resp.profile.name;
                 this.type = resp.profile.type;
                 console.log(resp);
             }, err => {
-                this.helperService.dismissLoader();
                 console.log(err);
             }
         );

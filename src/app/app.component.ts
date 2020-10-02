@@ -41,7 +41,7 @@ export class AppComponent {
             icon: 'list'
         },
         {
-            title: 'Inbox History',
+            title: 'History',
             url: '/history',
             icon: 'briefcase'
         },
@@ -179,6 +179,9 @@ export class AppComponent {
         console.log(this.isSignedIn);
         if (this.isSignedIn) {
             this.router.navigateByUrl('/home');
+        }
+        if (this.isSignedIn) {
+            this.router.navigateByUrl('/new-loop');
         }
         this.onGetCurrentUser();
     }
