@@ -9,7 +9,7 @@
 
 <ion-content [fullscreen]="true">
     <ion-list class="ion-no-padding">
-        <ion-item *ngFor="let item of list; let i = index" lines="full" (click)="openModal(i)">
+        <ion-item *ngFor="let item of list; let i = index" lines="full" (click)="details(item)">
             <ion-avatar slot="start">
                 <img src="/assets/images/ic_action_signal.png">
             </ion-avatar>

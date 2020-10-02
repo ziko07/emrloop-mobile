@@ -12,10 +12,10 @@ const {App} = Plugins;
 
 @Component({
     selector: 'app-home',
-    templateUrl: 'home.page.html',
-    styleUrls: ['home.page.scss'],
+    templateUrl: 'inbox.page.html',
+    styleUrls: ['inbox.page.scss'],
 })
-export class HomePage {
+export class InboxPage {
     list: any;
 
     constructor(
@@ -49,19 +49,22 @@ export class HomePage {
         });
     }
 
-    public details(id) {
-        this.router.navigateByUrl('message/' + id);
+    public details(item) {
+        console.log(item.id);
+        this.router.navigateByUrl('message/' + item.id);
     }
 
-    async openModal(index) {
-        const modal = await this.modalController.create({
-            component: DetailsComponent,
-            componentProps: {
-                list: this.list,
-                slide: index,
-                read: false
-            }
-        });
-        return await modal.present();
-    }
+    // async openModal(item, index) {
+    //     console.log(item.id);
+        // this.router.navigateByUrl('message/' + item.id);
+        // const modal = await this.modalController.create({
+        //     component: DetailsComponent,
+        //     componentProps: {
+        //         list: this.list,
+        //         slide: index,
+        //         read: false
+        //     }
+        // });
+        // return await modal.present();
+    // }
 }

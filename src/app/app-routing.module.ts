@@ -19,6 +19,7 @@ import {UpdateLogoComponent} from './logos/update-logo/update-logo.component';
 import {ChangeUserTypeComponent} from './users/change-user-type/change-user-type.component';
 import {UserDetailsComponent} from './users/user-details/user-details.component';
 import {ProfileComponent} from './profile/profile.component';
+import {HomeComponent} from './home/home.component';
 
 const routes: Routes = [
     {
@@ -27,8 +28,12 @@ const routes: Routes = [
         pathMatch: 'full'
     },
     {
+        path: 'inbox',
+        loadChildren: () => import('./inbox/inbox.module').then(m => m.InboxPageModule)
+    },
+    {
         path: 'home',
-        loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
+        component: HomeComponent
     },
     {
         path: 'profile',

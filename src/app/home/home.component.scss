@@ -1,0 +1,27 @@
+div {
+  text-align: center;
+  padding-top: 50%;
+  h2 {
+    margin: 20px 0;
+  }
+  h5 {
+    text-align: justify;
+    margin: 25px;
+  }
+  img {
+    width: 30px;
+    vertical-align: middle;
+  }
+  a {
+    text-decoration: none;
+    color: #fff;
+    background-color: #3880ff;
+    border: 1px solid #3880ff;
+    padding: 10px;
+    border-radius: 4px;
+  }
+  ion-icon {
+    position: relative;
+    top: 2px;
+  }
+}

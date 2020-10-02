@@ -26,17 +26,22 @@ export class AppComponent {
     osType: string;
     adminMenu = [
         {
+            title: 'Home',
+            url: '/home',
+            icon: 'home'
+        },
+        {
             title: 'My Profile',
             url: '/profile',
             icon: 'information-circle-outline'
         },
         {
-            title: 'To Do',
-            url: '/home',
+            title: 'Inbox',
+            url: '/inbox',
             icon: 'list'
         },
         {
-            title: 'History',
+            title: 'Inbox History',
             url: '/history',
             icon: 'briefcase'
         },
@@ -68,8 +73,8 @@ export class AppComponent {
             icon: 'information-circle-outline'
         },
         {
-            title: 'To Do',
-            url: '/home',
+            title: 'Inbox',
+            url: '/inbox',
             icon: 'list'
         },
         {
@@ -98,10 +103,9 @@ export class AppComponent {
     onNotificationTap(): void {
         this.fcm.onNotification().subscribe(data => {
             if (data.wasTapped) {
-                this.router.navigateByUrl('/users');
+                this.router.navigateByUrl('/message/564');
                 this.helperService.showSuccessToast('Received in background');
             } else {
-                this.router.navigateByUrl('/logos');
                 this.helperService.showSuccessToast('Received in foreground');
             }
         });

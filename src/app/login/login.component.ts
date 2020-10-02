@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
     buttonText: any = 'Login';
     regId: string;
     osType: string;
+    isSignedIn: boolean;
 
     constructor(private router: Router,
                 private helperService: HelperService,
@@ -34,6 +35,7 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.logInStatus();
         setTimeout(() => {
             this.getToken();
         }, 10000);
@@ -44,6 +46,13 @@ export class LoginComponent implements OnInit {
         this.form.login = credential.login;
         if (credential.login) {
             this.form.save_password = true;
+        }
+    }
+
+    logInStatus() {
+        this.isSignedIn = this.authProvider.signedIn();
+        if (this.isSignedIn) {
+            this.router.navigateByUrl('/home');
         }
     }
 

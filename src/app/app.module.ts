@@ -9,12 +9,13 @@ import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
 import {HttpClientModule} from '@angular/common/http';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
-import {FCM} from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';;
+import {FCM} from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
 import {BackgroundMode} from '@ionic-native/background-mode/ngx';
 
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {LoginComponent} from './login/login.component';
+import {HomeComponent} from './home/home.component';
 import {ProfileComponent} from './profile/profile.component';
 import {HistoryComponent} from './history/history.component';
 import {DetailsComponent} from './details/details.component';
@@ -41,6 +42,7 @@ import {PopoverComponent} from './popover/popover.component';
         AppComponent,
         HeaderComponent,
         LoginComponent,
+        HomeComponent,
         QuizComponent,
         AttachmentPipe,
         ProfileComponent,

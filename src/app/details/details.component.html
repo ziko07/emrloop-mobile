@@ -1,9 +1,7 @@
 <ion-header [translucent]="true">
     <ion-toolbar class="custom-toolbar">
         <ion-buttons slot="start">
-            <ion-button (click)="closeModal()">
-                <ion-icon slot="icon-only" name="close"></ion-icon>
-            </ion-button>
+            <ion-back-button></ion-back-button>
         </ion-buttons>
         <ion-title *ngIf="activeItem"> {{activeItem.title}}</ion-title>
     </ion-toolbar>
@@ -26,7 +24,7 @@
                         Acknowledgement receipt
                     </ion-button>
 
-                    <ion-title *ngIf="read"> Seen</ion-title>
+                    <ion-title *ngIf="read">Seen</ion-title>
                 </div>
             </ion-card-content>
             <ion-card-content *ngIf="!readySlider">

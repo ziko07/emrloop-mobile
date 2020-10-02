@@ -49,7 +49,7 @@ export class ClientsComponent implements OnInit {
         this.authService.getUserType().subscribe(
             resp => {
                 if (resp.user_type !== 'admin') {
-                    this.router.navigateByUrl('/home');
+                    this.router.navigateByUrl('/inbox');
                 }
                 console.log(resp);
             }, err => {
