@@ -11,7 +11,7 @@ import {IonRouterOutlet, Platform} from '@ionic/angular';
 const {App} = Plugins;
 
 @Component({
-    selector: 'app-home',
+    selector: 'app-inbox',
     templateUrl: 'inbox.page.html',
     styleUrls: ['inbox.page.scss'],
 })
@@ -49,22 +49,19 @@ export class InboxPage {
         });
     }
 
-    public details(item) {
-        console.log(item.id);
-        this.router.navigateByUrl('message/' + item.id);
+    public details(id) {
+        this.router.navigateByUrl('message/' + id);
     }
 
-    // async openModal(item, index) {
-    //     console.log(item.id);
-        // this.router.navigateByUrl('message/' + item.id);
-        // const modal = await this.modalController.create({
-        //     component: DetailsComponent,
-        //     componentProps: {
-        //         list: this.list,
-        //         slide: index,
-        //         read: false
-        //     }
-        // });
-        // return await modal.present();
-    // }
+    async openModal(index) {
+        const modal = await this.modalController.create({
+            component: DetailsComponent,
+            componentProps: {
+                list: this.list,
+                slide: index,
+                read: false
+            }
+        });
+        return await modal.present();
+    }
 }

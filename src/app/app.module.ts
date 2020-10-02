@@ -36,6 +36,9 @@ import {UpdateLogoComponent} from './logos/update-logo/update-logo.component';
 import {HeaderComponent} from './header/header.component';
 import {UserDetailsComponent} from './users/user-details/user-details.component';
 import {PopoverComponent} from './popover/popover.component';
+import {NewMessageComponent} from './new-message/new-message.component';
+import {InboxPage} from './inbox/inbox.page';
+import {NewLoopComponent} from './new-loop/new-loop.component';
 
 @NgModule({
     declarations: [
@@ -60,7 +63,9 @@ import {PopoverComponent} from './popover/popover.component';
         LogosComponent,
         AddLogoComponent,
         UpdateLogoComponent,
-        PopoverComponent
+        PopoverComponent,
+        NewMessageComponent,
+        NewLoopComponent
     ],
     entryComponents: [QuizComponent, ChangeUserTypeComponent, PopoverComponent],
     imports: [BrowserModule, IonicModule.forRoot(),

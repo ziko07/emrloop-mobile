@@ -15,7 +15,7 @@
     <h5>
       KaizenLoop is your Secure Enterprise Solution for precise deployment and tracking of notifications and content delivery!
     </h5>
-    <a routerLink="/new_message">
+    <a *ngIf="type !== 'User'" routerLink="/new-message">
       New Loop <ion-icon name="arrow-forward-outline"></ion-icon>
     </a>
   </div>

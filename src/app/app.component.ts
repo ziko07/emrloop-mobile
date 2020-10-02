@@ -103,7 +103,7 @@ export class AppComponent {
     onNotificationTap(): void {
         this.fcm.onNotification().subscribe(data => {
             if (data.wasTapped) {
-                this.router.navigateByUrl('/message/564');
+                this.router.navigateByUrl('/inbox');
                 this.helperService.showSuccessToast('Received in background');
             } else {
                 this.helperService.showSuccessToast('Received in foreground');
@@ -126,6 +126,7 @@ export class AppComponent {
 
     getProfile(): void {
         this.authProvider.getProfile().subscribe(resp => {
+            console.log(resp);
             this.user = resp;
         }, err => {
             console.log(err);

@@ -20,6 +20,8 @@ import {ChangeUserTypeComponent} from './users/change-user-type/change-user-type
 import {UserDetailsComponent} from './users/user-details/user-details.component';
 import {ProfileComponent} from './profile/profile.component';
 import {HomeComponent} from './home/home.component';
+import {NewMessageComponent} from './new-message/new-message.component';
+import {NewLoopComponent} from './new-loop/new-loop.component';
 
 const routes: Routes = [
     {
@@ -98,6 +100,14 @@ const routes: Routes = [
     {
         path: 'forgot-password',
         component: ForgotPasswordComponent
+    },
+    {
+        path: 'new-message',
+        component: NewMessageComponent
+    },
+    {
+        path: 'new-loop',
+        component: NewLoopComponent
     }
 ];
 

@@ -1,13 +1,9 @@
 import {Component, OnInit, Input, ViewChild} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-
 import {HelperService} from '../../services/helper.service';
 import {LoaderService} from '../../services/loader.service';
 import {HomeService} from '../../services/home.service';
-
-
+import {ActivatedRoute} from '@angular/router';
 import {ModalController} from '@ionic/angular';
-
 import {QuizComponent} from '../quiz/quiz.component';
 
 @Component({
@@ -18,22 +14,22 @@ import {QuizComponent} from '../quiz/quiz.component';
 export class DetailsComponent implements OnInit {
     @ViewChild('tabSlider', {static: false}) slider: any;
     readySlider = false;
-    // task = {
-    //     id: '',
-    //     sender_name: '',
-    //     recipient_name: '',
-    //     content: '',
-    //     created_at: '',
-    //     title: '',
-    //     attachment: {url: ''},
-    //     receipt_type: '',
-    //     content_type: '',
-    //     remaining_minute: '',
-    //     total_minute: '',
-    //     client_id: '',
-    //     status: ''
-    // };
-    list = [];
+    task = {
+        id: '',
+        sender_name: '',
+        recipient_name: '',
+        content: '',
+        created_at: '',
+        title: '',
+        attachment: {url: ''},
+        receipt_type: '',
+        content_type: '',
+        remaining_minute: '',
+        total_minute: '',
+        client_id: '',
+        status: ''
+    };
+    @Input() list: any;
     @Input() slide: any;
     @Input() read: any;
     activeItem: any;
@@ -53,27 +49,10 @@ export class DetailsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getMessageList();
-        this.readySlider = true;
-
-        this.homeService.list().subscribe(
-            resp => {
-                console.log(resp);
-            }, err => {
-                console.log(err);
-            }
-        );
     }
 
-    getMessageList() {
-        this.homeService.list().subscribe(
-            resp => {
-                this.list = resp;
-                console.log('List ', this.list);
-            }, err => {
-                console.log(err);
-            }
-        );
+    closeModal() {
+        this.modalController.dismiss(true);
     }
 
     public slideNewTab(event) {
@@ -83,15 +62,15 @@ export class DetailsComponent implements OnInit {
         });
     }
 
-    // ionViewDidEnter() {
-    //     this.slider.slideTo(this.slide);
-    //     this.current_slider = this.slide;
-    //     this.slider.update();
-    //     this.activeItem = this.list[this.current_slider];
-    //     setTimeout(() => {
-    //         this.readySlider = true;
-    //     }, 100);
-    // }
+    ionViewDidEnter() {
+        this.slider.slideTo(this.slide);
+        this.current_slider = this.slide;
+        this.slider.update();
+        this.activeItem = this.list[this.current_slider];
+        setTimeout(() => {
+            this.readySlider = true;
+        }, 100);
+    }
 
     sentAcknowledgement(id) {
         this.spinnerDialog.show('', 'Sending Acknowledgement');
