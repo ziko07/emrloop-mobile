@@ -9,19 +9,17 @@
 
 <ion-content [fullscreen]="true">
     <ion-fab vertical="bottom" horizontal="start" slot="fixed">
-        <ion-fab-button>
+        <ion-fab-button style="--background: #1B8895;">
             <ion-icon name="add"></ion-icon>
         </ion-fab-button>
         <ion-fab-list side="end">
-            <ion-fab-button *ngIf="type !== 'user'" color="primary" class="fav-btn btn-1">
+            <ion-fab-button *ngIf="type !== 'user'" class="fav-btn btn-1">
                 <a routerLink="/new-loop">
-                    <ion-icon name="create-outline" class="inner-icons"></ion-icon>
                     New Loop
                 </a>
             </ion-fab-button>
-            <ion-fab-button color="primary" class="fav-btn btn-2">
+            <ion-fab-button class="fav-btn btn-2">
                 <a routerLink="/new-message">
-                    <ion-icon name="mail-outline" class="inner-icons"></ion-icon>
                     New Private Message
                 </a>
             </ion-fab-button>

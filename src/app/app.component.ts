@@ -66,7 +66,44 @@ export class AppComponent {
             icon: 'aperture-outline'
         }
     ];
-    generalMenu = [
+    powerUserMenu = [
+        {
+            title: 'Home',
+            url: '/home',
+            icon: 'home'
+        },
+        {
+            title: 'My Profile',
+            url: '/profile',
+            icon: 'information-circle-outline'
+        },
+        {
+            title: 'Inbox',
+            url: '/inbox',
+            icon: 'list'
+        },
+        {
+            title: 'History',
+            url: '/history',
+            icon: 'briefcase'
+        },
+        {
+            title: 'Users',
+            url: '/users',
+            icon: 'person-circle-outline'
+        },
+        {
+            title: 'Groups',
+            url: '/groups',
+            icon: 'people-outline'
+        }
+    ];
+    userMenu = [
+        {
+            title: 'Home',
+            url: '/home',
+            icon: 'home'
+        },
         {
             title: 'My Profile',
             url: '/profile',
@@ -113,7 +150,7 @@ export class AppComponent {
             this.backgroundMode.enable();
             setTimeout(() => {
                 this.onNotificationTap();
-            }, 5000);
+            }, 2000);
             this.statusBar.backgroundColorByHexString('#1B8895');
             this.splashScreen.hide();
             this.setUserData();
@@ -160,8 +197,10 @@ export class AppComponent {
             this.user = resp.profile;
             if (this.user.type === 'Admin') {
                 this.navigate = this.adminMenu;
+            } else if (this.user.type === 'User') {
+                this.navigate = this.userMenu;
             } else {
-                this.navigate = this.generalMenu;
+                this.navigate = this.powerUserMenu;
             }
         }, err => {
             this.user = null;

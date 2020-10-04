@@ -41,6 +41,7 @@ ion-item {
 }
 
 .fav-btn {
+  --background: #1B8895;
   --border-radius: 20px;
   position: relative;
   right: 10px;
@@ -51,12 +52,13 @@ ion-item {
 }
 
 .btn-1 {
-  width: 120px;
+  width: 100px;
 }
 
 .btn-2 {
-  width: 190px;
-  right: 15px;
+  width: 170px;
+  right: 12px;
+  margin-left: 5px;
 }
 
 .inner-icons {
