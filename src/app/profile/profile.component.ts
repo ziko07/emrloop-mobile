@@ -83,7 +83,7 @@ export class ProfileComponent implements OnInit {
             resp => {
                 if (resp.my_groups.length < 1) {
                     this.checked = true;
-                    this.helperService.showUpdateToast('All data successfully loaded!');
+                    this.helperService.showUpdateToast('User group list is successfully loaded!');
                     return;
                 }
                 this.groups = this.groups.concat(resp.my_groups);

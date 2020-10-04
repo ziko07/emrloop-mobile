@@ -101,7 +101,7 @@ export class UsersComponent implements OnInit {
                 }
                 if (resp.users.length < 1) {
                     this.checked = true;
-                    this.helperService.showUpdateToast('All data successfully loaded!');
+                    this.helperService.showUpdateToast('User list is successfully loaded!');
                     return;
                 }
                 this.users = this.users.concat(resp.users);

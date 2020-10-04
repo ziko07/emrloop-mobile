@@ -89,7 +89,7 @@ export class GroupsComponent implements OnInit {
             resp => {
                 if (resp.groups.length < 1) {
                     this.checked = true;
-                    this.helperService.showUpdateToast('All data successfully loaded!');
+                        this.helperService.showUpdateToast('Group list is successfully loaded!');
                     return;
                 }
                 this.groups = this.groups.concat(resp.groups);

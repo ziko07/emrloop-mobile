@@ -104,9 +104,6 @@ export class AppComponent {
         this.fcm.onNotification().subscribe(data => {
             if (data.wasTapped) {
                 this.router.navigateByUrl('/inbox');
-                this.helperService.showSuccessToast('Received in background');
-            } else {
-                this.helperService.showSuccessToast('Received in foreground');
             }
         });
     }
@@ -180,9 +177,9 @@ export class AppComponent {
         if (this.isSignedIn) {
             this.router.navigateByUrl('/home');
         }
-        if (this.isSignedIn) {
-            this.router.navigateByUrl('/new-loop');
-        }
+        // if (this.isSignedIn) {
+        //     this.router.navigateByUrl('/new-loop');
+        // }
         this.onGetCurrentUser();
     }
 }

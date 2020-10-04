@@ -155,7 +155,7 @@ export class LogosComponent implements OnInit {
             resp => {
                 if (resp.length < 1) {
                     this.checked = true;
-                    this.helperService.showUpdateToast('All data successfully loaded!');
+                    this.helperService.showUpdateToast('Logo list is successfully loaded!');
                     return;
                 }
                 this.logos = this.logos.concat(resp);
