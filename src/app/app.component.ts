@@ -3,9 +3,10 @@ import {ActivatedRoute, Router} from '@angular/router';
 
 import {Platform} from '@ionic/angular';
 
+import {FCM} from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
+
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
-import {FCM} from '@ionic-native/fcm/ngx';
 import {BackgroundMode} from '@ionic-native/background-mode/ngx';
 
 import {AuthService} from '../services/auth.service';
@@ -21,16 +22,22 @@ export class AppComponent {
     isSignedIn: boolean;
     navigate: any;
     user: any;
-    token: any;
+    token: string;
+    osType: string;
     adminMenu = [
+        {
+            title: 'Home',
+            url: '/home',
+            icon: 'home'
+        },
         {
             title: 'My Profile',
             url: '/profile',
             icon: 'information-circle-outline'
         },
         {
-            title: 'To Do',
-            url: '/home',
+            title: 'Inbox',
+            url: '/inbox',
             icon: 'list'
         },
         {
@@ -66,8 +73,8 @@ export class AppComponent {
             icon: 'information-circle-outline'
         },
         {
-            title: 'To Do',
-            url: '/home',
+            title: 'Inbox',
+            url: '/inbox',
             icon: 'list'
         },
         {
@@ -79,7 +86,6 @@ export class AppComponent {
 
     constructor(
         private platform: Platform,
-        private fcm: FCM,
         private splashScreen: SplashScreen,
         private statusBar: StatusBar,
         private authProvider: AuthService,
@@ -87,56 +93,44 @@ export class AppComponent {
         private activateRoute: ActivatedRoute,
         private backgroundMode: BackgroundMode,
         public helperService: HelperService,
-        public authGuard: AuthGuard
+        public authGuard: AuthGuard,
+        private fcm: FCM
     ) {
         this.sideMenu();
         this.initializeApp();
-        this.platform.ready()
-            .then(() => {
-                this.backgroundMode.enable();
-
-                this.fcm.onNotification().subscribe(data => {
-                    if (data.wasTapped) {
-                        this.getToken();
-                        console.log('Received in background');
-                    } else {
-                        console.log('Received in foreground');
-                    }
-                    ;
-                });
-
-                this.fcm.onTokenRefresh().subscribe(token => {
-                    // Register your new token in your back-end if you want
-                    // backend.registerToken(token);
-                });
-            });
     }
 
-    getToken() {
-        this.fcm.getToken().then(token => {
-            this.helperService.showSuccessToast(`Done with #{token}`);
-            // Register your new token in your back-end if you want
-            // backend.registerToken(token);
+    onNotificationTap(): void {
+        this.fcm.onNotification().subscribe(data => {
+            if (data.wasTapped) {
+                this.router.navigateByUrl('/inbox');
+            }
         });
     }
 
-    getProfile() {
-        this.authProvider.getProfile().subscribe(resp => {
-            this.user = resp;
-        }, err => {
-        });
-    }
-
-    initializeApp() {
+    initializeApp(): void {
         this.platform.ready().then(() => {
+            this.backgroundMode.enable();
+            setTimeout(() => {
+                this.onNotificationTap();
+            }, 5000);
             this.statusBar.backgroundColorByHexString('#1B8895');
             this.splashScreen.hide();
+            this.setUserData();
+            this.getProfile();
         });
-        this.setUserData();
-        this.getProfile();
     }
 
-    sideMenu() {
+    getProfile(): void {
+        this.authProvider.getProfile().subscribe(resp => {
+            console.log(resp);
+            this.user = resp;
+        }, err => {
+            console.log(err);
+        });
+    }
+
+    sideMenu(): void {
         this.navigate = [
             {
                 title: 'Login',
@@ -151,23 +145,17 @@ export class AppComponent {
         ];
     }
 
-    logout() {
+    logout(): void {
         this.helperService.showLoader();
         this.authProvider.logout().subscribe(resp => {
             this.helperService.dismissLoader();
-            // this.router.navigateByUrl('/login');
             window.location.href = '/login';
             this.helperService.showUpdateToast('You have successfully logged out!');
         }, err => {
         });
     }
 
-    setUserData() {
-        this.isSignedIn = this.authProvider.signedIn();
-        if (this.isSignedIn) {
-            this.router.navigateByUrl('/home');
-        }
-        console.log(this.isSignedIn);
+    onGetCurrentUser(): void {
         this.authProvider.getCurrentUser().subscribe(resp => {
             this.user = resp.profile;
             if (this.user.type === 'Admin') {
@@ -181,5 +169,17 @@ export class AppComponent {
                 this.router.navigateByUrl('/login');
             }
         });
+    }
+
+    setUserData(): void {
+        this.isSignedIn = this.authProvider.signedIn();
+        console.log(this.isSignedIn);
+        if (this.isSignedIn) {
+            this.router.navigateByUrl('/home');
+        }
+        // if (this.isSignedIn) {
+        //     this.router.navigateByUrl('/new-loop');
+        // }
+        this.onGetCurrentUser();
     }
 }

@@ -1,22 +1,27 @@
 import {Component} from '@angular/core';
-import {ModalController} from '@ionic/angular';
+import {Router} from '@angular/router';
+
+import {ModalController, IonRouterOutlet, Platform} from '@ionic/angular';
+
 import {HelperService} from '../../services/helper.service';
 import {LoaderService} from '../../services/loader.service';
 import {HomeService} from '../../services/home.service';
+import {AuthService} from '../../services/auth.service';
+
 import {DetailsComponent} from '../details/details.component';
-import {Router} from '@angular/router';
+
 import {Plugins} from '@capacitor/core';
-import {IonRouterOutlet, Platform} from '@ionic/angular';
 
 const {App} = Plugins;
 
 @Component({
-    selector: 'app-home',
-    templateUrl: 'home.page.html',
-    styleUrls: ['home.page.scss'],
+    selector: 'app-inbox',
+    templateUrl: 'inbox.page.html',
+    styleUrls: ['inbox.page.scss'],
 })
-export class HomePage {
+export class InboxPage {
     list: any;
+    type: string;
 
     constructor(
         private modalController: ModalController,
@@ -24,6 +29,7 @@ export class HomePage {
         public router: Router,
         public spinnerDialog: LoaderService,
         private helperService: HelperService,
+        public authService: AuthService,
         private platform: Platform,
         private routerOutlet: IonRouterOutlet
     ) {
@@ -36,6 +42,16 @@ export class HomePage {
 
     ngOnInit() {
         this.loadInbox();
+        this.getUserType();
+    }
+
+    getUserType(): void {
+        this.authService.getUserType().subscribe(
+            resp => {
+                this.type = resp.user_type;
+                console.log(this.type);
+            }
+        );
     }
 
     public loadInbox() {

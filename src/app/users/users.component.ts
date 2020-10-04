@@ -51,7 +51,7 @@ export class UsersComponent implements OnInit {
         this.authService.getUserType().subscribe(
             resp => {
                 if (resp.user_type !== 'admin') {
-                    this.router.navigateByUrl('/home');
+                    this.router.navigateByUrl('/inbox');
                 }
                 console.log(resp);
             }, err => {
@@ -101,7 +101,7 @@ export class UsersComponent implements OnInit {
                 }
                 if (resp.users.length < 1) {
                     this.checked = true;
-                    this.helperService.showUpdateToast('All data successfully loaded!');
+                    this.helperService.showUpdateToast('User list is successfully loaded!');
                     return;
                 }
                 this.users = this.users.concat(resp.users);
@@ -117,22 +117,24 @@ export class UsersComponent implements OnInit {
     }
 
     onConfirmUser(user) {
-        console.log(user);
-        this.userService.confirmUser(user.id).subscribe(
-            resp => {
-                if (resp.status === 'ok') {
-                    user.confirmed = true;
-                    this.helperService.showSuccessToast(resp.message);
+        if (confirm('Are you sure to confirm this user?')) {
+            console.log(user);
+            this.userService.confirmUser(user.id).subscribe(
+                resp => {
+                    if (resp.status === 'ok') {
+                        user.confirmed = true;
+                        this.helperService.showSuccessToast(resp.message);
+                    }
+                    console.log(resp);
+                }, err => {
+                    console.log(err);
                 }
-                console.log(resp);
-            }, err => {
-                console.log(err);
-            }
-        );
+            );
+        }
     }
 
     onDeleteUser(id, email) {
-        if (confirm('Are you sure?')) {
+        if (confirm('Are you sure to delete this user?')) {
             this.helperService.showLoader();
             this.userService.deleteUser(email).subscribe(
                 resp => {

@@ -1,8 +1,8 @@
-import {Component, OnInit, Input, OnDestroy, ViewChild} from '@angular/core';
+import {Component, OnInit, Input, ViewChild} from '@angular/core';
 import {HelperService} from '../../services/helper.service';
 import {LoaderService} from '../../services/loader.service';
 import {HomeService} from '../../services/home.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {ModalController} from '@ionic/angular';
 import {QuizComponent} from '../quiz/quiz.component';
 
@@ -51,7 +51,6 @@ export class DetailsComponent implements OnInit {
     ngOnInit() {
     }
 
-
     closeModal() {
         this.modalController.dismiss(true);
     }
@@ -80,7 +79,6 @@ export class DetailsComponent implements OnInit {
             this.helperService.showSuccessToast('Acknowledgement Successfully Received');
         }, err => {
             this.spinnerDialog.hide();
-            // this.helperService.showToast('Unable to load emails');
         });
     }
 

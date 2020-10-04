@@ -1,5 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+
+import {Platform} from '@ionic/angular';
+
+import {FCM} from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
+
 import {HelperService} from '../../services/helper.service';
 import {LoaderService} from '../../services/loader.service';
 import {AuthService} from '../../services/auth.service';
@@ -15,20 +20,68 @@ export class LoginComponent implements OnInit {
     disableLogin = false;
     errorMessage: any;
     buttonText: any = 'Login';
+    regId: string;
+    osType: string;
+    isSignedIn: boolean;
 
-    constructor(private router: Router, private helperService: HelperService,
-                public spinnerDialog: LoaderService, public authProvider: AuthService) {
+    constructor(private router: Router,
+                private helperService: HelperService,
+                public spinnerDialog: LoaderService,
+                public authProvider: AuthService,
+                private platform: Platform,
+                private fcm: FCM
+    ) {
         this.form = {login: '', password: ''};
     }
 
     ngOnInit() {
-        let data = window.localStorage.getItem('credential');
-        let credential = data ? JSON.parse(data) : {};
+        this.logInStatus();
+        setTimeout(() => {
+            this.getToken();
+        }, 10000);
+        this.getOSType();
+        const data = window.localStorage.getItem('credential');
+        const credential = data ? JSON.parse(data) : {};
         this.form.password = credential.password;
         this.form.login = credential.login;
         if (credential.login) {
             this.form.save_password = true;
         }
+    }
+
+    logInStatus() {
+        this.isSignedIn = this.authProvider.signedIn();
+        if (this.isSignedIn) {
+            this.router.navigateByUrl('/home');
+        }
+    }
+
+    getOSType(): void {
+        if (this.platform.is('android')) {
+            this.osType = 'android';
+        } else if (this.platform.is('ios')) {
+            this.osType = 'ios';
+        }
+    }
+
+    onPushNotification(): void {
+        this.authProvider.push(this.regId, this.osType).subscribe(
+            resp => {
+                console.log(resp);
+            }, err => {
+                console.log(err);
+            }
+        );
+    }
+
+    getToken(): void {
+        this.fcm.getToken().then(token => {
+            this.regId = token;
+        }).catch((error) => {
+                this.regId = error;
+                console.log(error);
+            }
+        );
     }
 
     signin() {
@@ -41,12 +94,14 @@ export class LoginComponent implements OnInit {
             };
             this.helperService.showLoader();
             this.authProvider.login(this.userDetails).subscribe(resp => {
-                this.helperService.dismissLoader();
-                window.location.href = '/';
-                // this.router.navigateByUrl('/home');
                 console.log(resp);
-                console.log('Hello World!');
+                this.helperService.dismissLoader();
+                if (resp.status === 200) {
+                    this.onPushNotification();
+                    window.location.href = '/';
+                }
             }, err => {
+                console.log(err);
                 this.helperService.dismissLoader();
                 this.disableLogin = false;
                 if (err.status === 401) {
@@ -60,10 +115,6 @@ export class LoginComponent implements OnInit {
         }
     }
 
-    public register() {
-
-    }
-
     validateRegister(form) {
         if (this.form.login == undefined || this.form.login == '') {
             this.errorMessage = 'Enter email';
@@ -75,5 +126,4 @@ export class LoginComponent implements OnInit {
         }
         return true;
     }
-
 }

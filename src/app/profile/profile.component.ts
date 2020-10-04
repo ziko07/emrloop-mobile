@@ -84,7 +84,7 @@ export class ProfileComponent implements OnInit {
             resp => {
                 if (resp.my_groups.length < 1) {
                     this.checked = true;
-                    this.helperService.showUpdateToast('All data successfully loaded!');
+                    this.helperService.showUpdateToast('User group list is successfully loaded!');
                     return;
                 }
                 this.groups = this.groups.concat(resp.my_groups);
@@ -144,9 +144,9 @@ export class ProfileComponent implements OnInit {
         this.helperService.showLoader();
         const formData = {};
         for (const key in this.form) {
-           if (this.form[key]) {
-               formData[key] = this.form[key];
-           }
+            if (this.form[key]) {
+                formData[key] = this.form[key];
+            }
         }
         this.authProvider.updateProfile(this.type, formData).subscribe(
             resp => {
@@ -169,5 +169,6 @@ export class ProfileComponent implements OnInit {
         this.form.password = '';
         this.form.password_confirmation = '';
         this.form.current_password = '';
+        this.form.image = '';
     }
 }

@@ -9,12 +9,13 @@ import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
 import {HttpClientModule} from '@angular/common/http';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
-import {FCM} from '@ionic-native/fcm/ngx';
+import {FCM} from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
 import {BackgroundMode} from '@ionic-native/background-mode/ngx';
 
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {LoginComponent} from './login/login.component';
+import {HomeComponent} from './home/home.component';
 import {ProfileComponent} from './profile/profile.component';
 import {HistoryComponent} from './history/history.component';
 import {DetailsComponent} from './details/details.component';
@@ -34,12 +35,17 @@ import {AddLogoComponent} from './logos/add-logo/add-logo.component';
 import {UpdateLogoComponent} from './logos/update-logo/update-logo.component';
 import {HeaderComponent} from './header/header.component';
 import {UserDetailsComponent} from './users/user-details/user-details.component';
+import {PopoverComponent} from './popover/popover.component';
+import {NewMessageComponent} from './new-message/new-message.component';
+import {InboxPage} from './inbox/inbox.page';
+import {NewLoopComponent} from './new-loop/new-loop.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         HeaderComponent,
         LoginComponent,
+        HomeComponent,
         QuizComponent,
         AttachmentPipe,
         ProfileComponent,
@@ -56,9 +62,12 @@ import {UserDetailsComponent} from './users/user-details/user-details.component'
         EditClientComponent,
         LogosComponent,
         AddLogoComponent,
-        UpdateLogoComponent
+        UpdateLogoComponent,
+        PopoverComponent,
+        NewMessageComponent,
+        NewLoopComponent
     ],
-    entryComponents: [QuizComponent, ChangeUserTypeComponent],
+    entryComponents: [QuizComponent, ChangeUserTypeComponent, PopoverComponent],
     imports: [BrowserModule, IonicModule.forRoot(),
         AppRoutingModule, FormsModule, ReactiveFormsModule,
         HttpClientModule, AngularTokenModule.forRoot({

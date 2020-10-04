@@ -49,7 +49,7 @@ export class ClientsComponent implements OnInit {
         this.authService.getUserType().subscribe(
             resp => {
                 if (resp.user_type !== 'admin') {
-                    this.router.navigateByUrl('/home');
+                    this.router.navigateByUrl('/inbox');
                 }
                 console.log(resp);
             }, err => {
@@ -85,7 +85,7 @@ export class ClientsComponent implements OnInit {
                 }
                 if (resp.length < 1) {
                     this.checked = true;
-                    this.helperService.showUpdateToast('All data successfully loaded!');
+                    this.helperService.showUpdateToast('Client list is successfully loaded!');
                     return;
                 }
                 this.clients = this.clients.concat(resp);

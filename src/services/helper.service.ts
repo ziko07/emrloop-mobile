@@ -1,5 +1,8 @@
 import {Injectable} from '@angular/core';
-import {ToastController, LoadingController} from '@ionic/angular';
+
+import {ToastController, LoadingController, PopoverController} from '@ionic/angular';
+
+import {PopoverComponent} from '../app/popover/popover.component';
 
 @Injectable({
     providedIn: 'root'
@@ -7,15 +10,17 @@ import {ToastController, LoadingController} from '@ionic/angular';
 export class HelperService {
     public toast;
     public loader;
+    public popover;
 
     constructor(public toastController: ToastController,
-                public loadingController: LoadingController) {
+                public loadingController: LoadingController,
+                public popoverController: PopoverController) {
     }
 
     public showSuccessToast(message) {
         this.toast = this.toastController.create({
             message,
-            position: 'middle',
+            position: 'bottom',
             duration: 1000,
             animated: true,
             color: 'success',
@@ -28,7 +33,7 @@ export class HelperService {
     public showUpdateToast(message) {
         this.toast = this.toastController.create({
             message,
-            position: 'middle',
+            position: 'bottom',
             duration: 1000,
             animated: true,
             color: 'tertiary',
@@ -41,7 +46,7 @@ export class HelperService {
     public showDangerToast(message) {
         this.toast = this.toastController.create({
             message,
-            position: 'middle',
+            position: 'bottom',
             duration: 1000,
             animated: true,
             color: 'danger',
@@ -63,4 +68,20 @@ export class HelperService {
     public dismissLoader() {
         this.loadingController.dismiss();
     }
+
+    // public showPopOver(i, logoId): void {
+    //     this.popover = this.popoverController.create({
+    //         component: PopoverComponent,
+    //         componentProps: {
+    //             i,
+    //             logoId
+    //         }
+    //     }).then((popOverData) => {
+    //         popOverData.present();
+    //     });
+    // }
+
+    // public dismissPopOver() {
+    //     this.popoverController.dismiss();
+    // }
 }

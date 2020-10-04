@@ -39,3 +39,27 @@ ion-item {
   border-left: 2px solid #1B8895;
   padding-left: 10px;
 }
+
+.fav-btn {
+  --border-radius: 20px;
+  position: relative;
+  right: 10px;
+  a {
+    color: #FFFFFF;
+    text-decoration: none;
+  }
+}
+
+.btn-1 {
+  width: 120px;
+}
+
+.btn-2 {
+  width: 190px;
+  right: 15px;
+}
+
+.inner-icons {
+  position: relative;
+  right: 5px;
+}

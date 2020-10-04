@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
+import { ActionSheetController, PopoverController } from '@ionic/angular';
+
 import {LogoService} from '../../services/logo.service';
 import {HelperService} from '../../services/helper.service';
 import {ClientService} from '../../services/client.service';
@@ -8,6 +10,7 @@ import {GroupService} from '../../services/group.service';
 import {AuthService} from '../../services/auth.service';
 
 import {Logo} from '../../models/logo.model';
+import {PopoverComponent} from '../popover/popover.component';
 
 @Component({
     selector: 'app-logos',
@@ -21,7 +24,9 @@ export class LogosComponent implements OnInit {
         public logoService: LogoService,
         public helperService: HelperService,
         public clientService: ClientService,
-        public groupService: GroupService) {
+        public groupService: GroupService,
+        public actionSheetController: ActionSheetController,
+        public popOverController: PopoverController) {
     }
 
     logo = new Logo();
@@ -29,6 +34,60 @@ export class LogosComponent implements OnInit {
     clients = [];
     page = 1;
     checked = false;
+    isVisible = false;
+
+    public actionSheet;
+    public popover;
+
+    public showPopOver(ev, i, logoId): void {
+        this.popover = this.popOverController.create({
+            component: PopoverComponent,
+            componentProps: {
+                logos: this.logos,
+                i,
+                logoId
+            },
+            cssClass: 'popover-content',
+            event: ev,
+            translucent: true
+        }).then((popOverData) => {
+            popOverData.present();
+        });
+    }
+
+    public dismissPopOver() {
+        this.popOverController.dismiss();
+    }
+
+    // public showActionSheet(logos, i, id): void {
+    //     this.actionSheet = this.actionSheetController.create({
+    //         header: 'Logo options',
+    //         cssClass: 'options',
+    //         buttons: [{
+    //             text: 'Update',
+    //             icon: 'pencil',
+    //             handler: () => {
+    //                 this.router.navigateByUrl('/logos/' + id + '/edit');
+    //             }
+    //         }, {
+    //             text: 'Delete',
+    //             role: 'destructive',
+    //             icon: 'trash',
+    //             handler: () => {
+    //                 this.deleteLogo(i, id);
+    //             }
+    //         }, {
+    //             text: 'Cancel',
+    //             icon: 'close',
+    //             role: 'cancel',
+    //             handler: () => {
+    //                 console.log('Cancel clicked');
+    //             }
+    //         }]
+    //     }).then((actionSheetData) => {
+    //         actionSheetData.present();
+    //     });
+    // }
 
     loadData(event) {
         if (this.checked) {
@@ -51,11 +110,21 @@ export class LogosComponent implements OnInit {
         this.getAllClients();
     }
 
+    // showOptions(e): void {
+    //     this.showActionSheet(logos, i, id);
+    //     const singleLogo = document.getElementById('show_option_' + i);
+    //     if (singleLogo.classList.contains('bg-shadow')) {
+    //         singleLogo.classList.remove('bg-shadow');
+    //     } else {
+    //         singleLogo.classList.add('bg-shadow');
+    //     }
+    // }
+
     getCurrentUserType() {
         this.authService.getUserType().subscribe(
             resp => {
                 if (resp.user_type !== 'admin') {
-                    this.router.navigateByUrl('/home');
+                    this.router.navigateByUrl('/inbox');
                 }
                 console.log(resp);
             }, err => {
@@ -67,18 +136,18 @@ export class LogosComponent implements OnInit {
     getLogo() {
         this.logoService.getLogo().subscribe(
             resp => {
-                    if (resp.action === 'new' && this.checked) {
-                        this.logos.push(resp.logo);
-                    } else {
-                        for (let i = 0; i < this.logos.length; i++) {
-                            if (this.logos[i].id === resp.logo.id) {
-                                this.logos[i] = resp.logo;
-                                break;
-                            }
+                if (resp.action === 'new' && this.checked) {
+                    this.logos.push(resp.logo);
+                } else {
+                    for (let i = 0; i < this.logos.length; i++) {
+                        if (this.logos[i].id === resp.logo.id) {
+                            this.logos[i] = resp.logo;
+                            break;
                         }
                     }
-        }, err => {
-        });
+                }
+            }, err => {
+            });
     }
 
     getAllLogos() {
@@ -86,7 +155,7 @@ export class LogosComponent implements OnInit {
             resp => {
                 if (resp.length < 1) {
                     this.checked = true;
-                    this.helperService.showUpdateToast('All data successfully loaded!');
+                    this.helperService.showUpdateToast('Logo list is successfully loaded!');
                     return;
                 }
                 this.logos = this.logos.concat(resp);
@@ -111,28 +180,5 @@ export class LogosComponent implements OnInit {
                 console.log(err);
             }
         );
-    }
-
-    deleteLogo(id, logoID) {
-        if (confirm('Are you sure?')) {
-            this.logos.splice(id, 1);
-            this.helperService.showLoader();
-            this.logoService.deleteLogo(logoID).subscribe(
-                resp => {
-                    console.log(resp);
-                    this.helperService.dismissLoader();
-                    if (resp.status === 'ok') {
-                        this.helperService.showUpdateToast(resp.message);
-                    } else {
-                        this.helperService.showDangerToast(resp.message);
-                    }
-                }, err => {
-                    console.log(err);
-                    this.helperService.dismissLoader();
-                    this.helperService.showDangerToast('Something went wrong. Try again later.');
-                }
-            );
-            console.log(id, logoID);
-        }
     }
 }
