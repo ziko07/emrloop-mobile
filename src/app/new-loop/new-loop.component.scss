@@ -1,3 +1,26 @@
 ion-back-button {
   display: block;
 }
+
+ion-card {
+  border: 2px solid #cbdcde;
+  box-shadow: none;
+  ion-card-content {
+    padding: 0;
+  }
+}
+
+.file-container {
+  padding-top: 10px;
+  margin-left: 20px;
+  color: black;
+  font-size: 16px;
+  ion-input {
+    position: relative;
+    right: 8px;
+  }
+}
+
+.p1 {
+
+}

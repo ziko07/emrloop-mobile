@@ -1,9 +1,15 @@
 export class Message {
     id: number;
-    groupName: string;
-    receiptType: number;
-    title: string | ArrayBuffer;
+    group_id: number;
+    receipt_type: string;
+    recipient: string;
+    title: string;
     content: string;
-    fileType: string;
-    base64Ffile: string | ArrayBuffer;
+    attachment: string | ArrayBuffer;
+    question: string;
+    answer_a: string;
+    answer_b: string;
+    answer_c: string;
+    answer_d: string;
+    answer: string;
 }

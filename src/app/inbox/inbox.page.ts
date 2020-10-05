@@ -43,6 +43,12 @@ export class InboxPage {
     ngOnInit() {
         this.loadInbox();
         this.getUserType();
+        this.setImageStyle();
+    }
+
+    setImageStyle() {
+        const el = document.getElementsByClassName('img-container');
+        console.log(el);
     }
 
     getUserType(): void {
@@ -59,6 +65,7 @@ export class InboxPage {
         this.homeService.list().subscribe(resp => {
             this.spinnerDialog.hide();
             this.list = resp;
+            console.log(resp);
         }, err => {
             this.spinnerDialog.hide();
             this.helperService.showDangerToast('Unable to load inbox');
