@@ -216,9 +216,7 @@ export class AppComponent {
         if (this.isSignedIn) {
             this.router.navigateByUrl('/home');
         }
-        if (this.isSignedIn) {
-            this.router.navigateByUrl('/new-message');
-        }
+
         this.onGetCurrentUser();
     }
 }

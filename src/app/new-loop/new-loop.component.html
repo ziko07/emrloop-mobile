@@ -18,7 +18,6 @@
                         cancelText="Dismiss"
                         interface="action-sheet"
                         class="mx-0 my-10"
-                        required
                 >
                     <ion-select-option
                             *ngFor="let group of groups"
@@ -37,7 +36,6 @@
                         cancelText="Dismiss"
                         interface="action-sheet"
                         value="Flag"
-                        required
                 >
                     <ion-select-option value="Flag">Flag</ion-select-option>
                     <ion-select-option value="Quiz">Quiz</ion-select-option>
@@ -113,22 +111,11 @@
                         type="text"
                         name="title"
                         [(ngModel)]="message.title"
-                        clearInput required
+                        clearInput spellcheck
                 >
                 </ion-input>
             </ion-item>
-            <ion-item>
-                <ion-label position="floating">
-                    Message Content
-                </ion-label>
-                <ion-textarea
-                        type="text"
-                        name="content"
-                        [(ngModel)]="message.content"
-                        required spellcheck
-                >
-                </ion-textarea>
-            </ion-item>
+            <angular-editor [(ngModel)]="message.content" [config]="config"></angular-editor>
             <div class="file-container">
                 <div>
                     <ion-label>

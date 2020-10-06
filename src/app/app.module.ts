@@ -6,6 +6,7 @@ import {AngularTokenModule} from 'angular-token';
 import {AuthGuardService as AuthGuard} from '../services/auth/auth-guard.service';
 
 import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 import {HttpClientModule} from '@angular/common/http';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
@@ -68,7 +69,7 @@ import {NewLoopComponent} from './new-loop/new-loop.component';
         NewLoopComponent
     ],
     entryComponents: [QuizComponent, ChangeUserTypeComponent, PopoverComponent],
-    imports: [BrowserModule, IonicModule.forRoot(),
+    imports: [BrowserModule, IonicModule.forRoot(), AngularEditorModule,
         AppRoutingModule, FormsModule, ReactiveFormsModule,
         HttpClientModule, AngularTokenModule.forRoot({
             signInPath: Base.apiUrl + '/auth/sign_in',

@@ -33,18 +33,21 @@
         >
         </ion-input>
       </ion-item>
-      <ion-item>
-        <ion-label position="floating">
-          Write Some Content
-        </ion-label>
-        <ion-textarea
-                type="text"
-                name="content"
-                [(ngModel)]="message.content"
-                spellcheck
+      <angular-editor [(ngModel)]="message.content" [config]="config"></angular-editor>
+      <div class="file-container">
+        <div>
+          <ion-label>
+            Attach file
+          </ion-label>
+        </div>
+        <ion-input
+                type="file"
+                name="file"
+                required
+                (change)="loadImageFromDevice($event)"
         >
-        </ion-textarea>
-      </ion-item>
+        </ion-input>
+      </div>
       <ion-button
               color="primary"
               class="ion-margin ion-float-right ion-text-capitalize"
