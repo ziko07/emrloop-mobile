@@ -106,6 +106,7 @@ export class NewLoopComponent implements OnInit {
                 this.helperService.dismissLoader();
                 console.log(resp);
                 if (resp.status === 'ok') {
+                    this.messageService.listMessage(this.message);
                     this.helperService.showSuccessToast(resp.message);
                     this.router.navigateByUrl('/inbox');
                 } else {

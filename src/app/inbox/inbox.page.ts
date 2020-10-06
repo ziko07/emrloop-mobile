@@ -7,6 +7,7 @@ import {HelperService} from '../../services/helper.service';
 import {LoaderService} from '../../services/loader.service';
 import {HomeService} from '../../services/home.service';
 import {AuthService} from '../../services/auth.service';
+import {MessageService} from '../../services/message.service';
 
 import {DetailsComponent} from '../details/details.component';
 
@@ -26,6 +27,7 @@ export class InboxPage {
     constructor(
         private modalController: ModalController,
         public homeService: HomeService,
+        public messageService: MessageService,
         public router: Router,
         public spinnerDialog: LoaderService,
         private helperService: HelperService,
@@ -43,12 +45,18 @@ export class InboxPage {
     ngOnInit() {
         this.loadInbox();
         this.getUserType();
-        this.setImageStyle();
+        this.onReceiveMessage();
     }
 
-    setImageStyle() {
-        const el = document.getElementsByClassName('img-container');
-        console.log(el);
+    onReceiveMessage(): void {
+        this.messageService.getMessage().subscribe(
+            resp => {
+                this.list.push(resp);
+                console.log(resp);
+            }, err => {
+                console.log(err);
+            }
+        );
     }
 
     getUserType(): void {
