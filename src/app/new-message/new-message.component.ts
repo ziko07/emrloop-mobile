@@ -26,7 +26,7 @@ export class NewMessageComponent implements OnInit {
     config: AngularEditorConfig = {
         editable: true,
         spellcheck: true,
-        height: '10rem',
+        height: '15rem',
         minHeight: '5rem',
         placeholder: 'Write some content...',
         translate: 'no',
