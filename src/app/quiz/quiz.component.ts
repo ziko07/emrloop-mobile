@@ -22,7 +22,7 @@ export class QuizComponent implements OnInit {
   }
 
    loadDelivery(id) {
-     this.spinnerDialog.show('', 'Loding quize');
+     this.spinnerDialog.show('', 'Loading quiz');
      this.homeService.task(id).subscribe(resp => {
        this.spinnerDialog.hide();
        this.item = resp;

@@ -78,7 +78,7 @@ export class NewMessageComponent implements OnInit {
     ngOnInit() {
     }
 
-    loadImageFromDevice(e): void {
+    loadFileFromDevice(e): void {
         const file = e.target.files[0];
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -95,7 +95,7 @@ export class NewMessageComponent implements OnInit {
                 console.log('Resp');
                 this.helperService.dismissLoader();
                 if (resp.status === 'ok') {
-                    this.helperService.showSuccessToast(resp.message);
+                    this.helperService.showSuccessToast('Message sent successfully.');
                     this.router.navigateByUrl('/inbox');
                 } else {
                     this.helperService.showDangerToast(resp.message);

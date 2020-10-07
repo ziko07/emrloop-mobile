@@ -22,7 +22,7 @@ export class AppComponent {
     isSignedIn: boolean;
     navigate: any;
     user: any;
-    token: string;
+    regId: string;
     osType: string;
     adminMenu = [
         {
@@ -135,14 +135,8 @@ export class AppComponent {
     ) {
         this.sideMenu();
         this.initializeApp();
-    }
-
-    onNotificationTap(): void {
-        this.fcm.onNotification().subscribe(data => {
-            if (data.wasTapped) {
-                this.router.navigateByUrl('/inbox');
-            }
-        });
+        this.setUserData();
+        this.getProfile();
     }
 
     initializeApp(): void {
@@ -153,8 +147,14 @@ export class AppComponent {
             }, 2000);
             this.statusBar.backgroundColorByHexString('#1B8895');
             this.splashScreen.hide();
-            this.setUserData();
-            this.getProfile();
+        });
+    }
+
+    onNotificationTap(): void {
+        this.fcm.onNotification().subscribe(data => {
+            if (data.wasTapped) {
+                this.router.navigateByUrl('/inbox');
+            }
         });
     }
 
@@ -187,6 +187,7 @@ export class AppComponent {
         this.authProvider.logout().subscribe(resp => {
             this.helperService.dismissLoader();
             window.location.href = '/login';
+            this.regId = null;
             this.helperService.showUpdateToast('You have successfully logged out!');
         }, err => {
         });
@@ -216,7 +217,6 @@ export class AppComponent {
         if (this.isSignedIn) {
             this.router.navigateByUrl('/home');
         }
-
         this.onGetCurrentUser();
     }
 }

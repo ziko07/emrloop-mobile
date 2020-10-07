@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {AngularEditorConfig} from '@kolkov/angular-editor';
 
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
+
+
 import {GroupService} from '../../services/group.service';
 import {MessageService} from '../../services/message.service';
 import {HelperService} from '../../services/helper.service';
@@ -78,6 +81,7 @@ export class NewLoopComponent implements OnInit {
 
     ngOnInit() {
         this.onGetAllGroups();
+
     }
 
     onGetAllGroups(): void {
@@ -89,7 +93,7 @@ export class NewLoopComponent implements OnInit {
         );
     }
 
-    loadImageFromDevice(e): void {
+    loadFileFromDevice(e): void {
         const file = e.target.files[0];
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -106,8 +110,8 @@ export class NewLoopComponent implements OnInit {
                 this.helperService.dismissLoader();
                 console.log(resp);
                 if (resp.status === 'ok') {
-                    this.messageService.listMessage(this.message);
-                    this.helperService.showSuccessToast(resp.message);
+                    this.messageService.listMessage(resp);
+                    this.helperService.showSuccessToast('Loop created successfully!');
                     this.router.navigateByUrl('/inbox');
                 } else {
                     this.helperService.showDangerToast(resp.message);

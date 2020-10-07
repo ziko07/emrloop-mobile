@@ -13,7 +13,7 @@ export class MessageService {
   private messageSubject = new Subject<any>();
 
   listMessage(message: any) {
-    this.messageSubject.next(message);
+    this.messageSubject.next({message});
   }
 
   getMessage(): Observable<any> {

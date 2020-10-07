@@ -21,7 +21,7 @@ const {App} = Plugins;
     styleUrls: ['inbox.page.scss'],
 })
 export class InboxPage {
-    list: any;
+    list = [];
     type: string;
 
     constructor(
@@ -43,16 +43,16 @@ export class InboxPage {
     }
 
     ngOnInit() {
+        this.onReceiveMessage();
         this.loadInbox();
         this.getUserType();
-        this.onReceiveMessage();
     }
 
     onReceiveMessage(): void {
         this.messageService.getMessage().subscribe(
             resp => {
-                this.list.push(resp);
-                console.log(resp);
+                this.list.push(resp.message.message);
+                console.log(resp.message.message);
             }, err => {
                 console.log(err);
             }

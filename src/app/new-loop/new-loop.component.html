@@ -51,7 +51,7 @@
                 </ion-item>
                 <ion-item>
                     <ion-list>
-                        <ion-radio-group value="biff">
+                        <ion-radio-group [(ngModel)]="message.answer" value="a">
                             <ion-list-header>
                                 <ion-label style="font-size: 16px">Answer</ion-label>
                             </ion-list-header>
@@ -126,7 +126,7 @@
                         type="file"
                         name="file"
                         required
-                        (change)="loadImageFromDevice($event)"
+                        (change)="loadFileFromDevice($event)"
                 >
                 </ion-input>
             </div>

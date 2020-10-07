@@ -20,9 +20,8 @@ export class LoginComponent implements OnInit {
     disableLogin = false;
     errorMessage: any;
     buttonText: any = 'Login';
-    regId: string;
     osType: string;
-    isSignedIn: boolean;
+    regId: string;
 
     constructor(private router: Router,
                 private helperService: HelperService,
@@ -35,11 +34,10 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.logInStatus();
+        this.getOSType();
         setTimeout(() => {
             this.getToken();
-        }, 10000);
-        this.getOSType();
+        }, 5000);
         const data = window.localStorage.getItem('credential');
         const credential = data ? JSON.parse(data) : {};
         this.form.password = credential.password;
@@ -49,29 +47,13 @@ export class LoginComponent implements OnInit {
         }
     }
 
-    logInStatus() {
-        this.isSignedIn = this.authProvider.signedIn();
-        if (this.isSignedIn) {
-            this.router.navigateByUrl('/home');
-        }
-    }
-
     getOSType(): void {
         if (this.platform.is('android')) {
             this.osType = 'android';
         } else if (this.platform.is('ios')) {
             this.osType = 'ios';
         }
-    }
-
-    onPushNotification(): void {
-        this.authProvider.push(this.regId, this.osType).subscribe(
-            resp => {
-                console.log(resp);
-            }, err => {
-                console.log(err);
-            }
-        );
+        console.log(this.osType);
     }
 
     getToken(): void {
@@ -79,7 +61,19 @@ export class LoginComponent implements OnInit {
             this.regId = token;
         }).catch((error) => {
                 this.regId = error;
-                console.log(error);
+            }
+        );
+    }
+
+    onPushNotification(): void {
+        this.helperService.showLoader();
+        this.authProvider.push(this.regId, this.osType).subscribe(
+            resp => {
+                this.helperService.dismissLoader();
+                console.log(resp);
+            }, err => {
+                this.helperService.dismissLoader();
+                console.log(err);
             }
         );
     }
