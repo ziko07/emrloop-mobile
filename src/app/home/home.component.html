@@ -10,7 +10,7 @@
   <div>
     <h2>
       <img src="../../assets/images/emrloop_icon_green-2a5f031247c3243a731a05e58137233e6e9c731ec3e4979be05eda6694cd7267.png" />
-      Welcome, {{ name }}
+      Welcome <span *ngIf="name">{{ ', ' + name }}</span>
     </h2>
     <h5>
       KaizenLoop is your Secure Enterprise Solution for precise deployment and tracking of notifications and content delivery!
