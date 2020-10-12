@@ -12,19 +12,19 @@ export class MessageService {
 
   private messageSubject = new Subject<any>();
 
-  listMessage(message: any) {
-    this.messageSubject.next({message});
+  public listMessage(message: any) {
+    this.messageSubject.next(message);
   }
 
-  getMessage(): Observable<any> {
+  public getMessage(): Observable<any> {
     return this.messageSubject;
   }
 
-  createNewLoop(data): Observable<any> {
+  public createNewLoop(data): Observable<any> {
     return this.http.post(Base.apiUrl + '/users/messages/publish_message', data, Base.requestHeader());
   }
 
-  sendMessage(data): Observable<any> {
+  public sendMessage(data): Observable<any> {
     return this.http.post(Base.apiUrl + '/users/messages/deliver_message', data, Base.requestHeader());
   }
 }

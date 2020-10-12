@@ -144,7 +144,7 @@ export class AppComponent {
             this.backgroundMode.enable();
             setTimeout(() => {
                 this.onNotificationTap();
-            }, 2000);
+            }, 5000);
             this.statusBar.backgroundColorByHexString('#1B8895');
             this.splashScreen.hide();
         });

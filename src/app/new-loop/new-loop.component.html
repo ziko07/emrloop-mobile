@@ -46,7 +46,7 @@
                     <ion-label position="floating">
                         Ask a Question
                     </ion-label>
-                    <ion-input type="text">
+                    <ion-input type="text" [(ngModel)]="message.question">
                     </ion-input>
                 </ion-item>
                 <ion-item>
@@ -126,7 +126,8 @@
                         type="file"
                         name="file"
                         required
-                        (change)="loadFileFromDevice($event)"
+                        (click)="uploadFile()"
+                        accept=".pdf, .doc, .docx"
                 >
                 </ion-input>
             </div>

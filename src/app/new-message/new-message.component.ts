@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {AngularEditorConfig} from '@kolkov/angular-editor';
 
+import {FileChooser} from '@ionic-native/file-chooser/ngx';
+import {File} from '@ionic-native/file/ngx';
+
 import {GroupService} from '../../services/group.service';
 import {MessageService} from '../../services/message.service';
 import {HelperService} from '../../services/helper.service';
@@ -18,7 +21,9 @@ export class NewMessageComponent implements OnInit {
     constructor(public router: Router,
                 public groupService: GroupService,
                 public messageService: MessageService,
-                public helperService: HelperService) {
+                public helperService: HelperService,
+                private fileChooser: FileChooser,
+                private file: File) {
     }
 
     message = new Message();
@@ -78,13 +83,24 @@ export class NewMessageComponent implements OnInit {
     ngOnInit() {
     }
 
-    loadFileFromDevice(e): void {
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-            this.message.attachment = reader.result;
-        };
+    public uploadFile(): void {
+        this.fileChooser.open().then(uri => {
+            console.log('Uri ' + uri);
+            this.file.resolveLocalFilesystemUrl(uri).then((newUrl) => {
+                console.log('NewUrl ' + JSON.stringify(newUrl));
+
+                let dirPath = newUrl.nativeURL;
+                const dirPathSegments = dirPath.split('/');
+                dirPathSegments.pop();
+                dirPath = dirPathSegments.join('/');
+                this.message.attachment = dirPath;
+
+                // this.file.readAsArrayBuffer(dirPath, newUrl.name).then((buffer) => {
+                //     this.upload(buffer, newUrl.name);
+                // });
+            });
+        })
+            .catch(err => alert(JSON.stringify(err)));
     }
 
     onSendMessage() {

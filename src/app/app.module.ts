@@ -12,6 +12,9 @@ import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {FCM} from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
 import {BackgroundMode} from '@ionic-native/background-mode/ngx';
+import {FileChooser} from '@ionic-native/file-chooser/ngx';
+import {FilePath} from '@ionic-native/file-path/ngx';
+import {File} from '@ionic-native/file/ngx';
 
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
@@ -82,7 +85,10 @@ import {NewLoopComponent} from './new-loop/new-loop.component';
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
         AuthGuard,
         FCM,
-        BackgroundMode
+        BackgroundMode,
+        FileChooser,
+        FilePath,
+        File
     ],
     exports: [
         AttachmentPipe

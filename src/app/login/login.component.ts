@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit {
     }
 
     getOSType(): void {
+
         if (this.platform.is('android')) {
             this.osType = 'android';
         } else if (this.platform.is('ios')) {
@@ -66,13 +67,10 @@ export class LoginComponent implements OnInit {
     }
 
     onPushNotification(): void {
-        this.helperService.showLoader();
         this.authProvider.push(this.regId, this.osType).subscribe(
             resp => {
-                this.helperService.dismissLoader();
                 console.log(resp);
             }, err => {
-                this.helperService.dismissLoader();
                 console.log(err);
             }
         );
@@ -86,7 +84,7 @@ export class LoginComponent implements OnInit {
                 login: this.form.login,
                 password: this.form.password
             };
-            this.helperService.showLoader();
+            this.helperService.showPushLoader();
             this.authProvider.login(this.userDetails).subscribe(resp => {
                 console.log(resp);
                 this.helperService.dismissLoader();

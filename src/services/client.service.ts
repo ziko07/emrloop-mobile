@@ -13,31 +13,31 @@ export class ClientService {
 
     private clientSubject = new Subject<any>();
 
-    listClient(client: any, action = 'new') {
+    public listClient(client: any, action = 'new') {
         this.clientSubject.next({client, action});
     }
 
-    getClient(): Observable<any> {
+    public getClient(): Observable<any> {
         return this.clientSubject;
     }
 
-    getSingleClient(id): Observable<any> {
+    public getSingleClient(id): Observable<any> {
         return this.http.get(Base.apiUrl + '/clients/' + id, Base.requestHeader());
     }
 
-    getClients(page): Observable<any> {
+    public getClients(page): Observable<any> {
         return this.http.get(Base.apiUrl + '/clients?page=' + page, Base.requestHeader());
     }
 
-    addClient(name): Observable<any> {
+    public addClient(name): Observable<any> {
         return this.http.post(Base.apiUrl + '/clients', {name}, Base.requestHeader());
     }
 
-    editClient(id, name): Observable<any> {
+    public editClient(id, name): Observable<any> {
         return this.http.patch(Base.apiUrl + '/clients/' + id, {name}, Base.requestHeader());
     }
 
-    deleteClient(clientId): Observable<any> {
+    public deleteClient(clientId): Observable<any> {
         return this.http.delete(Base.apiUrl + '/clients/' + clientId, Base.requestHeader());
     }
 }

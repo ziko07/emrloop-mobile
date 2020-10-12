@@ -21,7 +21,7 @@ const {App} = Plugins;
     styleUrls: ['inbox.page.scss'],
 })
 export class InboxPage {
-    list = [];
+    list: any;
     type: string;
 
     constructor(
@@ -51,8 +51,8 @@ export class InboxPage {
     onReceiveMessage(): void {
         this.messageService.getMessage().subscribe(
             resp => {
-                this.list.push(resp.message.message);
-                console.log(resp.message.message);
+                this.list.push(resp);
+                console.log(resp);
             }, err => {
                 console.log(err);
             }
@@ -73,7 +73,7 @@ export class InboxPage {
         this.homeService.list().subscribe(resp => {
             this.spinnerDialog.hide();
             this.list = resp;
-            console.log(resp);
+            console.log('After ' + resp);
         }, err => {
             this.spinnerDialog.hide();
             this.helperService.showDangerToast('Unable to load inbox');

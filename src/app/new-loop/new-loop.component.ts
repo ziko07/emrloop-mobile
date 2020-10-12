@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {AngularEditorConfig} from '@kolkov/angular-editor';
 
-import { EmailComposer } from '@ionic-native/email-composer/ngx';
-
+import {FileChooser} from '@ionic-native/file-chooser/ngx';
+import {File} from '@ionic-native/file/ngx';
 
 import {GroupService} from '../../services/group.service';
 import {MessageService} from '../../services/message.service';
@@ -21,11 +21,15 @@ export class NewLoopComponent implements OnInit {
     constructor(public router: Router,
                 public groupService: GroupService,
                 public messageService: MessageService,
-                public helperService: HelperService) {
+                public helperService: HelperService,
+                private fileChooser: FileChooser,
+                private file: File) {
     }
 
     groups = [];
     message = new Message();
+    uploadText: any;
+    downloadFile: any;
 
     config: AngularEditorConfig = {
         editable: true,
@@ -81,10 +85,9 @@ export class NewLoopComponent implements OnInit {
 
     ngOnInit() {
         this.onGetAllGroups();
-
     }
 
-    onGetAllGroups(): void {
+    private onGetAllGroups(): void {
         this.groupService.getAllInfo().subscribe(
             resp => {
                 this.groups = resp[0].groups;
@@ -93,24 +96,36 @@ export class NewLoopComponent implements OnInit {
         );
     }
 
-    loadFileFromDevice(e): void {
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-            this.message.attachment = reader.result;
-        };
+    public uploadFile(): void {
+        this.fileChooser.open().then(uri => {
+                alert(uri);
+                this.file.resolveLocalFilesystemUrl(uri).then((newUrl) => {
+                    alert(JSON.stringify(newUrl));
+
+                    let dirPath = newUrl.nativeURL;
+                    const dirPathSegments = dirPath.split('/');
+                    dirPathSegments.pop();
+                    dirPath = dirPathSegments.join('/');
+                    this.message.attachment = dirPath;
+
+                    // this.file.readAsArrayBuffer(dirPath, newUrl.name).then((buffer) => {
+                    //     this.upload(buffer, newUrl.name);
+                    // });
+                });
+            })
+            .catch(err => alert(JSON.stringify(err)));
     }
 
-    onLaunchLoop(): void {
+    public onLaunchLoop(): void {
+        // this.uploadFile();
         console.log(this.message);
         this.helperService.showLoader();
         this.messageService.createNewLoop(this.message).subscribe(
             resp => {
                 this.helperService.dismissLoader();
-                console.log(resp);
+                console.log(resp.message);
                 if (resp.status === 'ok') {
-                    this.messageService.listMessage(resp);
+                    this.messageService.listMessage(resp.message);
                     this.helperService.showSuccessToast('Loop created successfully!');
                     this.router.navigateByUrl('/inbox');
                 } else {

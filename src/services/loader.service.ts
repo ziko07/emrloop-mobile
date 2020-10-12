@@ -1,15 +1,15 @@
-import { LoadingController } from '@ionic/angular';
+import {LoadingController} from '@ionic/angular';
 import {Injectable} from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
 })
 export class LoaderService {
-  constructor(public loadingCtrl: LoadingController) {
+    constructor(public loadingCtrl: LoadingController) {
 
-  }
+    }
 
-    async show(title, text, callback = false)  {
+    async show(title, text, callback = false) {
         const loader = await this.loadingCtrl.create({
             cssClass: 'custom-loader',
             spinner: 'lines',
@@ -20,10 +20,10 @@ export class LoaderService {
         loader.present();
     }
 
-     hide() {
-      setTimeout(() => {
-          this.dismissLoader();
-      }, 1000);
+    hide() {
+        setTimeout(() => {
+            this.dismissLoader();
+        }, 1000);
     }
 
     async dismissLoader() {

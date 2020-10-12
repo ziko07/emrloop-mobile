@@ -13,11 +13,11 @@ export class AuthService {
 
     private profileSubject = new Subject<any>();
 
-    listProfile(user: any) {
+    public listProfile(user: any) {
         this.profileSubject.next(user);
     }
 
-    getProfile(): Observable<any> {
+    public getProfile(): Observable<any> {
         return this.profileSubject;
     }
 
@@ -33,19 +33,19 @@ export class AuthService {
         return this.tokenService.userSignedIn();
     }
 
-    getUserType(): Observable<any> {
+    public getUserType(): Observable<any> {
         return this.http.get(Base.apiUrl + '/users/current_user_type', Base.requestHeader());
     }
 
-    getCurrentUser(): Observable<any> {
+    public getCurrentUser(): Observable<any> {
         return this.http.get(Base.apiUrl + '/users/profile');
     }
 
-    push(regId, os_type): Observable<any> {
+    public push(regId, os_type): Observable<any> {
         return this.http.post(Base.apiUrl + '/users/push', {regId, os_type}, Base.requestHeader());
     }
 
-    updateProfile(type, formData): Observable<any> {
+    public updateProfile(type, formData): Observable<any> {
         console.log(type);
         if (type === 'admin') {
             return this.http.post(Base.apiUrl + '/users/update_profile', {admin: formData}, Base.requestHeader());
@@ -56,22 +56,22 @@ export class AuthService {
         }
     }
 
-    resetPassword(userEmail): Observable<any> {
+    public resetPassword(userEmail): Observable<any> {
         return this.http.post(Base.apiUrl + '/auth/password',
             {email: userEmail, redirect_url: `${Base.apiUrl}/auth/sign_in`},
             Base.requestHeader());
     }
 
-    getUserGroups(page): Observable<any> {
+    public getUserGroups(page): Observable<any> {
         return this.http.get(Base.apiUrl + '/group/my_groups?page=' + page, Base.requestHeader());
     }
 
-    getToken() {
+    public getToken() {
         let token_data = this.tokenService.currentAuthData;
         return token_data ? token_data.accessToken : '';
     }
 
-    getAuth() {
+    public getAuth() {
         return this.tokenService.currentAuthData;
     }
 }
