@@ -51,10 +51,7 @@ export class InboxPage {
     onReceiveMessage(): void {
         this.messageService.getMessage().subscribe(
             resp => {
-                this.list.push(resp);
-                console.log(resp);
-            }, err => {
-                console.log(err);
+                this.list.unshift(resp);
             }
         );
     }
@@ -73,7 +70,8 @@ export class InboxPage {
         this.homeService.list().subscribe(resp => {
             this.spinnerDialog.hide();
             this.list = resp;
-            console.log('After ' + resp);
+            // for (let l of this.list)
+              //  console.log(l, this.list.l);
         }, err => {
             this.spinnerDialog.hide();
             this.helperService.showDangerToast('Unable to load inbox');

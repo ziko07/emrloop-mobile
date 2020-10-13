@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.helperService.showMessageAlert();
         this.onGetProfile();
         this.getUserInfo();
     }

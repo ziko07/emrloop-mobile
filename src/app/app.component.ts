@@ -137,11 +137,11 @@ export class AppComponent {
         private network: Network
     ) {
         // this.connectSubscription();
-        this.disconnectSubscription();
         this.initializeApp();
         this.setUserData();
         this.getProfile();
         this.sideMenu();
+        this.disconnectSubscription();
     }
 
     initializeApp(): void {
@@ -163,7 +163,7 @@ export class AppComponent {
 
     disconnectSubscription(): void {
         this.network.onDisconnect().subscribe(() => {
-            this.helperService.showDangerToast('Please connect to the internet.');
+            this.helperService.showAlert('Please connect to the internet.');
             if (this.user.type === 'Admin') {
                 this.navigate = this.adminMenu;
             } else if (this.user.type === 'User') {
@@ -178,6 +178,8 @@ export class AppComponent {
         this.fcm.onNotification().subscribe(data => {
             if (data.wasTapped) {
                 this.router.navigateByUrl('/inbox');
+            } else {
+                this.helperService.showMessageAlert();
             }
         });
     }

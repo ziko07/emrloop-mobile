@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
 
 import {ToastController, LoadingController, PopoverController} from '@ionic/angular';
-
-import {PopoverComponent} from '../app/popover/popover.component';
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +13,42 @@ export class HelperService {
 
     constructor(public toastController: ToastController,
                 public loadingController: LoadingController,
-                public popoverController: PopoverController) {
+                public popoverController: PopoverController,
+                public router: Router) {
+    }
+
+    public showMessageAlert() {
+        this.toast = this.toastController.create({
+            position: 'top',
+            duration: 100000,
+            animated: true,
+            color: 'secondary',
+            cssClass: 'custom-toast',
+            buttons: [
+                {
+                    text: '1 new message received!',
+                    side: 'start',
+                    handler: () => {
+                        this.router.navigateByUrl('/inbox');
+                    }
+                }
+            ]
+        }).then((toastData) => {
+            toastData.present();
+        });
+    }
+
+    public showAlert(message) {
+        this.toast = this.toastController.create({
+            message,
+            position: 'bottom',
+            duration: 1000,
+            animated: true,
+            color: 'dark',
+            cssClass: 'custom-toast'
+        }).then((toastData) => {
+            toastData.present();
+        });
     }
 
     public showSuccessToast(message) {
@@ -24,7 +58,7 @@ export class HelperService {
             duration: 1000,
             animated: true,
             color: 'success',
-            cssClass: 'my-custom-class'
+            cssClass: 'custom-toast'
         }).then((toastData) => {
             toastData.present();
         });
@@ -37,7 +71,7 @@ export class HelperService {
             duration: 1000,
             animated: true,
             color: 'tertiary',
-            cssClass: 'my-custom-class'
+            cssClass: 'custom-toast'
         }).then((toastData) => {
             toastData.present();
         });
@@ -50,7 +84,7 @@ export class HelperService {
             duration: 1000,
             animated: true,
             color: 'danger',
-            cssClass: 'my-custom-class'
+            cssClass: 'custom-toast'
         }).then((toastData) => {
             toastData.present();
         });
