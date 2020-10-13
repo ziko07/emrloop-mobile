@@ -179,7 +179,7 @@ export class AppComponent {
             if (data.wasTapped) {
                 this.router.navigateByUrl('/inbox');
             } else {
-                this.helperService.showMessageAlert();
+                this.helperService.showMessageAlert('1 new message received!');
             }
         });
     }

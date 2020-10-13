@@ -26,3 +26,13 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 @import "assets/scss/public";
+
+.custom-toast, .alert-toast {
+  --border-radius: 10px;
+  --width: 300px;
+  top: -10%;
+}
+
+.alert-toast {
+  top: 0;
+}

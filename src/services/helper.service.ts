@@ -17,22 +17,14 @@ export class HelperService {
                 public router: Router) {
     }
 
-    public showMessageAlert() {
+    public showMessageAlert(message) {
         this.toast = this.toastController.create({
+            message,
             position: 'top',
-            duration: 100000,
+            duration: 500,
             animated: true,
-            color: 'secondary',
-            cssClass: 'custom-toast',
-            buttons: [
-                {
-                    text: '1 new message received!',
-                    side: 'start',
-                    handler: () => {
-                        this.router.navigateByUrl('/inbox');
-                    }
-                }
-            ]
+            color: 'dark',
+            cssClass: 'alert-toast'
         }).then((toastData) => {
             toastData.present();
         });

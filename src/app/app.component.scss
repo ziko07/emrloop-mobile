@@ -61,3 +61,7 @@
 .custom-toast {
   --border-radius: 25px;
 }
+
+ion-button, button {
+  text-transform: capitalize;
+}

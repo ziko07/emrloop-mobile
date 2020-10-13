@@ -19,13 +19,12 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.helperService.showMessageAlert();
+        this.helperService.showMessageAlert('1 new message received!');
         this.onGetProfile();
         this.getUserInfo();
     }
 
     onGetProfile() {
-        console.log('onGetProfile');
         this.authService.getProfile().subscribe(
             resp => {
                 this.name = resp.name;
