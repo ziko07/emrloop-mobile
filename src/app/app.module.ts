@@ -43,6 +43,7 @@ import {PopoverComponent} from './popover/popover.component';
 import {NewMessageComponent} from './new-message/new-message.component';
 import {InboxPage} from './inbox/inbox.page';
 import {NewLoopComponent} from './new-loop/new-loop.component';
+import {Network} from '@ionic-native/network/ngx';
 
 @NgModule({
     declarations: [
@@ -88,7 +89,8 @@ import {NewLoopComponent} from './new-loop/new-loop.component';
         BackgroundMode,
         FileChooser,
         FilePath,
-        File
+        File,
+        Network
     ],
     exports: [
         AttachmentPipe

@@ -126,10 +126,9 @@
                         type="file"
                         name="file"
                         required
-                        (click)="uploadFile()"
+                        (change)="uploadFile($event)"
                         accept=".pdf, .doc, .docx"
-                >
-                </ion-input>
+                ></ion-input>
             </div>
             <ion-button
                     color="primary"

@@ -8,6 +8,7 @@ import {FCM} from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {BackgroundMode} from '@ionic-native/background-mode/ngx';
+import { Network } from '@ionic-native/network/ngx';
 
 import {AuthService} from '../services/auth.service';
 import {HelperService} from '../services/helper.service';
@@ -120,6 +121,7 @@ export class AppComponent {
             icon: 'briefcase'
         }
     ];
+    isConnected: boolean;
 
     constructor(
         private platform: Platform,
@@ -131,12 +133,15 @@ export class AppComponent {
         private backgroundMode: BackgroundMode,
         public helperService: HelperService,
         public authGuard: AuthGuard,
-        private fcm: FCM
+        private fcm: FCM,
+        private network: Network
     ) {
-        this.sideMenu();
+        // this.connectSubscription();
+        this.disconnectSubscription();
         this.initializeApp();
         this.setUserData();
         this.getProfile();
+        this.sideMenu();
     }
 
     initializeApp(): void {
@@ -147,6 +152,25 @@ export class AppComponent {
             }, 5000);
             this.statusBar.backgroundColorByHexString('#1B8895');
             this.splashScreen.hide();
+        });
+    }
+
+    connectSubscription(): void {
+        this.network.onConnect().subscribe(() => {
+            this.helperService.showSuccessToast('network connected :-D');
+        });
+    }
+
+    disconnectSubscription(): void {
+        this.network.onDisconnect().subscribe(() => {
+            this.helperService.showDangerToast('Please connect to the internet.');
+            if (this.user.type === 'Admin') {
+                this.navigate = this.adminMenu;
+            } else if (this.user.type === 'User') {
+                this.navigate = this.userMenu;
+            } else {
+                this.navigate = this.powerUserMenu;
+            }
         });
     }
 

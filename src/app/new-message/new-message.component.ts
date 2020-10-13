@@ -27,6 +27,7 @@ export class NewMessageComponent implements OnInit {
     }
 
     message = new Message();
+    formData = new FormData();
 
     config: AngularEditorConfig = {
         editable: true,
@@ -83,30 +84,20 @@ export class NewMessageComponent implements OnInit {
     ngOnInit() {
     }
 
-    public uploadFile(): void {
-        this.fileChooser.open().then(uri => {
-            console.log('Uri ' + uri);
-            this.file.resolveLocalFilesystemUrl(uri).then((newUrl) => {
-                console.log('NewUrl ' + JSON.stringify(newUrl));
-
-                let dirPath = newUrl.nativeURL;
-                const dirPathSegments = dirPath.split('/');
-                dirPathSegments.pop();
-                dirPath = dirPathSegments.join('/');
-                this.message.attachment = dirPath;
-
-                // this.file.readAsArrayBuffer(dirPath, newUrl.name).then((buffer) => {
-                //     this.upload(buffer, newUrl.name);
-                // });
-            });
-        })
-            .catch(err => alert(JSON.stringify(err)));
+    public uploadFile(e): void {
+        const file = e.target.files[0];
+        this.formData.append('attachment', file, file.name);
     }
 
     onSendMessage() {
+        for (const key in this.message) {
+            if (key) {
+                this.formData.append(key, this.message[key]);
+            }
+        }
         console.log(this.message);
         this.helperService.showLoader();
-        this.messageService.sendMessage(this.message).subscribe(
+        this.messageService.sendMessage(this.formData).subscribe(
             resp => {
                 console.log('Resp');
                 this.helperService.dismissLoader();
@@ -123,8 +114,6 @@ export class NewMessageComponent implements OnInit {
                 this.helperService.showDangerToast('Something is wrong. Please try again later.');
             }
         );
-        this.message.recipient = '';
-        this.message.title = '';
-        this.message.content = '';
+        this.formData = null;
     }
 }

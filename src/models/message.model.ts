@@ -5,7 +5,7 @@ export class Message {
     recipient: string;
     title: string;
     content: string;
-    attachment: string;
+    attachment: FormData;
     question: string;
     answer_a: string;
     answer_b: string;

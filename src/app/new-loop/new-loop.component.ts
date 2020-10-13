@@ -1,15 +1,13 @@
 import {Component, OnInit} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {AngularEditorConfig} from '@kolkov/angular-editor';
 
-import {FileChooser} from '@ionic-native/file-chooser/ngx';
-import {File} from '@ionic-native/file/ngx';
+import {Message} from '../../models/message.model';
 
 import {GroupService} from '../../services/group.service';
 import {MessageService} from '../../services/message.service';
 import {HelperService} from '../../services/helper.service';
-
-import {Message} from '../../models/message.model';
 
 @Component({
     selector: 'app-new-loop',
@@ -22,15 +20,12 @@ export class NewLoopComponent implements OnInit {
                 public groupService: GroupService,
                 public messageService: MessageService,
                 public helperService: HelperService,
-                private fileChooser: FileChooser,
-                private file: File) {
+                public http: HttpClient) {
     }
 
-    groups = [];
     message = new Message();
-    uploadText: any;
-    downloadFile: any;
-
+    groups = [];
+    formData = new FormData();
     config: AngularEditorConfig = {
         editable: true,
         spellcheck: true,
@@ -96,31 +91,20 @@ export class NewLoopComponent implements OnInit {
         );
     }
 
-    public uploadFile(): void {
-        this.fileChooser.open().then(uri => {
-                alert(uri);
-                this.file.resolveLocalFilesystemUrl(uri).then((newUrl) => {
-                    alert(JSON.stringify(newUrl));
-
-                    let dirPath = newUrl.nativeURL;
-                    const dirPathSegments = dirPath.split('/');
-                    dirPathSegments.pop();
-                    dirPath = dirPathSegments.join('/');
-                    this.message.attachment = dirPath;
-
-                    // this.file.readAsArrayBuffer(dirPath, newUrl.name).then((buffer) => {
-                    //     this.upload(buffer, newUrl.name);
-                    // });
-                });
-            })
-            .catch(err => alert(JSON.stringify(err)));
+    public uploadFile(e): void {
+        const file = e.target.files[0];
+        this.formData.append('attachment', file, file.name);
     }
 
     public onLaunchLoop(): void {
-        // this.uploadFile();
         console.log(this.message);
+        for (const key in this.message) {
+            if (key) {
+                this.formData.append(key, this.message[key]);
+            }
+        }
         this.helperService.showLoader();
-        this.messageService.createNewLoop(this.message).subscribe(
+        this.messageService.createNewLoop(this.formData).subscribe(
             resp => {
                 this.helperService.dismissLoader();
                 console.log(resp.message);
@@ -137,7 +121,10 @@ export class NewLoopComponent implements OnInit {
                 console.log(err);
             }
         );
+        this.message.group_id = null;
+        this.message.receipt_type = '';
         this.message.title = '';
         this.message.content = '';
+        this.message.attachment = null;
     }
 }
