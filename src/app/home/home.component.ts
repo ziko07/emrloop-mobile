@@ -19,7 +19,6 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.helperService.showMessageAlert('1 new message received!');
         this.onGetProfile();
         this.getUserInfo();
     }

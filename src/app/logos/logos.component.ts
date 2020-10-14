@@ -47,7 +47,7 @@ export class LogosComponent implements OnInit {
                 i,
                 logoId
             },
-            cssClass: 'popover-content',
+            cssClass: 'custom-popover',
             event: ev,
             translucent: true
         }).then((popOverData) => {
