@@ -26,10 +26,17 @@ export class ProfileComponent implements OnInit {
     form = new Form();
     page = 0;
     length = 0;
+    len = 0;
     checked = false;
 
+    doRefresh(event): void {
+        setTimeout(() => {
+            this.getAllUserGroups();
+            event.target.complete();
+        }, 500);
+    }
 
-    loadData(event) {
+    loadData(event): void {
         if (this.checked) {
             event.target.complete();
             return;
@@ -47,10 +54,11 @@ export class ProfileComponent implements OnInit {
     ngOnInit() {
         this.getCurrentUserType();
         this.loadData(event);
+        this.doRefresh(event);
         this.onGetCurrentUser();
     }
 
-    onGetCurrentUser() {
+    onGetCurrentUser(): void {
         this.helperService.showLoader();
         this.authProvider.getCurrentUser().subscribe(
             resp => {
@@ -68,7 +76,7 @@ export class ProfileComponent implements OnInit {
         );
     }
 
-    getCurrentUserType() {
+    getCurrentUserType(): void {
         this.authProvider.getUserType().subscribe(
             resp => {
                 this.type = resp.user_type;
@@ -79,7 +87,7 @@ export class ProfileComponent implements OnInit {
         );
     }
 
-    getAllUserGroups() {
+    getAllUserGroups(): void {
         this.authProvider.getUserGroups(this.page).subscribe(
             resp => {
                 if (resp.my_groups.length < 1) {
@@ -96,7 +104,22 @@ export class ProfileComponent implements OnInit {
         );
     }
 
-    loadImageFromDevice(e) {
+    pullAllUserGroups(): void {
+        this.authProvider.getUserGroups(this.page).subscribe(
+            resp => {
+                // if (resp.my_groups.length < 1) {
+                //     this.checked = true;
+                //     this.helperService.showUpdateToast('User group list is successfully loaded!');
+                //     return;
+                // }
+                this.groups = resp.my_groups;
+                this.length = resp.group_size;
+                console.log(this.page, resp);
+            }
+        );
+    }
+
+    loadImageFromDevice(e): void {
         const file = e.target.files[0];
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -105,7 +128,7 @@ export class ProfileComponent implements OnInit {
         };
     }
 
-    onUpdateProfile() {
+    onUpdateProfile(): void {
         if (!this.form.current_password) {
             this.helperService.showDangerToast('Input current password to update profile.');
             return;
