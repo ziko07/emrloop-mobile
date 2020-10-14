@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
 
-import {ToastController, LoadingController, PopoverController} from '@ionic/angular';
+import {ToastController, LoadingController, PopoverController, AlertController} from '@ionic/angular';
 
 @Injectable({
     providedIn: 'root'
@@ -10,11 +9,38 @@ export class HelperService {
     public toast;
     public loader;
     public popover;
+    public alert;
 
     constructor(public toastController: ToastController,
                 public loadingController: LoadingController,
                 public popoverController: PopoverController,
-                public router: Router) {
+                public alertController: AlertController) {
+    }
+
+    public showExitConfirm() {
+        this.alert = this.alertController.create({
+            header: 'Confirm!',
+            message: 'Do you want to close the app?',
+            backdropDismiss: false,
+            buttons: [
+                {
+                    text: 'Exit',
+                    cssClass: 'alert-btn',
+                    handler: () => {
+                        navigator['app'].exitApp();
+                    }
+                },
+                {
+                    text: 'Stay',
+                    role: 'cancel',
+                    cssClass: 'alert-btn',
+                    handler: () => {
+                        console.log('Application exit prevented!');
+                    }
+                }]
+        }).then((alertData) => {
+            alertData.present();
+        });
     }
 
     public showMessageAlert(message) {
@@ -30,7 +56,7 @@ export class HelperService {
         });
     }
 
-    public showAlert(message) {
+    public showAlertToast(message) {
         this.toast = this.toastController.create({
             message,
             position: 'bottom',

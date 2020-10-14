@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 
+import {Platform} from '@ionic/angular';
+
 import {AuthService} from '../../services/auth.service';
 import {HelperService} from '../../services/helper.service';
 
@@ -14,7 +16,8 @@ export class HomeComponent implements OnInit {
     type: string;
     user: any;
 
-    constructor(public authService: AuthService,
+    constructor(private platform: Platform,
+                public authService: AuthService,
                 public helperService: HelperService) {
     }
 

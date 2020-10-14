@@ -3,6 +3,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 
 import {Platform} from '@ionic/angular';
 
+import {Location} from '@angular/common';
+
 import {FCM} from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
 
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
@@ -135,31 +137,53 @@ export class AppComponent {
         public helperService: HelperService,
         public authGuard: AuthGuard,
         private fcm: FCM,
-        private network: Network
+        private network: Network,
+        private location: Location
     ) {
-        // this.connectSubscription();
         this.initializeApp();
         this.setUserData();
         this.getProfile();
         this.sideMenu();
+        this.connectSubscription();
         this.disconnectSubscription();
     }
 
     initializeApp(): void {
         this.platform.ready().then(() => {
+            this.onPressBackButton();
             this.statusBar.backgroundColorByHexString('#1B8895');
             this.splashScreen.hide();
             this.backgroundMode.enable();
+            this.getOSType();
             setTimeout(() => {
                 this.getToken();
             }, 10000);
             setTimeout(() => {
                 this.onPushNotification();
-            }, 12000);
+            }, 60000);
             setTimeout(() => {
                 this.onNotificationTap();
-            }, 15000);
+            }, 65000);
         });
+    }
+
+    onPressBackButton(): void {
+        this.platform.backButton.subscribeWithPriority(10, () => {
+            if (this.location.isCurrentPathEqualTo('/home') || this.location.isCurrentPathEqualTo('/login')) {
+                this.helperService.showExitConfirm();
+            } else {
+                this.location.back();
+            }
+        });
+    }
+
+    getOSType(): void {
+        if (this.platform.is('android')) {
+            this.osType = 'android';
+        } else if (this.platform.is('ios')) {
+            this.osType = 'ios';
+        }
+        console.log(this.osType);
     }
 
     getToken(): void {
@@ -192,7 +216,7 @@ export class AppComponent {
         this.network.onDisconnect().subscribe(() => {
             this.isDisconnected = true;
             this.isConnected = false;
-            this.helperService.showAlert('Can\'t retrieve information. Connect to the internet.');
+            this.helperService.showAlertToast('Can\'t retrieve information. Connect to the internet.');
             if (this.user.type === 'Admin') {
                 this.navigate = this.adminMenu;
             } else if (this.user.type === 'User') {

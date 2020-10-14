@@ -1,10 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
-import {Platform} from '@ionic/angular';
-
-import {FCM} from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
-
 import {HelperService} from '../../services/helper.service';
 import {LoaderService} from '../../services/loader.service';
 import {AuthService} from '../../services/auth.service';
@@ -20,21 +16,16 @@ export class LoginComponent implements OnInit {
     disableLogin = false;
     errorMessage: any;
     buttonText: any = 'Login';
-    osType: string;
-    regId: string;
 
     constructor(private router: Router,
                 private helperService: HelperService,
                 public spinnerDialog: LoaderService,
-                public authProvider: AuthService,
-                private platform: Platform,
-                private fcm: FCM
+                public authProvider: AuthService
     ) {
         this.form = {login: '', password: ''};
     }
 
     ngOnInit() {
-        this.getOSType();
         const data = window.localStorage.getItem('credential');
         const credential = data ? JSON.parse(data) : {};
         this.form.password = credential.password;
@@ -42,15 +33,6 @@ export class LoginComponent implements OnInit {
         if (credential.login) {
             this.form.save_password = true;
         }
-    }
-
-    getOSType(): void {
-        if (this.platform.is('android')) {
-            this.osType = 'android';
-        } else if (this.platform.is('ios')) {
-            this.osType = 'ios';
-        }
-        console.log(this.osType);
     }
 
     signin() {
