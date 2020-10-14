@@ -8,7 +8,7 @@ import {FCM} from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {BackgroundMode} from '@ionic-native/background-mode/ngx';
-import { Network } from '@ionic-native/network/ngx';
+import {Network} from '@ionic-native/network/ngx';
 
 import {AuthService} from '../services/auth.service';
 import {HelperService} from '../services/helper.service';
@@ -122,6 +122,7 @@ export class AppComponent {
         }
     ];
     isConnected: boolean;
+    isDisconnected: boolean;
 
     constructor(
         private platform: Platform,
@@ -146,24 +147,52 @@ export class AppComponent {
 
     initializeApp(): void {
         this.platform.ready().then(() => {
-            this.backgroundMode.enable();
-            setTimeout(() => {
-                this.onNotificationTap();
-            }, 5000);
             this.statusBar.backgroundColorByHexString('#1B8895');
             this.splashScreen.hide();
+            this.backgroundMode.enable();
+            setTimeout(() => {
+                this.getToken();
+            }, 10000);
+            setTimeout(() => {
+                this.onPushNotification();
+            }, 12000);
+            setTimeout(() => {
+                this.onNotificationTap();
+            }, 15000);
         });
+    }
+
+    getToken(): void {
+        this.fcm.getToken().then(token => {
+            this.regId = token;
+        });
+    }
+
+    onPushNotification(): void {
+        this.authProvider.push(this.regId, this.osType).subscribe(
+            resp => {
+                console.log(resp);
+            }, err => {
+                console.log(err);
+            }
+        );
     }
 
     connectSubscription(): void {
         this.network.onConnect().subscribe(() => {
-            this.helperService.showSuccessToast('network connected :-D');
+            if (this.isDisconnected === true && this.isConnected === false) {
+                this.helperService.showSuccessToast('Connected to the internet!');
+                this.isDisconnected = false;
+                this.isConnected = true;
+            }
         });
     }
 
     disconnectSubscription(): void {
         this.network.onDisconnect().subscribe(() => {
-            this.helperService.showAlert('Please connect to the internet.');
+            this.isDisconnected = true;
+            this.isConnected = false;
+            this.helperService.showAlert('Can\'t retrieve information. Connect to the internet.');
             if (this.user.type === 'Admin') {
                 this.navigate = this.adminMenu;
             } else if (this.user.type === 'User') {

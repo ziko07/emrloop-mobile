@@ -31,7 +31,7 @@ export class NewLoopComponent implements OnInit {
         spellcheck: true,
         height: '15rem',
         minHeight: '5rem',
-        placeholder: 'Write some content...',
+        placeholder: 'Write your message...',
         translate: 'no',
         defaultParagraphSeparator: 'p',
         defaultFontName: 'Arial',

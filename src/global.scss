@@ -28,6 +28,7 @@
 @import "assets/scss/public";
 
 .custom-toast, .alert-toast {
+  --box-shadow: none;
   --border-radius: 10px;
   --width: 300px;
   top: -10%;

@@ -35,9 +35,6 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this.getOSType();
-        setTimeout(() => {
-            this.getToken();
-        }, 5000);
         const data = window.localStorage.getItem('credential');
         const credential = data ? JSON.parse(data) : {};
         this.form.password = credential.password;
@@ -48,32 +45,12 @@ export class LoginComponent implements OnInit {
     }
 
     getOSType(): void {
-
         if (this.platform.is('android')) {
             this.osType = 'android';
         } else if (this.platform.is('ios')) {
             this.osType = 'ios';
         }
         console.log(this.osType);
-    }
-
-    getToken(): void {
-        this.fcm.getToken().then(token => {
-            this.regId = token;
-        }).catch((error) => {
-                this.regId = error;
-            }
-        );
-    }
-
-    onPushNotification(): void {
-        this.authProvider.push(this.regId, this.osType).subscribe(
-            resp => {
-                console.log(resp);
-            }, err => {
-                console.log(err);
-            }
-        );
     }
 
     signin() {
@@ -84,13 +61,11 @@ export class LoginComponent implements OnInit {
                 login: this.form.login,
                 password: this.form.password
             };
-            this.helperService.showPushLoader();
+            this.helperService.showLoader();
             this.authProvider.login(this.userDetails).subscribe(resp => {
-                console.log(resp);
-                this.helperService.dismissLoader();
                 if (resp.status === 200) {
-                    this.onPushNotification();
                     window.location.href = '/';
+                    this.helperService.dismissLoader();
                 }
             }, err => {
                 console.log(err);

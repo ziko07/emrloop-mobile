@@ -91,16 +91,6 @@ export class HelperService {
         });
     }
 
-    public showPushLoader() {
-        this.loader = this.loadingController.create({
-            animated: true,
-            message: 'Please wait ...',
-            duration: 10000
-        }).then((loadData) => {
-            loadData.present();
-        });
-    }
-
     public dismissLoader() {
         this.loadingController.dismiss();
     }
