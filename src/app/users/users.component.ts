@@ -86,7 +86,6 @@ export class UsersComponent implements OnInit {
                     }
                 }
             }
-        }, err => {
         });
     }
 

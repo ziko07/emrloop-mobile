@@ -31,7 +31,7 @@ export class ProfileComponent implements OnInit {
 
     doRefresh(event): void {
         setTimeout(() => {
-            this.getAllUserGroups();
+            this.getAllUserGroups('refresh');
             event.target.complete();
         }, 500);
     }
@@ -43,7 +43,7 @@ export class ProfileComponent implements OnInit {
         }
         setTimeout(() => {
             ++this.page;
-            this.getAllUserGroups();
+            this.getAllUserGroups('scroll');
             if (this.groups.length > 0) {
                 event.target.complete();
                 return;
@@ -87,34 +87,27 @@ export class ProfileComponent implements OnInit {
         );
     }
 
-    getAllUserGroups(): void {
+    getAllUserGroups(action): void {
         this.authProvider.getUserGroups(this.page).subscribe(
             resp => {
-                if (resp.my_groups.length < 1) {
-                    this.checked = true;
-                    this.helperService.showUpdateToast('User group list is successfully loaded!');
-                    return;
+                console.log(action, resp);
+                if (action === 'scroll') {
+                    if (resp.my_groups.length < 1) {
+                        this.checked = true;
+                        this.helperService.showUpdateToast('User group list is successfully loaded!');
+                        return;
+                    }
+                    this.groups = this.groups.concat(resp.my_groups);
+                    this.length = resp.group_size;
+                } else {
+                    console.log(this.length, resp.group_size);
+                    if (resp.group_size > this.length) {
+                        this.length = resp.group_size;
+                        this.groups = this.groups.concat(resp.my_groups);
+                    }
                 }
-                this.groups = this.groups.concat(resp.my_groups);
-                this.length = resp.group_size;
-                console.log(resp);
             }, err => {
                 console.log(err);
-            }
-        );
-    }
-
-    pullAllUserGroups(): void {
-        this.authProvider.getUserGroups(this.page).subscribe(
-            resp => {
-                // if (resp.my_groups.length < 1) {
-                //     this.checked = true;
-                //     this.helperService.showUpdateToast('User group list is successfully loaded!');
-                //     return;
-                // }
-                this.groups = resp.my_groups;
-                this.length = resp.group_size;
-                console.log(this.page, resp);
             }
         );
     }

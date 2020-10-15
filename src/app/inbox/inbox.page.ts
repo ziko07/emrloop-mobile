@@ -11,10 +11,6 @@ import {MessageService} from '../../services/message.service';
 
 import {DetailsComponent} from '../details/details.component';
 
-import {Plugins} from '@capacitor/core';
-
-const {App} = Plugins;
-
 @Component({
     selector: 'app-inbox',
     templateUrl: 'inbox.page.html',
@@ -35,17 +31,20 @@ export class InboxPage {
         private platform: Platform,
         private routerOutlet: IonRouterOutlet
     ) {
-        this.platform.backButton.subscribeWithPriority(-1, () => {
-            if (!this.routerOutlet.canGoBack()) {
-                App.exitApp();
-            }
-        });
     }
 
     ngOnInit() {
         this.onReceiveMessage();
-        this.loadInbox();
+        this.loadInbox('init');
         this.getUserType();
+        this.doRefresh(event);
+    }
+
+    doRefresh(event): void {
+        setTimeout(() => {
+            this.loadInbox('refresh');
+            event.target.complete();
+        }, 500);
     }
 
     onReceiveMessage(): void {
@@ -65,17 +64,24 @@ export class InboxPage {
         );
     }
 
-    public loadInbox() {
-        this.spinnerDialog.show('', 'Loading inbox...');
-        this.homeService.list().subscribe(resp => {
-            this.spinnerDialog.hide();
-            this.list = resp;
-            // for (let l of this.list)
-              //  console.log(l, this.list.l);
-        }, err => {
-            this.spinnerDialog.hide();
-            this.helperService.showDangerToast('Unable to load inbox');
-        });
+    public loadInbox(action) {
+        if (action === 'init') {
+            this.spinnerDialog.show('', 'Loading inbox...');
+            this.homeService.list().subscribe(resp => {
+                this.spinnerDialog.hide();
+                this.list = resp;
+                console.log(resp);
+                // for (let l of this.list)
+                //  console.log(l, this.list.l);
+            }, err => {
+                this.spinnerDialog.hide();
+                this.helperService.showDangerToast('Unable to load inbox');
+            });
+        } else {
+            this.homeService.list().subscribe(resp => {
+                this.list = resp;
+            });
+        }
     }
 
     public details(id) {
