@@ -9,15 +9,10 @@
 }
 
 .users-card {
-    border: 1px solid #a7a4a4;
     box-shadow: none;
-    padding-top: 30px;
-    border-top: 3px solid #1B8895;
-
     ion-card-header, 
     ion-card-content { 
         @extend .p-0;
-        margin-bottom: 20px;
     }
 
     .title {
@@ -98,4 +93,17 @@
 ion-back-button {
     position: relative;
     right: 10px;
+}
+
+.user-info {
+    border-bottom: 1px solid #a7a4a4;
+    padding: 15px 0;
+}
+
+.user-name {
+    a {
+        color: black;
+        font-weight: bold;
+        font-size: 18px;
+    }
 }

@@ -7,6 +7,9 @@ import {AuthService} from '../../services/auth.service';
 
 import {Client} from '../../models/client.model';
 
+import { PopoverController } from '@ionic/angular';
+import {PopoverComponent} from '../popover/popover.component';
+
 @Component({
     selector: 'app-clients',
     templateUrl: './clients.component.html',
@@ -16,13 +19,33 @@ export class ClientsComponent implements OnInit {
     constructor(public clientService: ClientService,
                 public helperService: HelperService,
                 private router: Router,
-                public authService: AuthService) {
+                public authService: AuthService,
+                public popOverController: PopoverController) {
     }
 
     client = new Client();
     clients = [];
     page = 0;
     checked = false;
+
+    public popover;
+
+    public showPopOver(ev, i, id): void {
+        this.popover = this.popOverController.create({
+            component: PopoverComponent,
+            componentProps: {
+                list: this.clients,
+                i,
+                id,
+                text: 'client'
+            },
+            cssClass: 'custom-popover',
+            event: ev,
+            translucent: true
+        }).then((popOverData) => {
+            popOverData.present();
+        });
+    }
 
     loadData(event) {
         if (this.checked) {
@@ -98,29 +121,5 @@ export class ClientsComponent implements OnInit {
                 console.log(err);
             }
         );
-    }
-
-    onDeleteClient(id, clientId) {
-        if (confirm('Are you sure?')) {
-            this.clients.splice(id, 1);
-            console.log(id + ',' + clientId);
-            this.helperService.showLoader();
-            this.clientService.deleteClient(clientId).subscribe(
-                resp => {
-                    this.helperService.dismissLoader();
-                    if (resp.status === 'ok') {
-                        this.helperService.showUpdateToast(resp.message);
-                    } else {
-                        this.helperService.showDangerToast(resp.message);
-                    }
-                    console.log(resp);
-                },
-                err => {
-                    console.log(err);
-                    this.helperService.showDangerToast('Something went wrong. Try again later.');
-                    this.helperService.dismissLoader();
-                }
-            );
-        }
     }
 }

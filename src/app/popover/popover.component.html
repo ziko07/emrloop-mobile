@@ -1,10 +1,14 @@
 <div class="options">
-  <div (click)="onChangeRoute(logoId)">
-      <ion-icon name="pencil"></ion-icon>
-      Update logo
-  </div>
-  <div (click)="deleteLogo(i, logoId)">
-    <ion-icon name="trash"></ion-icon>
-    Delete logo
-  </div>
+    <div *ngIf="text === 'user' && user.confirmed === false" (click)="onConfirmUser()">
+        <ion-icon name="checkmark-circle-outline" class="confirm-user"></ion-icon>
+        Confirm {{ text }}
+    </div>
+    <div (click)="onChangeRoute()">
+        <ion-icon name="pencil"></ion-icon>
+        Edit {{ text }}
+    </div>
+    <div (click)="delete(i, id)">
+        <ion-icon name="trash"></ion-icon>
+        Delete {{ text }}
+    </div>
 </div>

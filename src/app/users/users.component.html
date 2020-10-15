@@ -26,62 +26,19 @@
     </ion-card-header>
     <p *ngIf="users.length === 0" class="not-found">No user found. Add to see them.</p>
     <ion-card-content *ngIf="users.length">
-      <ion-grid class="grid-one">
-        <ion-row class="row-bb-head">
-          <ion-col size="2">
-            User Type
-          </ion-col>
-          <ion-col size="2">
-            Profile
-          </ion-col>
-          <ion-col size="3">
-            Email
-          </ion-col>
-          <ion-col size="2">
-            Group Numbers
-          </ion-col>
-          <ion-col size="1"></ion-col>
-          <ion-col size="1"></ion-col>
-          <ion-col size="1"></ion-col>
-        </ion-row>
-      </ion-grid>
-      <ion-grid class="grid-two" *ngFor="let user of users; let i=index">
-        <ion-row class="users-content" [ngClass]="i < users.length-1 ? 'row-bb-body' : ''">
-          <ion-col size="2">
-            {{ user.type }}
-          </ion-col>
-          <ion-col size="2">
-            <a routerLink="/users/{{user.id}}">
-              {{ user.name }}
-            </a>
-          </ion-col>
-          <ion-col size="3">
-            <a routerLink="/users/{{user.id}}">
-              {{ user.email }}
-            </a>
-          </ion-col>
-          <ion-col size="2">
-            {{ user.group_number }}
-          </ion-col>
-          <ion-col size="3">
-            <ion-buttons class="user-customize">
-              <span *ngIf="!user.confirmed" style="position: relative; bottom: 1px">
-                  <ion-button class="check" style="margin-right: 5px;" (click)="onConfirmUser(user)">
-                    <ion-icon slot="icon-only" name="checkmark-sharp" class="icon"></ion-icon>
-                  </ion-button>
-              </span>
-              <ion-button class="close" (click)="onDeleteUser(i,user.email)">
-                <ion-icon slot="icon-only" name="close-sharp" class="icon"></ion-icon>
-              </ion-button>
-              <ion-button color="primary" style="position: relative; right: 6px;">
-                <a routerLink="/users/{{user.id}}/change">
-                  <ion-icon slot="icon-only" name="settings-sharp" class="icon"></ion-icon>
-                </a>
-              </ion-button>
-            </ion-buttons>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+      <ion-list>
+        <ion-item *ngFor="let user of users; let i=index" lines="none" class="user-info">
+          <div style="width: 320px">
+            <span class="user-name">
+              <a routerLink="/users/{{user.id}}">{{ user.name ? user.name : 'N/A' }}</a> <br>
+            </span>
+            <a routerLink="/users/{{user.id}}">{{ user.email }}</a> <br>
+            {{ user.type }} <br>
+            Groups added: {{ user.group_number }}
+          </div>
+          <ion-icon (click)="showPopOver($event, i, user.id, user.email, user)" name="ellipsis-horizontal-sharp"></ion-icon>
+        </ion-item>
+      </ion-list>
     </ion-card-content>
   </ion-card>
   <ion-infinite-scroll threshold="10px" (ionInfinite)="loadData($event)">

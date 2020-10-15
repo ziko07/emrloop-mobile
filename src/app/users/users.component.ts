@@ -1,11 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
+import { PopoverController } from '@ionic/angular';
+
 import {UserService} from '../../services/user.service';
 import {HelperService} from '../../services/helper.service';
 import {AuthService} from '../../services/auth.service';
 
 import {User} from '../../models/user.model';
+
+import {PopoverComponent} from '../popover/popover.component';
 
 @Component({
     selector: 'app-users',
@@ -18,13 +22,34 @@ export class UsersComponent implements OnInit {
         private router: Router,
         public userService: UserService,
         public helperService: HelperService,
-        public authService: AuthService) {
+        public authService: AuthService,
+        public popOverController: PopoverController) {
     }
 
     user = new User();
     users = [];
     page = 0;
     checked = false;
+    public popover;
+
+    public showPopOver(ev, i, id, email, user): void {
+        this.popover = this.popOverController.create({
+            component: PopoverComponent,
+            componentProps: {
+                list: this.users,
+                i,
+                id,
+                email,
+                text: 'user',
+                user
+            },
+            cssClass: 'custom-popover',
+            event: ev,
+            translucent: true
+        }).then((popOverData) => {
+            popOverData.present();
+        });
+    }
 
     ngOnInit() {
         this.loadData(event);
@@ -113,44 +138,5 @@ export class UsersComponent implements OnInit {
                 console.log(err);
             }
         );
-    }
-
-    onConfirmUser(user) {
-        if (confirm('Are you sure to confirm this user?')) {
-            console.log(user);
-            this.userService.confirmUser(user.id).subscribe(
-                resp => {
-                    if (resp.status === 'ok') {
-                        user.confirmed = true;
-                        this.helperService.showSuccessToast(resp.message);
-                    }
-                    console.log(resp);
-                }, err => {
-                    console.log(err);
-                }
-            );
-        }
-    }
-
-    onDeleteUser(id, email) {
-        if (confirm('Are you sure to delete this user?')) {
-            this.helperService.showLoader();
-            this.userService.deleteUser(email).subscribe(
-                resp => {
-                    console.log(resp);
-                    this.helperService.dismissLoader();
-                    if (resp.status === 'ok') {
-                        this.helperService.showSuccessToast(resp.message);
-                    } else {
-                        this.helperService.showDangerToast(resp.message);
-                    }
-                },
-                err => {
-                    this.helperService.dismissLoader();
-                    this.helperService.showDangerToast('Something went wrong. Try again later.');
-                }
-            );
-            this.users.splice(id, 1);
-        }
     }
 }

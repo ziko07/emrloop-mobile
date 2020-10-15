@@ -44,7 +44,7 @@ export class InboxPage {
         setTimeout(() => {
             this.loadInbox('refresh');
             event.target.complete();
-        }, 500);
+        }, 2000);
     }
 
     onReceiveMessage(): void {

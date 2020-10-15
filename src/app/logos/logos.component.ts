@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
-import { ActionSheetController, PopoverController } from '@ionic/angular';
+import {ActionSheetController, PopoverController} from '@ionic/angular';
 
 import {LogoService} from '../../services/logo.service';
 import {HelperService} from '../../services/helper.service';
@@ -10,6 +10,7 @@ import {GroupService} from '../../services/group.service';
 import {AuthService} from '../../services/auth.service';
 
 import {Logo} from '../../models/logo.model';
+
 import {PopoverComponent} from '../popover/popover.component';
 
 @Component({
@@ -39,13 +40,14 @@ export class LogosComponent implements OnInit {
     public actionSheet;
     public popover;
 
-    public showPopOver(ev, i, logoId): void {
+    public showPopOver(ev, i, id): void {
         this.popover = this.popOverController.create({
             component: PopoverComponent,
             componentProps: {
-                logos: this.logos,
+                list: this.logos,
                 i,
-                logoId
+                id,
+                text: 'logo'
             },
             cssClass: 'custom-popover',
             event: ev,

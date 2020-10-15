@@ -54,7 +54,7 @@ export class ProfileComponent implements OnInit {
     ngOnInit() {
         this.getCurrentUserType();
         this.loadData(event);
-        this.doRefresh(event);
+        // this.doRefresh(event);
         this.onGetCurrentUser();
     }
 
