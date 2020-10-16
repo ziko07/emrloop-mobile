@@ -107,7 +107,7 @@ export class LogosComponent implements OnInit {
 
     ngOnInit() {
         this.getCurrentUserType();
-        this.loadData(event);
+        this.getAllLogos();
         this.getLogo();
         this.getAllClients();
     }

@@ -13,6 +13,7 @@ export class QuizComponent implements OnInit {
   @Input() id: any;
   item: any;
   form: any;
+  // tslint:disable-next-line:max-line-length
   constructor(private modalController: ModalController, public homeService: HomeService, public router: ActivatedRoute, public spinnerDialog: LoaderService, private helperService: HelperService) {
     this.form = {answer: 'a'};
   }

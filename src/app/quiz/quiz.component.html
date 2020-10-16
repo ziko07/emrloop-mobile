@@ -23,26 +23,26 @@
 
                 <ion-item>
                   <ion-label>a) {{item.status.answer_a}}</ion-label>
-                  <ion-radio value="a" name="answer_a" [attr.checked]=true [attr.disabled]="item.response ? '' : null">></ion-radio>
+                  <ion-radio value="a" name="answer_a" [attr.checked]=true >></ion-radio>
                 </ion-item>
 
                 <ion-item>
                   <ion-label>b) {{item.status.answer_b}}</ion-label>
-                  <ion-radio value="b" name="answer_b" [attr.disabled]="item.response ? '' : null"></ion-radio>
+                  <ion-radio value="b" name="answer_b" ></ion-radio>
                 </ion-item>
 
                 <ion-item>
                   <ion-label>c) {{item.status.answer_c}}</ion-label>
-                  <ion-radio value="c" name="answer_c" [attr.disabled]="item.response ? '' : null"></ion-radio>
+                  <ion-radio value="c" name="answer_c" ></ion-radio>
                 </ion-item>
 
                 <ion-item>
                   <ion-label>d) {{item.status.answer_d}}</ion-label>
-                  <ion-radio value="d" name="answer_d" [attr.disabled]="item.response ? '' : null"></ion-radio>
+                  <ion-radio value="d" name="answer_d" ></ion-radio>
                 </ion-item>
               </ion-radio-group>
             </ion-list>
-            <ion-button expand="full" color="secondary" type="submit" [attr.disabled]="item.response ? '' : null">
+            <ion-button expand="full" color="secondary" type="submit" >
               Submit Answer
             </ion-button>
           </form>

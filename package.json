@@ -58,8 +58,6 @@
     "@types/node": "~8.9.4",
     "codelyzer": "^5.0.0",
     "cordova-android": "^9.0.0",
-    "cordova-plugin-background-mode": "^0.7.3",
-    "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-file": "^6.0.2",
     "cordova-plugin-file-transfer": "^1.7.1",
     "cordova-plugin-filepath": "^1.5.8",
@@ -93,7 +91,6 @@
         "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
       },
       "cordova-plugin-ionic-keyboard": {},
-      "cordova-plugin-background-mode": {},
       "cordova-plugin-fcm-with-dependecy-updated": {
         "ANDROID_FCM_VERSION": "19.0.0",
         "ANDROID_GRADLE_TOOLS_VERSION": "3.5.3",

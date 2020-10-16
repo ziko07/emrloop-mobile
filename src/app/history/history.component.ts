@@ -36,7 +36,7 @@ export class HistoryComponent implements OnInit {
     }
 
     public loadTodo() {
-        this.spinnerDialog.show('', 'Loading ToDO...');
+        this.spinnerDialog.show('', 'Loading history...');
         this.homeService.all().subscribe(resp => {
             this.spinnerDialog.hide();
             this.list = resp;

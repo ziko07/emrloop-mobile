@@ -150,10 +150,13 @@ export class AppComponent {
 
     initializeApp(): void {
         this.platform.ready().then(() => {
+            this.backgroundMode.enable();
             this.onPressBackButton();
+            setTimeout(() => {
+                this.onNotificationTap();
+            }, 5000);
             this.statusBar.backgroundColorByHexString('#1B8895');
             this.splashScreen.hide();
-            this.backgroundMode.enable();
             this.getOSType();
             setTimeout(() => {
                 this.getToken();
@@ -161,9 +164,6 @@ export class AppComponent {
             setTimeout(() => {
                 this.onPushNotification();
             }, 60000);
-            setTimeout(() => {
-                this.onNotificationTap();
-            }, 65000);
         });
     }
 
@@ -230,7 +230,7 @@ export class AppComponent {
     onNotificationTap(): void {
         this.fcm.onNotification().subscribe(data => {
             if (data.wasTapped) {
-                window.location.href = 'inbox';
+                window.location.href = '/inbox';
             } else {
                 this.helperService.showMessageAlert('1 new message received!');
             }

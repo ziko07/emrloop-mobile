@@ -12,12 +12,12 @@
         <ion-refresher-content>
         </ion-refresher-content>
     </ion-refresher>
-    <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab *ngIf="type !== 'user'" vertical="bottom" horizontal="start" slot="fixed">
         <ion-fab-button style="--background: #1B8895;">
             <ion-icon name="add"></ion-icon>
         </ion-fab-button>
         <ion-fab-list side="end">
-            <ion-fab-button *ngIf="type !== 'user'" class="fav-btn btn-1">
+            <ion-fab-button class="fav-btn btn-1">
                 <a routerLink="/new-loop">
                     New Loop
                 </a>
@@ -28,6 +28,13 @@
                 </a>
             </ion-fab-button>
         </ion-fab-list>
+    </ion-fab>
+    <ion-fab *ngIf="type === 'user'" vertical="bottom" horizontal="start" slot="fixed">
+        <a routerLink="/new-message">
+            <ion-fab-button style="--background: #1B8895;">
+                <ion-icon name="add"></ion-icon>
+            </ion-fab-button>
+        </a>
     </ion-fab>
     <ion-list class="ion-no-padding">
         <ion-item *ngFor="let item of list; let i = index" lines="full" (click)="openModal(i)">

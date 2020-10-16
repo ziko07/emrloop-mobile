@@ -7,7 +7,7 @@ import {ToastController, LoadingController, PopoverController, AlertController} 
 })
 export class HelperService {
     public toast;
-    public loader;
+    public loader: any;
     public popover;
     public alert;
 
