@@ -83,8 +83,8 @@ export class ClientsComponent implements OnInit {
 
     getClient() {
         this.clientService.getClient().subscribe(resp => {
-            if (resp.action === 'new' && this.checked) {
-                this.clients.push(resp.client);
+            if (resp.action === 'new') {
+                this.clients.unshift(resp.client);
             } else {
                 for (let i = 0; i < this.clients.length; i++) {
                     if (this.clients[i].id === resp.client.id) {

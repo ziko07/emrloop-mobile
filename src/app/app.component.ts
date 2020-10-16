@@ -230,7 +230,7 @@ export class AppComponent {
     onNotificationTap(): void {
         this.fcm.onNotification().subscribe(data => {
             if (data.wasTapped) {
-                this.router.navigateByUrl('/inbox');
+                window.location.href = 'inbox';
             } else {
                 this.helperService.showMessageAlert('1 new message received!');
             }

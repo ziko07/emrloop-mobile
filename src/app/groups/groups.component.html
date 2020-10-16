@@ -15,19 +15,27 @@
                 </ion-text>
             </ion-card-header>
             <ion-card-content>
-                <input
-                        placeholder="Group Name"
-                        list="groups-1"
-                        name="group_name"
-                        [(ngModel)]="group.join_group_name"
-                        class="custom-search-box"
-                        required clearInput
-                />
-                <datalist id="groups-1">
-                    <option *ngFor="let group of groups">
-                        {{ group.group_name }}
-                    </option>
-                </datalist>
+                <ion-item lines="none">
+                    <ion-label>
+                        Select Group
+                    </ion-label>
+                    <ion-select
+                            class="group"
+                            name="client_id"
+                            [(ngModel)]="group.join_group_id"
+                            okText="Okay"
+                            cancelText="Dismiss"
+                            interface="action-sheet"
+                    >
+                        <ion-select-option>Select Group</ion-select-option>
+                        <ion-select-option
+                                *ngFor="let group of allGroups"
+                                [value]="group.id"
+                        >
+                            {{ group.group_name }}
+                        </ion-select-option>
+                    </ion-select>
+                </ion-item>
                 <ion-button class="ion-float-right" (click)="onJoinGroup()">Join Group</ion-button>
             </ion-card-content>
         </ion-card>
@@ -39,36 +47,48 @@
                 </ion-text>
             </ion-card-header>
             <ion-card-content>
-                <input
-                        type="text"
-                        placeholder="Group Name"
-                        list="groups-2"
-                        name="group_name"
-                        class="custom-search-box"
-                        [(ngModel)]="group.add_user_group_name"
-                        required clearInput
-                />
-                <datalist id="groups-2">
-                    <option *ngFor="let group of groups">
-                        {{ group.group_name }}
-                    </option>
-                </datalist>
-
-                <input
-                        type="email"
-                        placeholder="User Email"
-                        list="emails-1"
-                        name="email_name"
-                        class="custom-search-box"
-                        [(ngModel)]="email.email"
-                        required clearInput
-                />
-                <datalist id="emails-1">
-                    <option *ngFor="let email of emails">
-                        {{ email.email }}
-                    </option>
-                </datalist>
-
+                <ion-item lines="none">
+                    <ion-label>
+                        Select Group
+                    </ion-label>
+                    <ion-select
+                            class="group"
+                            name="client_id"
+                            [(ngModel)]="group.add_user_group_id"
+                            okText="Okay"
+                            cancelText="Dismiss"
+                            interface="action-sheet"
+                    >
+                        <ion-select-option>Select Group</ion-select-option>
+                        <ion-select-option
+                                *ngFor="let group of allGroups"
+                                [value]="group.id"
+                        >
+                            {{ group.group_name }}
+                        </ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ion-item lines="none">
+                    <ion-label>
+                        Select User Email
+                    </ion-label>
+                    <ion-select
+                            class="group"
+                            name="client_id"
+                            [(ngModel)]="email.email"
+                            okText="Okay"
+                            cancelText="Dismiss"
+                            interface="action-sheet"
+                    >
+                        <ion-select-option>Select Group</ion-select-option>
+                        <ion-select-option
+                                *ngFor="let email of emails"
+                                [value]="email.uid"
+                        >
+                            {{ email.email }}
+                        </ion-select-option>
+                    </ion-select>
+                </ion-item>
                 <ion-button class="ion-float-right" (click)="onAddUserToGroup()">Add To Group</ion-button>
             </ion-card-content>
         </ion-card>
@@ -80,20 +100,27 @@
                 </ion-text>
             </ion-card-header>
             <ion-card-content>
-                <input
-                        type="text"
-                        placeholder="Group Name"
-                        list="groups-3"
-                        name="group_name"
-                        class="custom-search-box"
-                        [(ngModel)]="group.leave_user_group_name"
-                        required clearInput
-                />
-                <datalist id="groups-3">
-                    <option *ngFor="let group of groups">
-                        {{ group.group_name }}
-                    </option>
-                </datalist>
+                <ion-item lines="none">
+                    <ion-label>
+                        Select Group
+                    </ion-label>
+                    <ion-select
+                            class="group"
+                            name="client_id"
+                            [(ngModel)]="group.leave_user_group_id"
+                            okText="Okay"
+                            cancelText="Dismiss"
+                            interface="action-sheet"
+                    >
+                        <ion-select-option>Select Group</ion-select-option>
+                        <ion-select-option
+                                *ngFor="let group of allGroups"
+                                [value]="group.id"
+                        >
+                            {{ group.group_name }}
+                        </ion-select-option>
+                    </ion-select>
+                </ion-item>
                 <ion-button class="ion-float-right" (click)="onLeaveGroup()">Leave Group</ion-button>
             </ion-card-content>
         </ion-card>
@@ -105,26 +132,30 @@
                 </ion-text>
             </ion-card-header>
             <ion-card-content>
-                <input
-                        type="text"
-                        placeholder="Group Name"
-                        name="group_name"
-                        class="custom-search-box"
-                        [(ngModel)]="group.create_group_name"
-                        required clearInput
-                />
+                <ion-item lines="none">
+                    <ion-input
+                            placeholder="Add Group Name"
+                            class="grp-input"
+                            type="text"
+                            name="client_id"
+                            [(ngModel)]="group.create_group_name"
+                    >
+                    </ion-input>
+                </ion-item>
                 <ion-item lines="none">
                     <ion-label>
                         Select Client
                     </ion-label>
                     <ion-select
-                        [(ngModel)]="client_id"
-                        name="select_client"
-                        okText="Okay"
-                        cancelText="Dismiss"
-                        interface="action-sheet"
+                            class="group"
+                            [(ngModel)]="client_id"
+                            name="select_client"
+                            okText="Okay"
+                            cancelText="Dismiss"
+                            interface="action-sheet"
                     >
-                        <ion-select-option *ngFor="let client of clients" value="{{client.id}}">{{ client.name }}</ion-select-option>
+                        <ion-select-option *ngFor="let client of clients"
+                                           value="{{client.id}}">{{ client.name }}</ion-select-option>
                     </ion-select>
                 </ion-item>
                 <ion-button class="ion-float-right" (click)="onCreateGroup()">Create Group</ion-button>

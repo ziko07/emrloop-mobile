@@ -138,8 +138,8 @@ export class LogosComponent implements OnInit {
     getLogo() {
         this.logoService.getLogo().subscribe(
             resp => {
-                if (resp.action === 'new' && this.checked) {
-                    this.logos.push(resp.logo);
+                if (resp.action === 'new') {
+                    this.logos.unshift(resp.logo);
                 } else {
                     for (let i = 0; i < this.logos.length; i++) {
                         if (this.logos[i].id === resp.logo.id) {

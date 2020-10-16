@@ -33,7 +33,7 @@ export class ProfileComponent implements OnInit {
         setTimeout(() => {
             this.getAllUserGroups('refresh');
             event.target.complete();
-        }, 500);
+        }, 2000);
     }
 
     loadData(event): void {

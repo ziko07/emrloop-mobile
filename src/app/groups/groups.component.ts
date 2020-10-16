@@ -24,9 +24,11 @@ export class GroupsComponent implements OnInit {
                 public authService: AuthService) {
     }
 
+    allGroups = [];
+
     groups = [];
     group = new Group();
-    group_name: string;
+    group_id: number;
 
     emails = [];
     email = new Email();
@@ -58,7 +60,6 @@ export class GroupsComponent implements OnInit {
         this.getCurrentUserType();
         this.loadData(event);
         this.getInfo();
-        this.getGroup();
     }
 
     getCurrentUserType() {
@@ -74,22 +75,12 @@ export class GroupsComponent implements OnInit {
         );
     }
 
-    getGroup() {
-        this.groupService.getGroup().subscribe(
-            resp => {
-                if (this.checked) {
-                    this.groups.push(resp);
-                }
-            }, err => {}
-        );
-    }
-
     getAllGroups() {
         this.groupService.getGroups(this.page).subscribe(
             resp => {
                 if (resp.groups.length < 1) {
                     this.checked = true;
-                        this.helperService.showUpdateToast('Group list is successfully loaded!');
+                    this.helperService.showUpdateToast('Group list is successfully loaded!');
                     return;
                 }
                 this.groups = this.groups.concat(resp.groups);
@@ -105,9 +96,12 @@ export class GroupsComponent implements OnInit {
         this.helperService.showLoader();
         this.groupService.getAllInfo().subscribe(
             resp => {
+                this.allGroups = resp[0].groups;
                 this.clients = resp[0].clients;
                 this.emails = resp[0].emails;
+                console.log(resp);
                 this.helperService.dismissLoader();
+                console.log(this.allGroups);
             },
             err => {
                 this.helperService.dismissLoader();
@@ -117,30 +111,32 @@ export class GroupsComponent implements OnInit {
 
     onJoinGroup() {
         this.helperService.showLoader();
-        this.group_name = this.group.join_group_name;
-        console.log(this.group_name);
-        this.groupService.joinGroup(this.group_name).subscribe(
+        this.group_id = this.group.join_group_id;
+        console.log(this.group_id);
+        this.groupService.joinGroup(this.group_id).subscribe(
             resp => {
                 this.helperService.dismissLoader();
                 if (resp.status === 'ok') {
-                    this.helperService.showSuccessToast(resp.message);
+                    this.helperService.showSuccessToast('You have been added to the selected group.');
                 } else {
                     this.helperService.showDangerToast(resp.message);
                 }
+                console.log(resp);
             }, err => {
                 this.helperService.dismissLoader();
                 this.helperService.showDangerToast('Something went wrong. Try again later.');
+                console.log(err);
             }
         );
-        this.group.join_group_name = '';
+        this.group.join_group_id = null;
     }
 
     onAddUserToGroup() {
         this.helperService.showLoader();
-        this.group_name = this.group.add_user_group_name;
+        this.group_id = this.group.add_user_group_id;
         this.email_name = this.email.email;
-        console.log(this.group_name, this.email_name);
-        this.groupService.addUserToGroup(this.group_name, this.email_name).subscribe(
+        console.log(this.group_id, this.email_name);
+        this.groupService.addUserToGroup(this.group_id, this.email_name).subscribe(
             resp => {
                 this.helperService.dismissLoader();
                 console.log(resp);
@@ -155,13 +151,15 @@ export class GroupsComponent implements OnInit {
                 this.helperService.showDangerToast('Something went wrong. Try again later.');
             }
         );
+        this.group.add_user_group_id = null;
+        this.email_name = null;
     }
 
     onLeaveGroup() {
         this.helperService.showLoader();
-        this.group_name = this.group.leave_user_group_name;
-        console.log(this.group_name);
-        this.groupService.leaveGroup(this.group_name).subscribe(
+        this.group_id = this.group.leave_user_group_id;
+        console.log(this.group_id);
+        this.groupService.leaveGroup(this.group_id).subscribe(
             resp => {
                 this.helperService.dismissLoader();
                 if (resp.status === 'ok') {
@@ -174,7 +172,7 @@ export class GroupsComponent implements OnInit {
                 this.helperService.showDangerToast('Something went wrong. Try again later.');
             }
         );
-        this.group.leave_user_group_name = '';
+        this.group.leave_user_group_id = null;
     }
 
     onCreateGroup() {
@@ -184,9 +182,13 @@ export class GroupsComponent implements OnInit {
                 console.log(resp);
                 this.helperService.dismissLoader();
                 if (resp.status === 'ok') {
-                    this.group = resp.group;
-                    this.group.client_name = resp.client_name;
-                    this.groupService.listGroup(this.group);
+                    const data = {
+                        id: resp.group.id,
+                        group_name: resp.group.group_name,
+                        client_name: resp.client_name
+                    };
+                    this.groups.unshift(data);
+                    this.allGroups.unshift(data);
                     this.helperService.showSuccessToast(resp.message);
                 } else {
                     this.helperService.showDangerToast(resp.message);
@@ -198,5 +200,6 @@ export class GroupsComponent implements OnInit {
             }
         );
         this.group.create_group_name = '';
+        this.client_id = null;
     }
 }

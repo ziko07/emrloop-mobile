@@ -87,12 +87,12 @@ export class UsersComponent implements OnInit {
 
     getUser() {
         this.userService.getUser().subscribe(resp => {
-            if (resp.action === 'new' && this.checked) {
+            if (resp.action === 'new') {
                 console.log(resp);
                 const user = resp.user.user;
                 user.type = resp.user.user_type;
                 console.log(user);
-                this.users.push(user);
+                this.users.unshift(user);
             } else if (resp.action === 'update') {
                 for (let i = 0; i < this.users.length; i++) {
                     if (this.users[i].id === resp.user.user.id) {
