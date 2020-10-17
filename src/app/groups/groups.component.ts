@@ -65,7 +65,7 @@ export class GroupsComponent implements OnInit {
     getCurrentUserType() {
         this.authService.getUserType().subscribe(
             resp => {
-                if (resp.user_type !== 'admin') {
+                if (resp.user_type === 'user') {
                     this.router.navigateByUrl('/inbox');
                 }
                 console.log(resp);
