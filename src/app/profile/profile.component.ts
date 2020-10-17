@@ -30,15 +30,6 @@ export class ProfileComponent implements OnInit {
     length = 0;
     checked = false;
 
-    public getGroup(): void {
-        this.groupService.getGroup().subscribe(
-            resp => {
-                this.groups.unshift(resp);
-                console.log('GET GROUP ' + resp);
-            }
-        );
-    }
-
     public loadData(event): void {
         if (this.checked) {
             event.target.complete();
@@ -58,7 +49,6 @@ export class ProfileComponent implements OnInit {
         this.getCurrentUserType();
         this.loadData(event);
         this.onGetCurrentUser();
-        this.getGroup();
     }
 
     public onGetCurrentUser(): void {
@@ -117,6 +107,19 @@ export class ProfileComponent implements OnInit {
     }
 
     public onUpdateProfile(): void {
+        if (!this.name && !this.nickname && !this.form.image && !this.form.current_password && !this.password &&
+            !this.password_confirmation) {
+            this.helperService.showDangerToast('All fields are empty.');
+            return;
+        }
+        if (!this.name) {
+            this.helperService.showDangerToast('Name can\'t be empty.');
+            return;
+        }
+        if (!this.nickname) {
+            this.helperService.showDangerToast('Nickname can\'t be empty.');
+            return;
+        }
         if (!this.form.current_password) {
             this.helperService.showDangerToast('Input current password to update profile.');
             return;
@@ -159,6 +162,7 @@ export class ProfileComponent implements OnInit {
                 formData[key] = this.form[key];
             }
         }
+        console.log(formData);
         this.authProvider.updateProfile(this.type, formData).subscribe(
             resp => {
                 console.log(resp);

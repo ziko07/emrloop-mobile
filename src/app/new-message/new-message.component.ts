@@ -92,7 +92,7 @@ export class NewMessageComponent implements OnInit {
     onSendMessage() {
         for (const key in this.message) {
             if (key) {
-                this.formData.append(key, this.message[key]);
+                this.formData.append(key, this.message[key].trim());
             }
         }
         console.log(this.message);
