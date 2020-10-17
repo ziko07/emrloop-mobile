@@ -111,6 +111,7 @@ export class NewLoopComponent implements OnInit {
                 if (resp.status === 'ok') {
                     this.messageService.listMessage(resp.message);
                     this.helperService.showSuccessToast('Loop created successfully!');
+                    this.resetLoop();
                     this.router.navigateByUrl('/inbox');
                 } else {
                     this.helperService.showDangerToast(resp.message);
@@ -121,6 +122,9 @@ export class NewLoopComponent implements OnInit {
                 console.log(err);
             }
         );
+    }
+
+    public resetLoop() {
         this.message.group_id = null;
         this.message.receipt_type = '';
         this.message.title = '';
