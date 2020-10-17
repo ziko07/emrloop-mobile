@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Base } from './base';
 
 @Injectable({
@@ -8,6 +8,16 @@ import { Base } from './base';
 })
 export class GroupService {
   constructor(public http: HttpClient) { }
+
+  private groupSubject = new Subject();
+
+  public listGroup(groupName: string): any {
+    this.groupSubject.next(groupName);
+  }
+
+  public getGroup(): Observable<any> {
+    return this.groupSubject;
+  }
 
   public getGroups(page): Observable<any> {
     return this.http.get(Base.apiUrl + '/group?page=' + page, Base.requestHeader());

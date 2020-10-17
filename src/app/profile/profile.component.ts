@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 
 import {HelperService} from '../../services/helper.service';
 import {AuthService} from '../../services/auth.service';
+import {GroupService} from '../../services/group.service';
 
 import {Form} from '../../models/form.model';
 
@@ -13,7 +14,8 @@ import {Form} from '../../models/form.model';
 export class ProfileComponent implements OnInit {
 
     constructor(public helperService: HelperService,
-                public authProvider: AuthService) {
+                public authProvider: AuthService,
+                public groupService: GroupService) {
     }
 
     groups = [];
@@ -26,24 +28,25 @@ export class ProfileComponent implements OnInit {
     form = new Form();
     page = 0;
     length = 0;
-    len = 0;
     checked = false;
 
-    doRefresh(event): void {
-        setTimeout(() => {
-            this.getAllUserGroups('refresh');
-            event.target.complete();
-        }, 2000);
+    public getGroup(): void {
+        this.groupService.getGroup().subscribe(
+            resp => {
+                this.groups.unshift(resp);
+                console.log('GET GROUP ' + resp);
+            }
+        );
     }
 
-    loadData(event): void {
+    public loadData(event): void {
         if (this.checked) {
             event.target.complete();
             return;
         }
         setTimeout(() => {
             ++this.page;
-            this.getAllUserGroups('scroll');
+            this.getAllUserGroups();
             if (this.groups.length > 0) {
                 event.target.complete();
                 return;
@@ -54,11 +57,11 @@ export class ProfileComponent implements OnInit {
     ngOnInit() {
         this.getCurrentUserType();
         this.loadData(event);
-        // this.doRefresh(event);
         this.onGetCurrentUser();
+        this.getGroup();
     }
 
-    onGetCurrentUser(): void {
+    public onGetCurrentUser(): void {
         this.helperService.showLoader();
         this.authProvider.getCurrentUser().subscribe(
             resp => {
@@ -76,7 +79,7 @@ export class ProfileComponent implements OnInit {
         );
     }
 
-    getCurrentUserType(): void {
+    public getCurrentUserType(): void {
         this.authProvider.getUserType().subscribe(
             resp => {
                 this.type = resp.user_type;
@@ -87,32 +90,24 @@ export class ProfileComponent implements OnInit {
         );
     }
 
-    getAllUserGroups(action): void {
+    public getAllUserGroups(): void {
         this.authProvider.getUserGroups(this.page).subscribe(
             resp => {
-                console.log(action, resp);
-                if (action === 'scroll') {
-                    if (resp.my_groups.length < 1) {
-                        this.checked = true;
-                        this.helperService.showUpdateToast('User group list is successfully loaded!');
-                        return;
-                    }
-                    this.groups = this.groups.concat(resp.my_groups);
-                    this.length = resp.group_size;
-                } else {
-                    console.log(this.length, resp.group_size);
-                    if (resp.group_size > this.length) {
-                        this.length = resp.group_size;
-                        this.groups = this.groups.concat(resp.my_groups);
-                    }
+                if (resp.my_groups.length < 1) {
+                    this.checked = true;
+                    this.helperService.showUpdateToast('User group list is successfully loaded!');
+                    return;
                 }
+                this.groups = this.groups.concat(resp.my_groups);
+                this.length = resp.group_size;
+                console.log(resp);
             }, err => {
                 console.log(err);
             }
         );
     }
 
-    loadImageFromDevice(e): void {
+    public loadImageFromDevice(e): void {
         const file = e.target.files[0];
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -121,7 +116,7 @@ export class ProfileComponent implements OnInit {
         };
     }
 
-    onUpdateProfile(): void {
+    public onUpdateProfile(): void {
         if (!this.form.current_password) {
             this.helperService.showDangerToast('Input current password to update profile.');
             return;
@@ -166,9 +161,10 @@ export class ProfileComponent implements OnInit {
         }
         this.authProvider.updateProfile(this.type, formData).subscribe(
             resp => {
+                console.log(resp);
+                console.log(this.form);
                 this.helperService.dismissLoader();
                 if (resp.status === 'ok') {
-                    console.log(this.form, formData);
                     this.authProvider.listProfile(resp.user);
                     this.helperService.showSuccessToast(resp.message);
                 } else {

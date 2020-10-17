@@ -99,7 +99,6 @@ export class GroupsComponent implements OnInit {
                 this.allGroups = resp[0].groups;
                 this.clients = resp[0].clients;
                 this.emails = resp[0].emails;
-                console.log(resp);
                 this.helperService.dismissLoader();
                 console.log(this.allGroups);
             },
@@ -107,6 +106,14 @@ export class GroupsComponent implements OnInit {
                 this.helperService.dismissLoader();
             }
         );
+    }
+
+    private getGroupName(id: number): string {
+        for (const i in this.allGroups) {
+            if (this.allGroups[i].id === id) {
+                return this.allGroups[i].group_name;
+            }
+        }
     }
 
     onJoinGroup() {
@@ -117,6 +124,9 @@ export class GroupsComponent implements OnInit {
             resp => {
                 this.helperService.dismissLoader();
                 if (resp.status === 'ok') {
+                    const groupName = this.getGroupName(this.group_id);
+                    console.log(groupName);
+                    this.groupService.listGroup(groupName);
                     this.helperService.showSuccessToast('You have been added to the selected group.');
                 } else {
                     this.helperService.showDangerToast(resp.message);
@@ -161,9 +171,10 @@ export class GroupsComponent implements OnInit {
         console.log(this.group_id);
         this.groupService.leaveGroup(this.group_id).subscribe(
             resp => {
+                console.log(resp);
                 this.helperService.dismissLoader();
-                if (resp.status === 'ok') {
-                    this.helperService.showSuccessToast(resp.message);
+                if (resp.message === 'success!') {
+                    this.helperService.showSuccessToast('Success!');
                 } else {
                     this.helperService.showDangerToast(resp.message);
                 }
