@@ -29,6 +29,7 @@ export class ProfileComponent implements OnInit {
     page = 0;
     length = 0;
     checked = false;
+    newAddedGroups = [];
 
     public loadData(event): void {
         if (this.checked) {
@@ -45,17 +46,28 @@ export class ProfileComponent implements OnInit {
         }, 500);
     }
 
+    public onGetGroup(): void {
+        this.groupService.getGroup().subscribe(
+            resp => {
+                this.newAddedGroups.push(resp);
+                console.log('Added ' + this.newAddedGroups);
+            }, err => {
+                console.log(err);
+            }
+        )
+    }
+
     ngOnInit() {
+        console.log('You are in PROFILE page');
         this.getCurrentUserType();
         this.loadData(event);
         this.onGetCurrentUser();
+        this.onGetGroup();
     }
 
     public onGetCurrentUser(): void {
-        this.helperService.showLoader();
         this.authProvider.getCurrentUser().subscribe(
             resp => {
-                this.helperService.dismissLoader();
                 this.form.name = resp.profile.name;
                 this.name = resp.profile.name;
                 this.form.nickname = resp.profile.nickname;
@@ -63,7 +75,6 @@ export class ProfileComponent implements OnInit {
                 this.email = resp.profile.email;
                 console.log(resp.profile);
             }, err => {
-                this.helperService.dismissLoader();
                 console.log(err);
             }
         );
@@ -112,16 +123,16 @@ export class ProfileComponent implements OnInit {
             this.helperService.showDangerToast('All fields are empty.');
             return;
         }
+        if (!this.form.current_password) {
+            this.helperService.showDangerToast('Input current password to update profile.');
+            return;
+        }
         if (!this.name) {
             this.helperService.showDangerToast('Name can\'t be empty.');
             return;
         }
         if (!this.nickname) {
             this.helperService.showDangerToast('Nickname can\'t be empty.');
-            return;
-        }
-        if (!this.form.current_password) {
-            this.helperService.showDangerToast('Input current password to update profile.');
             return;
         }
         if (this.password && this.password_confirmation) {

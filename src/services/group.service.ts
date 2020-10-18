@@ -27,7 +27,7 @@ export class GroupService {
     return this.http.get(Base.apiUrl + '/group/great_group', Base.requestHeader());
   }
 
-  public joinGroup(group_id): Observable<any> {
+  public joinGroup(group_id): Observable<any> {console.log(this.groupSubject);
     return this.http.post(Base.apiUrl + '/group/join_group', { group_id }, Base.requestHeader());
   }
 

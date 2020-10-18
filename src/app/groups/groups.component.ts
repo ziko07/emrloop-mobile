@@ -93,17 +93,14 @@ export class GroupsComponent implements OnInit {
     }
 
     getInfo() {
-        this.helperService.showLoader();
         this.groupService.getAllInfo().subscribe(
             resp => {
                 this.allGroups = resp[0].groups;
                 this.clients = resp[0].clients;
                 this.emails = resp[0].emails;
-                this.helperService.dismissLoader();
                 console.log(this.allGroups);
             },
             err => {
-                this.helperService.dismissLoader();
             }
         );
     }
@@ -125,7 +122,6 @@ export class GroupsComponent implements OnInit {
                 this.helperService.dismissLoader();
                 if (resp.status === 'ok') {
                     const groupName = this.getGroupName(this.group_id);
-                    console.log(groupName);
                     this.groupService.listGroup(groupName);
                     this.helperService.showSuccessToast('You have been added to the selected group.');
                 } else {
