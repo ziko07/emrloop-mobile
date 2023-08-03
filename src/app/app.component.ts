@@ -187,9 +187,9 @@ export class AppComponent {
     }
 
     getToken(): void {
-        this.fcm.getToken().then(token => {
-            this.regId = token;
-        });
+        // this.fcm.getToken().then(token => {
+        //     this.regId = token;
+        // });
     }
 
     onPushNotification(): void {
@@ -228,13 +228,13 @@ export class AppComponent {
     }
 
     onNotificationTap(): void {
-        this.fcm.onNotification().subscribe(data => {
-            if (data.wasTapped) {
-                window.location.href = '/inbox';
-            } else {
-                this.helperService.showMessageAlert('1 new message received!');
-            }
-        });
+        // this.fcm.onNotification().subscribe(data => {
+        //     if (data.wasTapped) {
+        //         window.location.href = '/inbox';
+        //     } else {
+        //         this.helperService.showMessageAlert('1 new message received!');
+        //     }
+        // });
     }
 
     getProfile(): void {

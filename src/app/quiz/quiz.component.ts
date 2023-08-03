@@ -30,7 +30,7 @@ export class QuizComponent implements OnInit {
       this.item = resp;
       this.form.answer = this.item.status.correct;
       console.log(resp);
-      this.helperService.showSuccessToast('Acknowledgement Successfully Received');
+      // this.helperService.showSuccessToast('Acknowledgement Successfully Received');
     }, err => {
       this.spinnerDialog.hide();
       this.helperService.showDangerToast('error');
