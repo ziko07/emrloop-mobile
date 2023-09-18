@@ -12,47 +12,107 @@
         <ion-refresher-content>
         </ion-refresher-content>
     </ion-refresher>
-    <ion-fab *ngIf="type !== 'user'" vertical="bottom" horizontal="start" slot="fixed">
-        <ion-fab-button style="--background: #1B8895;">
-            <ion-icon name="add"></ion-icon>
-        </ion-fab-button>
-        <ion-fab-list side="top">
-            <ion-fab-button class="fav-btn action-fab-btn">
-                <a routerLink="/new-loop">
-                    New Loop
-                </a>
-            </ion-fab-button>
-            <ion-fab-button class="fav-btn action-fab-btn">
-                <a routerLink="/new-message">
-                    New Private Message
-                </a>
-            </ion-fab-button>
-        </ion-fab-list>
-    </ion-fab>
-    <ion-fab *ngIf="type === 'user'" vertical="bottom" horizontal="start" slot="fixed">
+    <ion-segment value="default">
+        <ion-segment [(ngModel)]="selectedSegment"
+            (ionChange)="segmentChanged()">
+            <ion-segment-button value="default">
+                <ion-label>Unread</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="segment">
+                <ion-label>Read</ion-label>
+            </ion-segment-button>
+        </ion-segment>
+    </ion-segment>
+
+    <ion-fab *ngIf="type === 'user'" vertical="bottom" horizontal="start"
+        slot="fixed">
         <a routerLink="/new-message">
             <ion-fab-button style="--background: #1B8895;">
                 <ion-icon name="add"></ion-icon>
             </ion-fab-button>
         </a>
     </ion-fab>
-    <ion-list class="ion-no-padding">
-        <ion-item *ngFor="let item of list; let i = index" lines="full" (click)="openModal(i)">
-            <ion-avatar slot="start">
-                <img src="/assets/images/ic_action_signal.png">
-            </ion-avatar>
-            <ion-label class="list-item">
-                <h2>{{item.recipient_name}}</h2>
-                <h3>{{item.title}}</h3>
+    <ion-list *ngFor="let item of filteredItems; let i = index">
+        <ion-card>
+            <ion-item lines="none">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col>
+                            <ion-row>
+                                <ion-icon name="person-outline" size="large"
+                                    class="blue-icon">
+                                </ion-icon>
+                                <ion-label class="recipinent-name">{{item.recipient_name}}</ion-label>
+                            </ion-row>
+                        </ion-col>
+                        <ion-col>
+                            <div class="red-dot"></div>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+                <!-- <ion-thumbnail slot="start">
+                    <ion-row class="ion-align-items-center"
+                        style="padding-top: 12px;">
+                        <ion-col size="1"
+                            style="padding: 0; width: auto;">
+                            <ion-icon name="person-outline" size="large"
+                                class="blue-icon">
+                            </ion-icon>
+                        </ion-col>
+                    </ion-row> 
+                </ion-thumbnail>
+                <ion-label>{{item.recipient_name}}</ion-label> -->
+
+                <!-- <ion-thumbnail slot="end">
+                </ion-thumbnail> -->
+            </ion-item>
+            <ion-card-content class="remove-marging m-2">
+                <ion-label class="bold-text">{{item.title}}</ion-label>
+            </ion-card-content>
+            <ion-card-content class="remove-marging card-with-border m-2">
                 <p class="img-container" [innerHTML]="item.content"></p>
-            </ion-label>
-            <ion-label slot="end" style="margin-bottom: auto" class="ion-text-right">
-                <h2>{{item.created_at | date: 'dd/MM/yyyy'}}</h2>
-                <img src="/assets/images/ic_action_picture.png">
-            </ion-label>
-        </ion-item>
-        <ion-item *ngIf="list && list.length <= 0" class="ion-text-center">
-            No inbox found!
-        </ion-item>
+            </ion-card-content>
+            <ion-card-content>
+                <ion-grid>
+                    <ion-row>
+                        <ion-col size="6">
+                            <ion-row class="ion-align-items-center"
+                                style="padding: 0;">
+                                <ion-col size="6"
+                                    style="padding: 0; width: auto;">
+                                    <p style="margin: 0;">{{item.created_at |
+                                        date: 'dd/MM/yyyy'}}</p>
+                                </ion-col>
+                                <ion-col size="1"
+                                    style="padding: 0; width: auto;">
+                                    <ion-icon name="time-outline" size="large"></ion-icon>
+                                </ion-col>
+                            </ion-row>
+                        </ion-col>
+                        <ion-col size="6" class="ion-text-end">
+                            <ion-row class="custom-row">
+                                <ion-col class="custom-col">
+                                    <ion-icon name="film-outline" size="large"
+                                        class="blue-icon"></ion-icon> </ion-col>
+                                <ion-col class="custom-col">
+                                    <p style="margin-left: 3px;">VIDEO</p>
+                                </ion-col>
+                                <ion-col class="custom-col">
+                                    <ion-icon name="document-outline"
+                                        size="large" class="blue-icon"></ion-icon>
+                                </ion-col>
+                                <ion-col class="custom-col">
+                                    <p style="margin: 0px;">PDF</p>
+                                </ion-col>
+                            </ion-row>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-card-content>
+        </ion-card>
     </ion-list>
+    <ion-item *ngIf="list && list.length <= 0" class="ion-text-center">
+        No inbox found!
+    </ion-item>
+
 </ion-content>

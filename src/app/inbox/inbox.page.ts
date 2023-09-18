@@ -18,7 +18,9 @@ import {DetailsComponent} from '../details/details.component';
 })
 export class InboxPage {
     list: any;
+    filteredItems:any;
     type: string;
+    selectedSegment = 'default'; 
 
     constructor(
         private modalController: ModalController,
@@ -47,10 +49,20 @@ export class InboxPage {
         }, 2000);
     }
 
+    segmentChanged() {
+        if (this.selectedSegment === 'default') {
+          this.filteredItems = this.list.filter(item => !item.read);
+        } else if (this.selectedSegment === 'segment') {
+          this.filteredItems = this.list.filter(item => item.read);
+        }
+      }
+      
+
     onReceiveMessage(): void {
         this.messageService.getMessage().subscribe(
             resp => {
-                this.list.unshift(resp);
+                // this.list.unshift(resp);
+                this.segmentChanged()
             }
         );
     }

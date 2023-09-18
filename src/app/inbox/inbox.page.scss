@@ -31,7 +31,6 @@ ion-content ion-toolbar {
 }
 
 ion-item {
-  --background: #1b889505;
   background: #1b889505;
 }
 
@@ -78,3 +77,84 @@ ion-item {
   }
 }
 
+ion-item{
+  background-color: #ffffff; /* Replace with your desired background color */
+
+}
+ion-segment {
+  background-color: #ffffff; /* Replace with your desired background color */
+}
+ion-segment {
+  font-size: 14px; /* Adjust the font size as needed */
+  padding: 5px 10px; /* Adjust the padding as needed */
+  margin: 0; /* Remove any default margin */
+}
+ion-segment {
+  display: flex;
+  justify-content: flex-start;
+}
+ion-segment .segment-button {
+  padding: 5px 10px; /* Adjust the padding as needed */
+  margin-right: 5px; /* Add space between buttons */
+}
+ion-segment[mode="md"] .segment-button-checked,
+ion-segment[mode="ios"] .segment-button-checked {
+  color: green; /* Replace with your desired text color */
+}
+.custom-item {
+  --padding-start: 0; /* Remove left padding */
+  --padding-end: 0;   /* Remove right padding */
+  --inner-padding-start: 0; /* Remove inner left padding */
+  --inner-padding-end: 0;   /* Remove inner right padding */
+  background-color: transparent !important; /* Remove background color */
+}
+.red-dot {
+  width: 10px; /* Adjust the width of the red dot as needed */
+  height: 10px; /* Adjust the height of the red dot as needed */
+  background-color: red; /* Set the color of the red dot */
+  border-radius: 50%; /* Create a circular shape for the red dot */
+  margin-left: auto; /* Push the red dot to the right side */
+}
+
+
+.item-inner {
+  border-bottom-color: transparent !important;
+  box-shadow: none !important;
+}
+.bold-text {
+  font-weight: bold;
+}
+
+.remove-marging {
+  margin-bottom: -8px !important;
+  margin-top: -16px !important;
+}
+
+/* src/app/your-component/your-component.page.scss */
+
+.card-with-border {
+  border-bottom: 1px solid #ccc; /* Adjust the color and thickness as needed */
+}
+
+.custom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+}
+
+.custom-col {
+  padding: 0;
+}
+
+.blue-icon {
+  color: blue; /* Set the outer color to blue */
+}
+.recipinent-name {
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+}
+.m-2{
+  margin-left: 5px;
+}
