@@ -143,8 +143,20 @@ ion-segment[mode="ios"] .segment-button-checked {
   padding: 0;
 }
 
-.custom-col {
-  padding: 0;
+/* Add this to your CSS file */
+.custom-row ion-icon,
+.custom-row p {
+  margin: 0; /* Remove margins around icons and text */
+  padding: 0; /* Remove padding around icons and text */
+}
+
+/* Optionally, you can add specific margin or padding to elements as needed */
+.custom-row ion-icon {
+  margin-right: 5px; /* Add margin between icons and text if desired */
+}
+
+.custom-row p {
+  margin-left: 5px; /* Add margin between icons and text if desired */
 }
 
 .blue-icon {
@@ -158,3 +170,4 @@ ion-segment[mode="ios"] .segment-button-checked {
 .m-2{
   margin-left: 5px;
 }
+

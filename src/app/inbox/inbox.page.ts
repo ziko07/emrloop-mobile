@@ -1,15 +1,15 @@
-import {Component} from '@angular/core';
-import {Router} from '@angular/router';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
-import {ModalController, IonRouterOutlet, Platform} from '@ionic/angular';
+import { ModalController, IonRouterOutlet, Platform } from '@ionic/angular';
 
-import {HelperService} from '../../services/helper.service';
-import {LoaderService} from '../../services/loader.service';
-import {HomeService} from '../../services/home.service';
-import {AuthService} from '../../services/auth.service';
-import {MessageService} from '../../services/message.service';
+import { HelperService } from '../../services/helper.service';
+import { LoaderService } from '../../services/loader.service';
+import { HomeService } from '../../services/home.service';
+import { AuthService } from '../../services/auth.service';
+import { MessageService } from '../../services/message.service';
 
-import {DetailsComponent} from '../details/details.component';
+import { DetailsComponent } from '../details/details.component';
 
 @Component({
     selector: 'app-inbox',
@@ -18,9 +18,12 @@ import {DetailsComponent} from '../details/details.component';
 })
 export class InboxPage {
     list: any;
-    filteredItems:any;
+    filteredItems: any;
     type: string;
-    selectedSegment = 'default'; 
+    selectedSegment = 'default';
+    fileType: string | null;
+    videoFileTypes = ['mov', 'mp4', 'avi', 'wmv', 'flv', 'egp'];
+    documentFileTypes = ['jpeg', 'pdf', 'png', 'pptx'];
 
     constructor(
         private modalController: ModalController,
@@ -42,6 +45,7 @@ export class InboxPage {
         this.doRefresh(event);
     }
 
+
     doRefresh(event): void {
         setTimeout(() => {
             this.loadInbox('refresh');
@@ -50,19 +54,29 @@ export class InboxPage {
     }
 
     segmentChanged() {
-        if (this.selectedSegment === 'default') {
-          this.filteredItems = this.list.filter(item => !item.read);
-        } else if (this.selectedSegment === 'segment') {
-          this.filteredItems = this.list.filter(item => item.read);
+        if (this.selectedSegment === 'unread') {
+            this.readInbox()
+        } else if (this.selectedSegment === 'read') {
+            this.unread()
+        }
+    }
+
+    downloadAttachment(url: string, attachmentType: string) {
+        if (url && attachmentType) {
+          const downloadUrl = `${url}`;
+          const link = document.createElement('a');
+          link.href = downloadUrl;
+          link.target = '_blank'; 
+          link.download = `attachment.${attachmentType.toLowerCase()}`;
+          link.click();
         }
       }
-      
 
     onReceiveMessage(): void {
         this.messageService.getMessage().subscribe(
             resp => {
-                // this.list.unshift(resp);
-                this.segmentChanged()
+                this.list.unshift(resp);
+                // this.segmentChanged()
             }
         );
     }
@@ -94,6 +108,32 @@ export class InboxPage {
                 this.list = resp;
             });
         }
+    }
+
+
+    public readInbox() {
+        this.spinnerDialog.show('', 'Loading inbox...');
+        this.homeService.list().subscribe(resp => {
+            this.list = [];
+            this.list = resp;
+            this.spinnerDialog.hide();
+
+        }, err => {
+            this.spinnerDialog.hide();
+            this.helperService.showDangerToast('Unable to load inbox');
+        });
+    }
+
+    public unread() {
+        this.spinnerDialog.show('', 'Loading inbox...');
+        this.homeService.all().subscribe(resp => {
+            this.list = [];
+            this.list = resp;
+        }, err => {
+            this.spinnerDialog.hide();
+            this.helperService.showDangerToast('Unable to load inbox');
+        });
+        this.spinnerDialog.hide();
     }
 
     public details(id) {

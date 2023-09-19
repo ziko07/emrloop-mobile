@@ -15,10 +15,10 @@
     <ion-segment value="default">
         <ion-segment [(ngModel)]="selectedSegment"
             (ionChange)="segmentChanged()">
-            <ion-segment-button value="default">
+            <ion-segment-button value="read">
                 <ion-label>Unread</ion-label>
             </ion-segment-button>
-            <ion-segment-button value="segment">
+            <ion-segment-button value="unread">
                 <ion-label>Read</ion-label>
             </ion-segment-button>
         </ion-segment>
@@ -32,7 +32,7 @@
             </ion-fab-button>
         </a>
     </ion-fab>
-    <ion-list *ngFor="let item of filteredItems; let i = index">
+    <ion-list *ngFor="let item of list; let i = index">
         <ion-card>
             <ion-item lines="none">
                 <ion-grid>
@@ -89,22 +89,15 @@
                                 </ion-col>
                             </ion-row>
                         </ion-col>
-                        <ion-col size="6" class="ion-text-end">
-                            <ion-row class="custom-row">
-                                <ion-col class="custom-col">
-                                    <ion-icon name="film-outline" size="large"
-                                        class="blue-icon"></ion-icon> </ion-col>
-                                <ion-col class="custom-col">
-                                    <p style="margin-left: 3px;">VIDEO</p>
+                        <ion-col size="3" class="ion-text-end" (click)="downloadAttachment(item.attachment.url, item.attachment_type)">
+                            <ion-row class="custom-row"  *ngIf="item.attachment_type !== null">
+                                <ion-col style="margin-left: 70%; display: flex; align-items: center;">
+                                  <ion-icon *ngIf="videoFileTypes.includes(item.attachment_type)" name="film-outline" size="large" class="blue-icon icon"></ion-icon>
+                                  <ion-icon *ngIf="documentFileTypes.includes(item.attachment_type)" name="document-outline" size="large" class="blue-icon icon"></ion-icon>
+                                  <p *ngIf="videoFileTypes.includes(item.attachment_type)" class="text">VIDEO</p>
+                                  <p *ngIf="documentFileTypes.includes(item.attachment_type)" class="text">PDF</p>
                                 </ion-col>
-                                <ion-col class="custom-col">
-                                    <ion-icon name="document-outline"
-                                        size="large" class="blue-icon"></ion-icon>
-                                </ion-col>
-                                <ion-col class="custom-col">
-                                    <p style="margin: 0px;">PDF</p>
-                                </ion-col>
-                            </ion-row>
+                              </ion-row>                              
                         </ion-col>
                     </ion-row>
                 </ion-grid>
