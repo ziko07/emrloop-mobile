@@ -3,7 +3,15 @@
         <ion-buttons slot="start">
             <ion-menu-button></ion-menu-button>
         </ion-buttons>
-        <ion-title>Inbox</ion-title>
+        <ion-row>
+            <ion-col style="padding: 0px;">
+                <ion-row>
+                    <ion-label class="recipinent-name bold-text">Inbox</ion-label>
+                    <img class="title-image" src="../../assets/images/KaizenLoop.png" alt="Your Image">
+                </ion-row>
+            </ion-col>
+           
+        </ion-row>
     </ion-toolbar>
 </ion-header>
 
@@ -18,7 +26,8 @@
             <ion-segment-button value="read" style="background-color: #f2f2f2;">
                 <ion-label class="bold-text">Unread</ion-label>
             </ion-segment-button>
-            <ion-segment-button value="unread" style="background-color: #f2f2f2;">
+            <ion-segment-button value="unread"
+                style="background-color: #f2f2f2;">
                 <ion-label class="bold-text">Read</ion-label>
             </ion-segment-button>
         </ion-segment>
@@ -32,7 +41,8 @@
             </ion-fab-button>
         </a>
     </ion-fab>
-    <ion-list *ngFor="let item of list; let i = index" style="background-color: #f2f2f2;">
+    <ion-list *ngFor="let item of list; let i = index"
+        style="background-color: #f2f2f2;">
         <ion-card>
             <ion-item lines="none">
                 <ion-grid>

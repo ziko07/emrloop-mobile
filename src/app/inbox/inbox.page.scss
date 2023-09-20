@@ -188,4 +188,21 @@ ion-segment[mode="ios"] .segment-button-checked {
 .m-2{
   margin-left: 5px;
 }
+/* Assuming you have a class called "title-text" and "title-icon" */
+.title-text {
+  flex: 1; /* This will make "Inbox" take the remaining space to the left of the icon */
+  text-align: left; /* Align text to the left */
+}
 
+.title-icon {
+  font-size: 24px;
+  text-align: right;
+  width: 50%;
+}
+.title-image{
+  max-width: 100%;
+  border-radius: 60%;
+  height: 35px;
+  width: 36px;
+  margin-left: 26%;
+}
