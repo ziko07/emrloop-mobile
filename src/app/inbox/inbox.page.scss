@@ -116,6 +116,14 @@ ion-segment[mode="ios"] .segment-button-checked {
   margin-left: auto; /* Push the red dot to the right side */
 }
 
+.ion-list{
+  background: #f2f2f2 !important;
+}
+
+.list-md {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
 
 .item-inner {
   border-bottom-color: transparent !important;
@@ -123,7 +131,17 @@ ion-segment[mode="ios"] .segment-button-checked {
 }
 .bold-text {
   font-weight: bold;
+  color: black;
 }
+.black-text {
+  color: black;
+}
+
+.icon-size {
+  height: 20px;
+  width: 25px;
+}
+
 
 .remove-marging {
   margin-bottom: -8px !important;
@@ -160,7 +178,7 @@ ion-segment[mode="ios"] .segment-button-checked {
 }
 
 .blue-icon {
-  color: blue; /* Set the outer color to blue */
+  color: #1B8895; /* Set the outer color to blue */
 }
 .recipinent-name {
   margin-left: 10px;

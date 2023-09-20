@@ -4,6 +4,7 @@
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#e9f6fd+0,d3eefb+100;Blue+3D+%233 */
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#1b8895+0,407766+100 */
   background: rgb(27,136,149); /* Old browsers */
+  // background: #d7d8da !important;
   background: -moz-linear-gradient(top,  rgba(27,136,149,1) 0%, rgba(64,119,102,1) 100%); /* FF3.6-15 */
   background: -webkit-linear-gradient(top,  rgba(27,136,149,1) 0%,rgba(64,119,102,1) 100%); /* Chrome10-25,Safari5.1-6 */
   background: linear-gradient(to bottom,  rgba(27,136,149,1) 0%,rgba(64,119,102,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
@@ -24,6 +25,17 @@
     }
   }
 
+  
+
+  .ion-menu {
+    background-color: white;
+  }
+  
+  /* Change header background color to white */
+  ion-header {
+    background-color: white;
+  }
+
   .mt_5 { margin-top: 5px !important; }
 
   .common-link {
@@ -39,15 +51,16 @@
 }
 
 .menu-content {
-  --background: #1B8895;
+  --background: #fff;
+  color:  rgb(27,136,149) !important;
   ion-list, ion-item {
-    background: transparent;
-    --background: transparent;
+    // background: transparent;
+    // --background: transparent;
     ion-icon {
-      color: #dfdfdf;
+      color:  rgb(27,136,149) !important;
     }
     span {
-      color: #eae8e8;
+      color:  rgb(27,136,149) !important;
       font-weight: 500;
     }
   }

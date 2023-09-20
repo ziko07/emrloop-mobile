@@ -12,14 +12,14 @@
         <ion-refresher-content>
         </ion-refresher-content>
     </ion-refresher>
-    <ion-segment value="default">
+    <ion-segment value="default" style="background-color: #f2f2f2;">
         <ion-segment [(ngModel)]="selectedSegment"
-            (ionChange)="segmentChanged()">
-            <ion-segment-button value="read">
-                <ion-label>Unread</ion-label>
+            (ionChange)="segmentChanged()" style="background-color: #f2f2f2;">
+            <ion-segment-button value="read" style="background-color: #f2f2f2;">
+                <ion-label class="bold-text">Unread</ion-label>
             </ion-segment-button>
-            <ion-segment-button value="unread">
-                <ion-label>Read</ion-label>
+            <ion-segment-button value="unread" style="background-color: #f2f2f2;">
+                <ion-label class="bold-text">Read</ion-label>
             </ion-segment-button>
         </ion-segment>
     </ion-segment>
@@ -32,17 +32,17 @@
             </ion-fab-button>
         </a>
     </ion-fab>
-    <ion-list *ngFor="let item of list; let i = index">
+    <ion-list *ngFor="let item of list; let i = index" style="background-color: #f2f2f2;">
         <ion-card>
             <ion-item lines="none">
                 <ion-grid>
                     <ion-row>
-                        <ion-col>
+                        <ion-col style="padding: 0px;">
                             <ion-row>
                                 <ion-icon name="person-outline" size="large"
-                                    class="blue-icon">
+                                    class="blue-icon icon-size">
                                 </ion-icon>
-                                <ion-label class="recipinent-name">{{item.recipient_name}}</ion-label>
+                                <ion-label class="recipinent-name bold-text">{{item.recipient_name}}</ion-label>
                             </ion-row>
                         </ion-col>
                         <ion-col>
@@ -70,7 +70,7 @@
                 <ion-label class="bold-text">{{item.title}}</ion-label>
             </ion-card-content>
             <ion-card-content class="remove-marging card-with-border m-2">
-                <p class="img-container" [innerHTML]="item.content"></p>
+                <p class="img-container black-text" [innerHTML]="item.content"></p>
             </ion-card-content>
             <ion-card-content>
                 <ion-grid>
@@ -80,8 +80,9 @@
                                 style="line-height:normal">
                                 <ion-col size="6"
                                     style="padding: 0; width: auto;">
-                                    <p style="margin: 0;">{{item.created_at |
-                                        date: 'dd/MM/yyyy'}}</p>
+                                    <p class="black-text" style="margin: 0;">{{item.created_at
+                                        |
+                                        date: 'EEE MMM d'}}</p>
                                 </ion-col>
                                 <ion-col size="1"
                                     style="padding: 0px; width: auto;">
@@ -89,15 +90,28 @@
                                 </ion-col>
                             </ion-row>
                         </ion-col>
-                        <ion-col size="3" class="ion-text-end" (click)="downloadAttachment(item.attachment.url, item.attachment_type)">
-                            <ion-row class="custom-row"  *ngIf="item.attachment_type !== null">
-                                <ion-col style="margin-left: 70%; display: flex; align-items: center;">
-                                  <ion-icon *ngIf="videoFileTypes.includes(item.attachment_type)" name="film-outline" size="large" class="blue-icon icon"></ion-icon>
-                                  <ion-icon *ngIf="documentFileTypes.includes(item.attachment_type)" name="document-outline" size="large" class="blue-icon icon"></ion-icon>
-                                  <p *ngIf="videoFileTypes.includes(item.attachment_type)" class="text">VIDEO</p>
-                                  <p *ngIf="documentFileTypes.includes(item.attachment_type)" class="text">PDF</p>
+                        <ion-col size="3" class="ion-text-end"
+                            (click)="downloadAttachment(item.attachment.url, item.attachment_type)">
+                            <ion-row class="custom-row"
+                                *ngIf="item.attachment_type !== null">
+                                <ion-col
+                                    style="margin-left: 70%; display: flex; align-items: center;">
+                                    <ion-icon
+                                        *ngIf="videoFileTypes.includes(item.attachment_type)"
+                                        name="film-outline" size="large"
+                                        class="blue-icon icon"></ion-icon>
+                                    <ion-icon
+                                        *ngIf="documentFileTypes.includes(item.attachment_type)"
+                                        name="document-outline" size="large"
+                                        class="blue-icon icon"></ion-icon>
+                                    <p
+                                        *ngIf="videoFileTypes.includes(item.attachment_type)"
+                                        class="text bold-text">VIDEO</p>
+                                    <p
+                                        *ngIf="documentFileTypes.includes(item.attachment_type)"
+                                        class="text bold-text">PDF</p>
                                 </ion-col>
-                              </ion-row>                              
+                            </ion-row>
                         </ion-col>
                     </ion-row>
                 </ion-grid>
