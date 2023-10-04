@@ -7,10 +7,11 @@
             <ion-col style="padding: 0px;">
                 <ion-row>
                     <ion-label class="recipinent-name bold-text">Inbox</ion-label>
-                    <img class="title-image" src="../../assets/images/KaizenLoop.png" alt="Your Image">
+                    <img class="title-image"
+                        src="../../assets/images/KaizenLoop.png"
+                        alt="Your Image">
                 </ion-row>
             </ion-col>
-           
         </ion-row>
     </ion-toolbar>
 </ion-header>
@@ -20,19 +21,6 @@
         <ion-refresher-content>
         </ion-refresher-content>
     </ion-refresher>
-    <ion-segment value="default" style="background-color: #f2f2f2;">
-        <ion-segment [(ngModel)]="selectedSegment"
-            (ionChange)="segmentChanged()" style="background-color: #f2f2f2;">
-            <ion-segment-button value="read" style="background-color: #f2f2f2;">
-                <ion-label class="bold-text">Unread</ion-label>
-            </ion-segment-button>
-            <ion-segment-button value="unread"
-                style="background-color: #f2f2f2;">
-                <ion-label class="bold-text">Read</ion-label>
-            </ion-segment-button>
-        </ion-segment>
-    </ion-segment>
-
     <ion-fab *ngIf="type === 'user'" vertical="bottom" horizontal="start"
         slot="fixed">
         <a routerLink="/new-message">
@@ -41,41 +29,24 @@
             </ion-fab-button>
         </a>
     </ion-fab>
-    <ion-list *ngFor="let item of list; let i = index"
-        style="background-color: #f2f2f2;">
-        <ion-card>
-            <ion-item lines="none">
-                <ion-grid>
-                    <ion-row>
-                        <ion-col style="padding: 0px;">
-                            <ion-row>
-                                <ion-icon name="person-outline" size="large"
-                                    class="blue-icon icon-size">
-                                </ion-icon>
-                                <ion-label class="recipinent-name bold-text">{{item.recipient_name}}</ion-label>
-                            </ion-row>
-                        </ion-col>
-                        <ion-col>
-                            <div class="red-dot"></div>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
-                <!-- <ion-thumbnail slot="start">
-                    <ion-row class="ion-align-items-center"
-                        style="padding-top: 12px;">
-                        <ion-col size="1"
-                            style="padding: 0; width: auto;">
-                            <ion-icon name="person-outline" size="large"
-                                class="blue-icon">
+    <ion-list *ngFor="let item of list; let i = index">
+        <ion-card  class="common-card ion-activatable ripple-parent">
+            <ion-ripple-effect></ion-ripple-effect>
+            <ion-grid style="margin: 15px;">
+                <ion-row>
+                    <ion-col style="padding: 0px;">
+                        <ion-row>
+                            <ion-icon name="person-outline" size="large" class="blue-icon icon-size icon-with-border">
                             </ion-icon>
-                        </ion-col>
-                    </ion-row> 
-                </ion-thumbnail>
-                <ion-label>{{item.recipient_name}}</ion-label> -->
-
-                <!-- <ion-thumbnail slot="end">
-                </ion-thumbnail> -->
-            </ion-item>
+                            
+                            <ion-label class="recipinent-name bold-text">{{item.recipient_name}}</ion-label>
+                        </ion-row>
+                    </ion-col>
+                    <ion-col>
+                        <div class="red-dot"></div>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
             <ion-card-content class="remove-marging m-2">
                 <ion-label class="bold-text">{{item.title}}</ion-label>
             </ion-card-content>
@@ -86,20 +57,17 @@
                 <ion-grid>
                     <ion-row>
                         <ion-col size="6">
-                            <ion-row class="ion-align-items-center"
-                                style="line-height:normal">
-                                <ion-col size="6"
-                                    style="padding: 0; width: auto;">
-                                    <p class="black-text" style="margin: 0;">{{item.created_at
-                                        |
-                                        date: 'EEE MMM d'}}</p>
+                            <ion-row class="ion-align-items-center" style="line-height: normal;">
+                                <ion-col size="1" style="margin-right: 15px; width: auto;">
+                                    <ion-icon name="time-outline" size="small" style="margin-right: 5px;"></ion-icon>
                                 </ion-col>
-                                <ion-col size="1"
-                                    style="padding: 0px; width: auto;">
-                                    <ion-icon name="time-outline" size="large"></ion-icon>
+                                <ion-col size="6" style="padding: 0; width: auto;" class="ion-padding-start">
+                                    <p class="black-text" style="margin: 0;">{{item.created_at | date: 'EEE MMM d'}}</p>
                                 </ion-col>
                             </ion-row>
                         </ion-col>
+                        
+                        
                         <ion-col size="3" class="ion-text-end"
                             (click)="downloadAttachment(item.attachment.url, item.attachment_type)">
                             <ion-row class="custom-row"
@@ -126,10 +94,25 @@
                     </ion-row>
                 </ion-grid>
             </ion-card-content>
-        </ion-card>
+        </ion-card>        
     </ion-list>
     <ion-item *ngIf="list && list.length <= 0" class="ion-text-center">
         No inbox found!
     </ion-item>
-
 </ion-content>
+
+<ion-footer>
+    <ion-toolbar class="footer-toolbar">
+        <ion-segment [(ngModel)]="selectedSegment"
+            (ionChange)="segmentChanged()">
+            <ion-segment-button value="read">
+                <ion-label class="bold-text">Read</ion-label>
+                <ion-icon name="book-outline"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button value="unread">
+                <ion-label class="bold-text">Unread</ion-label>
+                <ion-icon name="mail-unread-outline"></ion-icon>
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
+</ion-footer>

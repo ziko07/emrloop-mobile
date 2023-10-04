@@ -20,7 +20,7 @@ export class InboxPage {
     list: any;
     filteredItems: any;
     type: string;
-    selectedSegment = 'default';
+    selectedSegment = 'read';
     fileType: string | null;
     videoFileTypes = ['mov', 'mp4', 'avi', 'wmv', 'flv', 'egp'];
     documentFileTypes = ['jpeg', 'pdf', 'png', 'pptx'];
