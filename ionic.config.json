@@ -1,7 +1,9 @@
 {
   "name": "emrloop-mobile",
   "integrations": {
-    "capacitor": {},
+    "capacitor": {
+      "enabled": false
+    },
     "cordova": {}
   },
   "type": "angular"
