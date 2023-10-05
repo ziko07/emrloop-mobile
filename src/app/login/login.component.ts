@@ -56,10 +56,11 @@ export class LoginComponent implements OnInit {
                 if (err.status === 401) {
                     this.helperService.showDangerToast('Invalid username or password!');
                 } else {
-                    this.helperService.showDangerToast('Server encountered an issue! Please try after again.');
+                    this.helperService.showDangerToast(`Server encountered an issue! Please try after again. ${err.message}`);
                 }
             });
         } else {
+            this.helperService.dismissLoader();
             this.helperService.showDangerToast('Something went wrong. Try again later.');
         }
     }
