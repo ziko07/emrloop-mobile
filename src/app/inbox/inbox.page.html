@@ -1,7 +1,7 @@
 <ion-header>
     <ion-toolbar class="custom-toolbar">
         <ion-buttons slot="start">
-            <ion-menu-button></ion-menu-button>
+            <ion-back-button defaultHref="/home"></ion-back-button>
         </ion-buttons>
         <ion-row>
             <ion-col style="padding: 0px;">
@@ -61,7 +61,7 @@
                                 <ion-col size="1" style="margin-right: 15px; width: auto;">
                                     <ion-icon name="time-outline" size="small" style="margin-right: 5px;"></ion-icon>
                                 </ion-col>
-                                <ion-col size="6" style="padding: 0; width: auto;" class="ion-padding-start">
+                                <ion-col size="7" style="padding: 0; width: auto;" class="ion-padding-start">
                                     <p class="black-text" style="margin: 0;">{{item.created_at | date: 'EEE MMM d'}}</p>
                                 </ion-col>
                             </ion-row>

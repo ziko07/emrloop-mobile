@@ -41,6 +41,7 @@ export class GroupsComponent implements OnInit {
 
     page = 1;
     checked = false;
+    selectedSegment = 'add';
 
     loadData(event) {
         if (this.checked) {

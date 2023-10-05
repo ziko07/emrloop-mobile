@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar class="custom-toolbar">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
     <ion-title>Clients</ion-title>
   </ion-toolbar>
@@ -28,15 +28,18 @@
     <p *ngIf="clients.length === 0" class="not-found">No client found. Add to see them.</p>
     <ion-card-content *ngIf="clients.length">
       <ion-list>
-        <ion-item *ngFor="let client of clients; let i=index" lines="none" class="user-info">
-          <div style="width: 320px">
-            <span class="user-name">
-              {{ client.name }}
-            </span> <br>
-            Token: {{ client.token }}
-          </div>
-          <ion-icon (click)="showPopOver($event, i, client.id)" name="ellipsis-horizontal-sharp"></ion-icon>
-        </ion-item>
+        <ion-card *ngFor="let client of clients; let i=index" ion-ripple-effect class="common-card">
+          <ion-ripple-effect></ion-ripple-effect>
+          <ion-item>
+            <ion-label class="label">
+              <span class="user-name">
+                {{ client.name }}
+              </span> <br>
+              Token: {{ client.token }}
+            </ion-label>
+            <ion-icon (click)="showPopOver($event, i, client.id)" name="ellipsis-horizontal-sharp"></ion-icon>
+          </ion-item>
+        </ion-card>
       </ion-list>
     </ion-card-content>
   </ion-card>

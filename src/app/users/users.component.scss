@@ -8,6 +8,11 @@
     bottom: 20%;
 }
 
+.common-card {
+    border-top: 3px solid #1B8895;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 .users-card {
     box-shadow: none;
     ion-card-header, 
@@ -15,8 +20,11 @@
         @extend .p-0;
     }
 
+    .recipient-name {
+        color: #28445c;
+    }
     .title {
-        font-size: 1.8em;
+        font-size: 1em;
         color: #28445c;
     }
 

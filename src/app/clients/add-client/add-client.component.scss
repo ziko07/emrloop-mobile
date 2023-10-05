@@ -4,9 +4,9 @@
 }
 
 .inner-card {
-    border: 2px solid #cbdcde;
+    // border: 2px solid #cbdcde;
     box-shadow: none;
-    margin-left: 20px;
+    // margin-left: 20px;
     ion-card-content {
         padding: 5px 15px;
         margin-bottom: 30px;
@@ -47,3 +47,17 @@ ion-back-button {
     position: relative;
     right: 10px;
 }
+
+.profile-card{
+    ion-card-header {
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+  }
+
+  .clients-card  {
+    border: 1px solid #a7a4a4;
+    box-shadow: none;
+    padding-top: 30px;
+    border-top: 3px solid #1B8895;
+  }
