@@ -218,6 +218,10 @@ ion-navbar.no-border {
   }
 }
 
+.custom-toolbar ion-title {
+  margin-left: -15px; /* Apply margin to ion-title within custom-toolbar */
+}
+
 // style for auth pages
 .auth-page {
   --background: transparent;

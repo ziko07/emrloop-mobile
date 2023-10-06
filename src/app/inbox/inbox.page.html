@@ -53,7 +53,7 @@
             <ion-card-content class="remove-marging card-with-border m-2">
                 <p class="img-container black-text" [innerHTML]="item.content"></p>
             </ion-card-content>
-            <ion-card-content>
+            <ion-card-content class="date-section">
                 <ion-grid>
                     <ion-row>
                         <ion-col size="6">
@@ -73,7 +73,7 @@
                             <ion-row class="custom-row"
                                 *ngIf="item.attachment_type !== null">
                                 <ion-col
-                                    style="margin-left: 70%; display: flex; align-items: center;">
+                                    style="margin-left: 70%; display: flex; align-items: center; padding-top: 0px">
                                     <ion-icon
                                         *ngIf="videoFileTypes.includes(item.attachment_type)"
                                         name="film-outline" size="large"
@@ -104,7 +104,7 @@
 <ion-footer>
     <ion-toolbar class="footer-toolbar">
         <ion-segment [(ngModel)]="selectedSegment"
-            (ionChange)="segmentChanged()">
+            (ionChange)="segmentChanged()" style="background-color: #f7f7f7;">
             <ion-segment-button value="read">
                 <ion-label class="bold-text">Read</ion-label>
                 <ion-icon name="book-outline"></ion-icon>
