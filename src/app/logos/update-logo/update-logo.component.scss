@@ -2,3 +2,18 @@ ion-back-button {
   position: relative;
   right: 10px;
 }
+
+.profile-card{
+  ion-card-header {
+    padding-bottom: 3px;
+    border-bottom: 1px solid #ddd;
+  }
+}
+
+
+.users-card {
+  border:1px solid #d9d9d9;
+  box-shadow: none;
+  padding-top: 3px;
+  border-top: 3px solid #1B8895;
+}

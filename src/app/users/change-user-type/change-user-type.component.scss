@@ -15,7 +15,7 @@ ion-card-content {
 }
 
 .dropdown {
-    padding: 45px 25px;
+    padding: 20px 10px;
     border-bottom: 1px solid #e5e5e5;
     ion-label {
         color: #28445c;
@@ -41,3 +41,19 @@ ion-back-button {
     position: relative;
     right: 10px;
 }
+
+
+.users-card {
+    border:1px solid #d9d9d9;
+    box-shadow: none;
+    padding-top: 3px;
+    border-top: 3px solid #1B8895;
+}
+.profile-card{
+    ion-card-header {
+      padding-bottom: 3px;
+      border-bottom: 1px solid #ddd;
+      padding-top: 0px !important;
+    }
+  }
+  

@@ -30,12 +30,12 @@
       <ion-list>
         <ion-card *ngFor="let client of clients; let i=index" ion-ripple-effect class="common-card">
           <ion-ripple-effect></ion-ripple-effect>
-          <ion-item>
+          <ion-item lines="none">
             <ion-label class="label">
               <span class="user-name">
                 {{ client.name }}
               </span> <br>
-              Token: {{ client.token }}
+              <span class="user-name"> Token: {{ client.token }} </span>
             </ion-label>
             <ion-icon (click)="showPopOver($event, i, client.id)" name="ellipsis-horizontal-sharp"></ion-icon>
           </ion-item>

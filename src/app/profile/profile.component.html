@@ -1,17 +1,17 @@
 <ion-header>
     <ion-toolbar class="custom-toolbar">
         <ion-buttons slot="start">
-        <ion-back-button defaultHref="/home"></ion-back-button>
+            <ion-back-button defaultHref="/home"></ion-back-button>
         </ion-buttons>
         <ion-title>My Profile</ion-title>
     </ion-toolbar>
 </ion-header>
-  
+
 <ion-content>
-<!--    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">-->
-<!--        <ion-refresher-content>-->
-<!--        </ion-refresher-content>-->
-<!--    </ion-refresher>-->
+    <!--    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">-->
+    <!--        <ion-refresher-content>-->
+    <!--        </ion-refresher-content>-->
+    <!--    </ion-refresher>-->
     <ion-card class="clients-card profile-card">
         <ion-card-header>
             <ion-text class="title pl-10">
@@ -37,11 +37,10 @@
                         </ion-label>
                     </div>
                     <ion-input
-                            type="text"
-                            name="name"
-                            [(ngModel)]="name"
-                            required clearInput
-                    >
+                        type="text"
+                        name="name"
+                        [(ngModel)]="name"
+                        required clearInput>
                     </ion-input>
                 </div>
                 <div class="profile-form-element">
@@ -49,11 +48,10 @@
                         Nickname
                     </ion-label>
                     <ion-input
-                            type="text"
-                            name="nickname"
-                            [(ngModel)]="nickname"
-                            required clearInput
-                    >
+                        type="text"
+                        name="nickname"
+                        [(ngModel)]="nickname"
+                        required clearInput>
                     </ion-input>
                 </div>
                 <div class="profile-form-element">
@@ -63,11 +61,10 @@
                         </ion-label>
                     </div>
                     <ion-input
-                            type="file"
-                            name="image"
-                            (change)="loadImageFromDevice($event)"
-                            accept="image/*"
-                    >
+                        type="file"
+                        name="image"
+                        (change)="loadImageFromDevice($event)"
+                        accept="image/*">
                     </ion-input>
                 </div>
                 <div class="profile-form-element">
@@ -77,11 +74,10 @@
                         </ion-label>
                     </div>
                     <ion-input
-                            type="password"
-                            name="password"
-                            [(ngModel)]="password"
-                            required clearInput autocomplete="off" minlength="8"
-                    >
+                        type="password"
+                        name="password"
+                        [(ngModel)]="password"
+                        required clearInput autocomplete="off" minlength="8">
                     </ion-input>
                     <small>Leave it blank if you don't want to change it.</small>
                 </div>
@@ -92,11 +88,10 @@
                         </ion-label>
                     </div>
                     <ion-input
-                            type="password"
-                            name="confirm-password"
-                            [(ngModel)]="password_confirmation"
-                            required clearInput autocomplete="off" minlength="8"
-                    >
+                        type="password"
+                        name="confirm-password"
+                        [(ngModel)]="password_confirmation"
+                        required clearInput autocomplete="off" minlength="8">
                     </ion-input>
                 </div>
                 <div class="profile-form-element">
@@ -106,19 +101,17 @@
                         </ion-label>
                     </div>
                     <ion-input
-                            type="password"
-                            name="current-password"
-                            [(ngModel)]="form.current_password"
-                            required clearInput autocomplete="off" minlength="8"
-                    >
+                        type="password"
+                        name="current-password"
+                        [(ngModel)]="form.current_password"
+                        required clearInput autocomplete="off" minlength="8">
                     </ion-input>
                 </div>
                 <ion-button
-                        color="primary ion-margin"
-                        type="submit"
-                        expand="block"
-                        (click)="onUpdateProfile()"
-                >
+                    color="primary ion-margin"
+                    type="submit"
+                    expand="block"
+                    (click)="onUpdateProfile()">
                     Update
                 </ion-button>
             </form>
@@ -143,8 +136,8 @@
     </ion-card>
     <ion-infinite-scroll threshold="10px" (ionInfinite)="loadData($event)">
         <ion-infinite-scroll-content
-                loadingSpinner="bubbles"
-                loadingText="Loading more groups...">
+            loadingSpinner="bubbles"
+            loadingText="Loading more groups...">
         </ion-infinite-scroll-content>
     </ion-infinite-scroll>
 </ion-content>

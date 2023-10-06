@@ -7,9 +7,17 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <ion-card>
-        <ion-card-header class="ion-text-center ion-text-uppercase">
-            Change the user type
+    <ion-card class="users-card profile-card">
+        <ion-card-header>
+            <ion-grid>
+                <ion-row>
+                    <ion-col>
+                        <ion-text >
+                            Change the user type
+                        </ion-text>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
         </ion-card-header>
         <ion-card-content>
             <div class="dropdown">
@@ -29,7 +37,7 @@
                     <ion-select-option value="PowerUser">PowerUser</ion-select-option>
                 </ion-select>
             </div>
-            <ion-button color="secondary" class="ion-margin ion-float-right ion-text-capitalize"
+            <ion-button color="primary" class="ion-margin ion-float-right ion-text-capitalize"
                         (click)="onChangeUserType()">Change User Type
             </ion-button>
         </ion-card-content>

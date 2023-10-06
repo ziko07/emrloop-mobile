@@ -7,10 +7,10 @@
     // border: 2px solid #cbdcde;
     box-shadow: none;
     // margin-left: 20px;
-    ion-card-content {
-        padding: 5px 15px;
-        margin-bottom: 30px;
-    }
+    // ion-card-content {
+    //     padding: 5px 15px;
+    //     margin-bottom: 30px;
+    // }
 }
 
 .form-text {
@@ -50,14 +50,14 @@ ion-back-button {
 
 .profile-card{
     ion-card-header {
-      padding-bottom: 10px;
+      padding-bottom: 3px;
       border-bottom: 1px solid #ddd;
     }
   }
 
   .clients-card  {
-    border: 1px solid #a7a4a4;
+    border: 1px solid #dbdbdb;
     box-shadow: none;
-    padding-top: 30px;
+    padding-top: 3px;
     border-top: 3px solid #1B8895;
   }

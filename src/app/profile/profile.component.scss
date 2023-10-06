@@ -21,11 +21,17 @@ ion-button {
 
 .profile-card{
   ion-card-header {
-    padding-bottom: 10px;
+    padding-bottom: 3px;
     border-bottom: 1px solid #ddd;
   }
 }
 
+.clients-card  {
+  border: 1px solid #dbdbdb;
+  box-shadow: none;
+  padding-top: 3px;
+  border-top: 3px solid #1B8895;
+}
 ion-label {
   margin-bottom: 5px;
   color: #28445c;

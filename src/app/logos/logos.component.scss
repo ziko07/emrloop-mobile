@@ -2,14 +2,15 @@
 .p-0 { padding: 0; }
 
 .logos-card {
-    border: 1px solid #a7a4a4;
+    border: 1px solid #cecece;
     box-shadow: none;
-    padding-top: 30px;
+    padding-top: 3px;
     border-top: 3px solid #1B8895;
 }
 .common-card {
     border-top: 3px solid #1B8895;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 15px;
 }
 ion-card {
     box-shadow: none;
@@ -22,6 +23,10 @@ ion-card-content {
 
 .logo-info {
     margin-left: 30px;
+    .title {
+        font-size: 1.8em;
+        color: #28445c;
+    }
 }
 
 .options {
@@ -182,3 +187,4 @@ ion-back-button {
     $popover-ios-width: 180px;
     $popover-wp-width: 180px;
 }
+

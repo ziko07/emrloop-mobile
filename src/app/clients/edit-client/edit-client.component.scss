@@ -7,3 +7,11 @@ ion-back-button {
     position: relative;
     right: 10px;
 }
+
+
+.client-edit-header{
+    ion-card-header {
+      padding-bottom: 3px;
+      border-bottom: 1px solid #ddd;
+    }
+  }
