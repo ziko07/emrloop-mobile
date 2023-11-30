@@ -40,24 +40,25 @@ export class InboxPage {
 
     ngOnInit() {
         this.onReceiveMessage();
-        this.loadInbox('init');
+        // this.loadInbox('init');
+        this.readInbox();
         this.getUserType();
-        this.doRefresh(event);
+        // this.doRefresh(event);
     }
 
 
     doRefresh(event): void {
         setTimeout(() => {
-            this.loadInbox('refresh');
+            this.segmentChanged();
             event.target.complete();
         }, 2000);
     }
 
     segmentChanged() {
         if (this.selectedSegment === 'unread') {
-            this.readInbox()
+            this.unreadInbox();
         } else if (this.selectedSegment === 'read') {
-            this.unread()
+            this.readInbox();
         }
     }
 
@@ -90,28 +91,27 @@ export class InboxPage {
         );
     }
 
-    public loadInbox(action) {
-        if (action === 'init') {
-            this.spinnerDialog.show('', 'Loading inbox...');
-            this.homeService.list().subscribe(resp => {
-                this.spinnerDialog.hide();
-                this.list = resp;
-                console.log(resp);
-                // for (let l of this.list)
-                //  console.log(l, this.list.l);
-            }, err => {
-                this.spinnerDialog.hide();
-                this.helperService.showDangerToast('Unable to load inbox');
-            });
-        } else {
-            this.homeService.list().subscribe(resp => {
-                this.list = resp;
-            });
-        }
-    }
+    // public loadInbox(action) {
+    //     if (action === 'init') {
+    //         this.spinnerDialog.show('', 'Loading inbox...');
+    //         this.homeService.list().subscribe(resp => {
+    //             this.spinnerDialog.hide();
+    //             this.list = resp;
+    //             console.log(resp);
+    //             // for (let l of this.list)
+    //             //  console.log(l, this.list.l);
+    //         }, err => {
+    //             this.spinnerDialog.hide();
+    //             this.helperService.showDangerToast('Unable to load inbox');
+    //         });
+    //     } else {
+    //         this.homeService.list().subscribe(resp => {
+    //             this.list = resp;
+    //         });
+    //     }
+    // }
 
-
-    public readInbox() {
+    public unreadInbox() {
         this.spinnerDialog.show('', 'Loading inbox...');
         this.homeService.list().subscribe(resp => {
             this.list = [];
@@ -124,7 +124,7 @@ export class InboxPage {
         });
     }
 
-    public unread() {
+    public readInbox() {
         this.spinnerDialog.show('', 'Loading inbox...');
         this.homeService.all().subscribe(resp => {
             this.list = [];

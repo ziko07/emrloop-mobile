@@ -29,7 +29,7 @@
             </ion-fab-button>
         </a>
     </ion-fab>
-    <ion-list *ngFor="let item of list; let i = index">
+    <ion-list *ngFor="let item of list; let i = index" (click)="openModal(i)">
         <ion-card  class="common-card ion-activatable ripple-parent">
             <ion-ripple-effect></ion-ripple-effect>
             <ion-grid style="margin: 15px;">
