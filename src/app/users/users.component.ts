@@ -91,6 +91,7 @@ export class UsersComponent implements OnInit {
                 console.log(resp);
                 const user = resp.user.user;
                 user.type = resp.user.user_type;
+                user.group_number = 0;
                 console.log(user);
                 this.users.unshift(user);
             } else if (resp.action === 'update') {
