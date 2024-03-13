@@ -12,17 +12,17 @@ export class HomeService {
     }
 
     public list(): Observable<any> {
-        return this.http.get<any>(Base.apiUrl + '/users/messages/inbox');
+        return this.http.get<any>(Base.apiUrl + '/users/messages/inbox', Base.requestHeader());
     }
 
     public all(): Observable<any> {
-        return this.http.get<any>(Base.apiUrl + '/users/messages/all');
+        return this.http.get<any>(Base.apiUrl + '/users/messages/all', Base.requestHeader());
     }
 
     public task(messageId): Observable<HttpResponse<any>> {
-        return this.http.get<any>(Base.apiUrl + '/users/messages/' + messageId);
+        return this.http.get<any>(Base.apiUrl + '/users/messages/' + messageId, Base.requestHeader());
     }
     public acknowledgementSent(messageId, data): Observable <any> {
-        return this.http.put(Base.apiUrl + '/users/messages/' + messageId + '/read', data);
+        return this.http.put(Base.apiUrl + '/users/messages/' + messageId + '/read', data, Base.requestHeader());
     }
 }

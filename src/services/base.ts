@@ -8,11 +8,13 @@ export class Base {
     // static baseUrl = 'http://192.168.0.117:3301';
 
     static getAuthToken() {
-        const auth = JSON.parse(window.localStorage.getItem('auth'));
-        return auth ? auth.auth_token : '';
+        // const auth = JSON.parse(window.localStorage.getItem('auth'));
+        // return auth ? auth.auth_token : '';
+        return JSON.parse(window.localStorage.getItem('AUTH'));
     }
 
     static requestHeader() {
-        return {headers: {Authorization: `Bearer ${Base.getAuthToken()}`}};
+        // return { headers: {Authorization: `Bearer ${Base.getAuthToken()}`} };
+        return { headers: this.getAuthToken() };
     }
 }

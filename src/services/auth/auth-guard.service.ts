@@ -8,6 +8,7 @@ export class AuthGuardService implements CanActivate {
     }
 
     canActivate(): boolean {
+        console.log(this.auth.getToken());
         if (!this.auth.getToken()) {
             window.location.href = '/login';
             return false;

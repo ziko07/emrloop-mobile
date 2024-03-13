@@ -60,20 +60,22 @@ export class AuthService {
     }
 
     public signedIn(): boolean {
+        console.log(this.getAccessTokens());
+        console.log(!!this.getAccessTokens());
         // return this.tokenService.userSignedIn();
         return !!this.getAccessTokens();
     }
 
     public getUserType(): Observable<any> {
-        return this.http.get(Base.apiUrl + '/users/current_user_type', Base.requestHeader());
+        return this.http.get(Base.apiUrl + '/users/current_user_type', this.getRequestHeader());
     }
 
     public getCurrentUser(): Observable<any> {
-        return this.http.get(Base.apiUrl + '/users/profile');
+        return this.http.get(Base.apiUrl + '/users/profile', this.getRequestHeader());
     }
 
     public push(regId, os_type): Observable<any> {
-        return this.http.post(Base.apiUrl + '/users/push', {regId, os_type}, Base.requestHeader());
+        return this.http.post(Base.apiUrl + '/users/push', {regId, os_type}, this.getRequestHeader());
     }
 
     public updateProfile(type, formData): Observable<any> {
@@ -99,8 +101,11 @@ export class AuthService {
 
     public getToken() {
         // let token_data = this.tokenService.currentAuthData;
+        console.log(this.getAccessTokens());
         let token_data = this.getAccessTokens();
-        return token_data ? token_data.accessToken : '';
+        console.log(token_data);
+        console.log(token_data['access-token']);
+        return token_data ? token_data['access-token'] : '';
     }
 
     // public getAuth() {
