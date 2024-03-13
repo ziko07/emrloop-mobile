@@ -265,9 +265,9 @@ export class AppComponent {
         this.helperService.showLoader();
         this.authProvider.logout().subscribe(resp => {
             this.helperService.dismissLoader();
-            window.location.href = '/login';
-            this.regId = null;
-            this.helperService.showUpdateToast('You have successfully logged out!');
+            // window.location.href = '/login';
+            // this.regId = null;
+            // this.helperService.showUpdateToast('You have successfully logged out!');
         }, err => {
         });
     }

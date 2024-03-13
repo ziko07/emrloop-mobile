@@ -1,14 +1,16 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpResponse} from '@angular/common/http';
-import {Observable, Subject} from 'rxjs';
-import {Base} from './base';
-import {AngularTokenService} from 'angular-token';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Base } from './base';
+// import { AngularTokenService } from 'angular-token';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
-    constructor(public http: HttpClient, private tokenService: AngularTokenService) {
+    authState = new BehaviorSubject(false);
+
+    constructor(public http: HttpClient) {
     }
 
     private profileSubject = new Subject<any>();
@@ -21,16 +23,45 @@ export class AuthService {
         return this.profileSubject;
     }
 
-    public login(userDetails): Observable<HttpResponse<any>> {
-        return this.tokenService.signIn(userDetails);
+    getAccessTokensFromResponse(resp: any): any {
+        return {
+            'access-token': resp.headers.get('access-token'),
+            'expiry': resp.headers.get('expiry'),
+            'uid': resp.headers.get('uid'),
+            'client': resp.headers.get('client')
+        };
+    }
+
+    getRequestObserver(): any {
+        return { observe: 'response' };
+    }
+
+    storeAccessTokens(access_tokens: any) {
+        localStorage.setItem('AUTH', JSON.stringify(access_tokens));
+        this.authState.next(true);
+    }
+
+    getAccessTokens() {
+        return JSON.parse(localStorage.getItem('AUTH'));
+    }
+
+    getRequestHeader(): any {
+        return { headers: this.getAccessTokens() };
+    }
+
+    public login(userDetails): Observable<any> {
+        // return this.tokenService.signIn(userDetails);
+        return this.http.post(Base.apiUrl + '/auth/sign_in', userDetails, this.getRequestObserver());
     }
 
     public logout(): Observable<any> {
-        return this.tokenService.signOut();
+        // return this.tokenService.signOut();
+        return this.http.delete(`${Base.apiUrl}/auth/sign_out`, this.getRequestHeader());
     }
 
     public signedIn(): boolean {
-        return this.tokenService.userSignedIn();
+        // return this.tokenService.userSignedIn();
+        return !!this.getAccessTokens();
     }
 
     public getUserType(): Observable<any> {
@@ -67,11 +98,12 @@ export class AuthService {
     }
 
     public getToken() {
-        let token_data = this.tokenService.currentAuthData;
+        // let token_data = this.tokenService.currentAuthData;
+        let token_data = this.getAccessTokens();
         return token_data ? token_data.accessToken : '';
     }
 
-    public getAuth() {
-        return this.tokenService.currentAuthData;
-    }
+    // public getAuth() {
+    //     return this.tokenService.currentAuthData;
+    // }
 }

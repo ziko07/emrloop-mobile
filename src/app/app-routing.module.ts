@@ -1,27 +1,27 @@
-import {NgModule} from '@angular/core';
-import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
-import {LoginComponent} from './login/login.component';
-import {HistoryComponent} from './history/history.component';
-import {DetailsComponent} from './details/details.component';
-import {QuizComponent} from './quiz/quiz.component';
-import {AngularTokenService} from 'angular-token';
-import {AuthGuardService as AuthGuard} from '../services/auth/auth-guard.service';
-import {ForgotPasswordComponent} from './forgot-password/forgot-password.component';
-import {UsersComponent} from './users/users.component';
-import {AddUserComponent} from './users/add-user/add-user.component';
-import {GroupsComponent} from './groups/groups.component';
-import {ClientsComponent} from './clients/clients.component';
-import {AddClientComponent} from './clients/add-client/add-client.component';
-import {EditClientComponent} from './clients/edit-client/edit-client.component';
-import {LogosComponent} from './logos/logos.component';
-import {AddLogoComponent} from './logos/add-logo/add-logo.component';
-import {UpdateLogoComponent} from './logos/update-logo/update-logo.component';
-import {ChangeUserTypeComponent} from './users/change-user-type/change-user-type.component';
-import {UserDetailsComponent} from './users/user-details/user-details.component';
-import {ProfileComponent} from './profile/profile.component';
-import {HomeComponent} from './home/home.component';
-import {NewMessageComponent} from './new-message/new-message.component';
-import {NewLoopComponent} from './new-loop/new-loop.component';
+import { NgModule } from '@angular/core';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { LoginComponent } from './login/login.component';
+import { HistoryComponent } from './history/history.component';
+import { DetailsComponent } from './details/details.component';
+// import { QuizComponent } from './quiz/quiz.component';
+// import {AngularTokenService} from 'angular-token';
+// import { AuthGuardService as AuthGuard } from '../services/auth/auth-guard.service';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { UsersComponent } from './users/users.component';
+import { AddUserComponent } from './users/add-user/add-user.component';
+import { GroupsComponent } from './groups/groups.component';
+import { ClientsComponent } from './clients/clients.component';
+import { AddClientComponent } from './clients/add-client/add-client.component';
+import { EditClientComponent } from './clients/edit-client/edit-client.component';
+import { LogosComponent } from './logos/logos.component';
+import { AddLogoComponent } from './logos/add-logo/add-logo.component';
+import { UpdateLogoComponent } from './logos/update-logo/update-logo.component';
+import { ChangeUserTypeComponent } from './users/change-user-type/change-user-type.component';
+import { UserDetailsComponent } from './users/user-details/user-details.component';
+import { ProfileComponent } from './profile/profile.component';
+import { HomeComponent } from './home/home.component';
+import { NewMessageComponent } from './new-message/new-message.component';
+import { NewLoopComponent } from './new-loop/new-loop.component';
 
 const routes: Routes = [
     {
@@ -113,7 +113,7 @@ const routes: Routes = [
 
 @NgModule({
     imports: [
-        RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})
+        RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
     ],
     exports: [RouterModule]
 })

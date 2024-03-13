@@ -40,12 +40,13 @@ export class LoginComponent implements OnInit {
             this.disableLogin = true;
             this.buttonText = 'Login...';
             this.userDetails = {
-                login: this.form.login,
+                email: this.form.login,
                 password: this.form.password
             };
             this.helperService.showLoader();
             this.authProvider.login(this.userDetails).subscribe(resp => {
                 if (resp.status === 200) {
+                    this.authProvider.storeAccessTokens(this.authProvider.getAccessTokensFromResponse(resp));
                     window.location.href = '/';
                     this.helperService.dismissLoader();
                 }
