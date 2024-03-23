@@ -10,7 +10,6 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { HttpClientModule } from '@angular/common/http';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { FCM } from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
@@ -81,7 +80,6 @@ import { Network } from '@ionic-native/network/ngx';
         SplashScreen,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
         AuthGuard,
-        FCM,
         BackgroundMode,
         FileChooser,
         FilePath,

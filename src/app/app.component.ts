@@ -1,17 +1,11 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-
 import {Platform} from '@ionic/angular';
-
 import {Location} from '@angular/common';
-
-import {FCM} from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
-
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {BackgroundMode} from '@ionic-native/background-mode/ngx';
 import {Network} from '@ionic-native/network/ngx';
-
 import {AuthService} from '../services/auth.service';
 import {HelperService} from '../services/helper.service';
 import {AuthGuardService as AuthGuard} from '../services/auth/auth-guard.service';
@@ -136,7 +130,6 @@ export class AppComponent {
         private backgroundMode: BackgroundMode,
         public helperService: HelperService,
         public authGuard: AuthGuard,
-        private fcm: FCM,
         private network: Network,
         private location: Location
     ) {
