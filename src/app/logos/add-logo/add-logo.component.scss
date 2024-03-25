@@ -53,6 +53,10 @@ ion-select {
     border-radius: 5px;
 }
 
+ion-input {
+    padding: 0 10px !important;
+}
+
 .bottom {
     position: relative;
     bottom: 24%;
@@ -78,4 +82,3 @@ ion-back-button {
       border-bottom: 1px solid #ddd;
     }
   }
-  

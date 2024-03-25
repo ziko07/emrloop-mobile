@@ -30,6 +30,7 @@
 ion-input {
     border: 1px solid #ccc;
     border-radius: 5px;
+  padding: 0 10px !important;
 }
 
 
@@ -49,6 +50,7 @@ ion-back-button {
 }
 
 .profile-card{
+  margin: 15px !important;
     ion-card-header {
       padding-bottom: 3px;
       border-bottom: 1px solid #ddd;

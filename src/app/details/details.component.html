@@ -14,7 +14,7 @@
         <ion-slide *ngFor="let item of list; let i = index;">
             <ion-card-content *ngIf="readySlider" class="ion-no-padding">
                 <div *ngIf="item.attachment && item.attachment.url && i == current_slider"
-                 [innerHTML]="item.attachment.url | attachment" style="width: 100%;height: 500px;background-color: rgb(255, 255, 255);"></div>
+                 [innerHTML]="item.attachment.url | attachment" class="slider-container"></div>
                 <div class="list-item-content">
                     <h2><b>{{item.title}} </b></h2>
                     <p [innerHTML]="item.content"></p>
@@ -26,7 +26,7 @@
                         Acknowledgement receipt
                     </ion-button>
 
-                    <ion-title *ngIf="read">Seen</ion-title>
+                    <ion-text class="text-bold" *ngIf="read">Seen</ion-text>
                 </div>
             </ion-card-content>
             <ion-card-content *ngIf="!readySlider">

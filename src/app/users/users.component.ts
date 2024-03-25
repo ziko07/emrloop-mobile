@@ -36,12 +36,7 @@ export class UsersComponent implements OnInit {
         this.popover = this.popOverController.create({
             component: PopoverComponent,
             componentProps: {
-                list: this.users,
-                i,
-                id,
-                email,
-                text: 'user',
-                user
+                list: this.users, i, id, email, text: 'user', user
             },
             cssClass: 'custom-popover',
             event: ev,

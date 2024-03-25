@@ -47,3 +47,11 @@
 .alert-btn {
   text-transform: capitalize !important;
 }
+
+ion-menu * {
+  pointer-events: auto !important;
+}
+
+ion-item * {
+  pointer-events: auto !important;
+}

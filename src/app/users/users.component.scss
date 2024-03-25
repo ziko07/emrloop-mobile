@@ -15,6 +15,7 @@
 
 .users-card {
     box-shadow: none;
+    margin: 0 !important;
     ion-card-header, 
     ion-card-content { 
         @extend .p-0;

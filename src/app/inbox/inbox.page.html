@@ -3,16 +3,7 @@
         <ion-buttons slot="start">
             <ion-back-button defaultHref="/home"></ion-back-button>
         </ion-buttons>
-        <ion-row>
-            <ion-col style="padding: 0px;">
-                <ion-row>
-                    <ion-label class="recipinent-name bold-text">Inbox</ion-label>
-                    <img class="title-image"
-                        src="../../assets/images/KaizenLoop.png"
-                        alt="Your Image">
-                </ion-row>
-            </ion-col>
-        </ion-row>
+        <ion-title>Inbox</ion-title>
     </ion-toolbar>
 </ion-header>
 
@@ -104,7 +95,7 @@
 <ion-footer>
     <ion-toolbar class="footer-toolbar">
         <ion-segment [(ngModel)]="selectedSegment"
-            (ionChange)="segmentChanged()" style="background-color: #f7f7f7;">
+            (ionChange)="segmentChanged()" style="background-color: #f7f7f7; width: 100vw;">
             <ion-segment-button value="read">
                 <ion-label class="bold-text">Read</ion-label>
                 <ion-icon name="book-outline"></ion-icon>

@@ -6,9 +6,26 @@ $colors-dark: #0039a2;
 
 .custom-toolbar {
   --background: $colors-primary;
-  background: #ffffff;
-  color: #222428;
+  background: $colors-primary;
+  color: #ffffff;
+  --color: #ffffff;
 }
+
+ion-header {
+  ion-toolbar {
+    ion-menu-button,
+    ion-back-button,
+    ion-button,
+    ion-title,
+    ion-icon {
+      color: #ffffff !important;
+    }
+    button {
+      color: #ffffff !important;
+    }
+  }
+}
+
 
 .white-bg {
   background-color: #fff;

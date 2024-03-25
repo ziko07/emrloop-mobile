@@ -15,7 +15,16 @@ ion-slides {
   min-height: 450px;
 }
 
+.slider-container {
+  width: 100vw;
+  min-height: calc(100vh - 250px);
+  background-color: rgb(255, 255, 255);
+}
 
+.list-item-content {
+  min-height: 100px;
+  padding: 16px;
+}
 
 .attachment-container {
   height: 100px; 
@@ -32,10 +41,6 @@ ion-slides {
   left: 0;
   right: 0;
   bottom: 0;
-}
-
-.list-item-content {
-  padding: 16px;
 }
 
 .image-section {
